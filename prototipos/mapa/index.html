@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Interativo — Viagem com Estilo (protótipo)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="mapa.css">
+</head>
+<body>
+
+  <!-- [SEÇÃO: mapa interativo]
+       Componente: .mapa-interativo (mapa.css)
+       Fixo: estrutura do SVG, título, legenda
+       Dinâmico:
+         - Geometria dos continentes: renderizada em runtime a partir de
+           Natural Earth 110m via d3-geo + topojson-client (CDN)
+         - Lista de roteiros por continente: window.VCE_MAPA_DATA (CMS em prod)
+  -->
+  <section class="mapa-interativo" aria-labelledby="mapa-title">
+    <div class="mapa-interativo__container">
+
+      <header class="mapa-interativo__header">
+        <span class="mapa-interativo__label">Descubra nossos destinos</span>
+        <h1 class="mapa-interativo__title" id="mapa-title">
+          Escolha por continente e veja os roteiros disponíveis
+        </h1>
+        <p class="mapa-interativo__lead">
+          Clique em um continente para ver os roteiros com datas, valores e condição de parcelamento.
+        </p>
+      </header>
+
+      <div class="mapa-interativo__stage">
+        <div class="mapa-svg__loading" data-mapa-loading>
+          <span class="mapa-svg__loading-spinner" aria-hidden="true"></span>
+          <span>Carregando mapa…</span>
+        </div>
+
+        <svg
+          data-mapa-svg
+          class="mapa-svg"
+          viewBox="0 0 1000 500"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          role="group"
+          aria-label="Mapa-múndi interativo com seis continentes"
+          hidden>
+
+          <title>Mapa-múndi — clique num continente para ver os roteiros</title>
+
+          <!-- OCEANO -->
+          <rect class="mapa-svg__ocean" x="0" y="0" width="1000" height="500" />
+
+          <!-- PATHS DINÂMICOS: populados em runtime por mapa.js -->
+          <g data-continent-paths></g>
+
+          <!-- LABELS -->
+          <g class="mapa-svg__labels">
+            <text class="mapa-svg__label" data-label="america-norte">América do Norte</text>
+            <text class="mapa-svg__label" data-label="america-sul">América do Sul</text>
+            <text class="mapa-svg__label" data-label="europa">Europa</text>
+            <text class="mapa-svg__label" data-label="africa">África</text>
+            <text class="mapa-svg__label" data-label="asia">Ásia</text>
+            <text class="mapa-svg__label" data-label="oceania">Oceania</text>
+          </g>
+
+          <!-- BADGES de contagem -->
+          <g class="mapa-svg__badge" data-badge="america-norte">
+            <circle class="mapa-svg__badge-bg" r="18" />
+            <text class="mapa-svg__badge-text">0</text>
+          </g>
+          <g class="mapa-svg__badge" data-badge="america-sul">
+            <circle class="mapa-svg__badge-bg" r="18" />
+            <text class="mapa-svg__badge-text">0</text>
+          </g>
+          <g class="mapa-svg__badge" data-badge="europa">
+            <circle class="mapa-svg__badge-bg" r="18" />
+            <text class="mapa-svg__badge-text">0</text>
+          </g>
+          <g class="mapa-svg__badge" data-badge="africa">
+            <circle class="mapa-svg__badge-bg" r="18" />
+            <text class="mapa-svg__badge-text">0</text>
+          </g>
+          <g class="mapa-svg__badge" data-badge="asia">
+            <circle class="mapa-svg__badge-bg" r="18" />
+            <text class="mapa-svg__badge-text">0</text>
+          </g>
+          <g class="mapa-svg__badge" data-badge="oceania">
+            <circle class="mapa-svg__badge-bg" r="18" />
+            <text class="mapa-svg__badge-text">0</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="mapa-interativo__legend" aria-hidden="true">
+        <span class="mapa-interativo__legend-item">
+          <span class="mapa-interativo__legend-dot"></span>
+          continente com roteiros disponíveis
+        </span>
+        <span class="mapa-interativo__legend-item">
+          <span class="mapa-interativo__legend-dot mapa-interativo__legend-dot--muted"></span>
+          em breve
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRAWER: lista de roteiros do continente -->
+  <div class="mapa-drawer__backdrop" data-mapa-backdrop aria-hidden="true"></div>
+
+  <aside class="mapa-drawer"
+         data-mapa-drawer
+         role="dialog"
+         aria-modal="true"
+         aria-hidden="true"
+         aria-labelledby="mapa-drawer-title">
+    <header class="mapa-drawer__header">
+      <div class="mapa-drawer__header-text">
+        <span class="mapa-drawer__eyebrow">Roteiros em</span>
+        <h2 class="mapa-drawer__title" id="mapa-drawer-title" data-mapa-drawer-title>—</h2>
+        <p class="mapa-drawer__count" data-mapa-drawer-count></p>
+      </div>
+      <button type="button" class="mapa-drawer__close"
+              data-mapa-close
+              aria-label="Fechar lista de roteiros">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+    <div class="mapa-drawer__list" data-mapa-drawer-list></div>
+  </aside>
+
+  <script src="data.js"></script>
+  <script src="continents-iso.js"></script>
+  <script type="module" src="mapa.js"></script>
+</body>
+</html>

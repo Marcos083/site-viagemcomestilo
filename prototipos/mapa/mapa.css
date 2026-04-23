@@ -1,0 +1,450 @@
+/* =============================================
+   VCE — MAPA INTERATIVO (protótipo)
+   Usa tokens globais do site (css/tokens.css).
+   Componente isolado — pronto para embed via shortcode.
+   ============================================= */
+
+.mapa-interativo {
+  position: relative;
+  background: var(--color-surface-base);
+  padding: var(--space-9) 0;
+  overflow: hidden;
+}
+
+.mapa-interativo__container {
+  width: var(--container-wide);
+  margin: 0 auto;
+}
+
+.mapa-interativo__header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.mapa-interativo__label {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-3);
+}
+
+.mapa-interativo__title {
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  margin: 0 auto var(--space-4);
+  max-width: 18ch;
+}
+
+.mapa-interativo__lead {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  max-width: 52ch;
+  margin: 0 auto;
+}
+
+/* ---------- MAPA (SVG) ---------- */
+
+.mapa-interativo__stage {
+  position: relative;
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-xl);
+  padding: clamp(var(--space-4), 3vw, var(--space-9));
+  box-shadow: var(--shadow-sm);
+}
+
+.mapa-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+}
+
+.mapa-svg__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.mapa-svg__loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border-subtle);
+  border-top-color: var(--color-brand-primary);
+  border-radius: 50%;
+  animation: mapaSpin 0.8s linear infinite;
+}
+
+@keyframes mapaSpin {
+  to { transform: rotate(360deg); }
+}
+
+.mapa-svg__ocean {
+  fill: var(--color-surface-warm);
+}
+
+.mapa-svg__continent {
+  fill: #D8D8D0;
+  stroke: var(--color-surface-warm);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill var(--duration-fast) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.mapa-svg__continent[data-count="0"] {
+  cursor: default;
+  opacity: 0.55;
+}
+
+@media (hover: hover) {
+  .mapa-svg__continent:not([data-count="0"]):hover {
+    fill: var(--color-brand-primary);
+  }
+}
+
+.mapa-svg__continent:not([data-count="0"]):focus-visible {
+  fill: var(--color-brand-primary);
+  outline: none;
+}
+
+.mapa-svg__continent:not([data-count="0"]).is-selected {
+  fill: var(--color-brand-primary-active);
+}
+
+/* Badge de contagem */
+.mapa-svg__badge {
+  pointer-events: none;
+}
+
+.mapa-svg__badge-bg {
+  fill: var(--color-brand-primary);
+  stroke: #FFFFFF;
+  stroke-width: 3;
+  filter: drop-shadow(0 2px 6px rgba(0, 1, 249, 0.35));
+}
+
+.mapa-svg__badge-text {
+  fill: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.mapa-svg__label {
+  pointer-events: none;
+  fill: var(--color-text-primary);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  text-anchor: middle;
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.mapa-svg__continent:hover + .mapa-svg__labels .mapa-svg__label,
+.mapa-svg__continent.is-selected + .mapa-svg__labels .mapa-svg__label {
+  opacity: 1;
+}
+
+/* ---------- LEGENDA ---------- */
+
+.mapa-interativo__legend {
+  margin-top: var(--space-6);
+  display: flex;
+  gap: var(--space-6);
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.mapa-interativo__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mapa-interativo__legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  display: inline-block;
+}
+
+.mapa-interativo__legend-dot--muted {
+  background: #D8D8D0;
+}
+
+/* ---------- DRAWER ---------- */
+
+.mapa-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: min(480px, 100vw);
+  background: var(--color-surface-white);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--duration-normal) var(--ease-out);
+  z-index: var(--z-menu);
+  will-change: transform;
+}
+
+.mapa-drawer.is-open {
+  transform: translateX(0);
+}
+
+.mapa-drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 13, 36, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-normal), visibility var(--duration-normal);
+  z-index: calc(var(--z-menu) - 1);
+}
+
+.mapa-drawer__backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mapa-drawer__header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.mapa-drawer__header-text {
+  min-width: 0;
+}
+
+.mapa-drawer__eyebrow {
+  display: block;
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.mapa-drawer__title {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.mapa-drawer__count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+.mapa-drawer__close {
+  flex-shrink: 0;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-base);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background var(--duration-fast);
+}
+
+.mapa-drawer__close:hover {
+  background: var(--color-brand-primary-tint);
+}
+
+.mapa-drawer__close svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-text-primary);
+}
+
+.mapa-drawer__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- CARD DE ROTEIRO NO DRAWER ---------- */
+
+.roteiro-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface-base);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--duration-fast),
+              box-shadow var(--duration-fast),
+              border-color var(--duration-fast);
+}
+
+.roteiro-item:hover,
+.roteiro-item:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-strong);
+  outline: none;
+}
+
+.roteiro-item__cover {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-warm);
+}
+
+.roteiro-item__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.roteiro-item__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.roteiro-item__destaque {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-brand-accent-gold);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+.roteiro-item__titulo {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-1);
+  font-weight: var(--font-weight-semibold);
+}
+
+.roteiro-item__sub {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-3);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.roteiro-item__meta {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.roteiro-item__price {
+  margin-top: auto;
+}
+
+.roteiro-item__price-small {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.roteiro-item__price-value {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.roteiro-item__price-parcelas {
+  font-size: var(--font-size-xs);
+  color: var(--color-brand-primary);
+  font-weight: var(--font-weight-medium);
+  margin-top: 2px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .mapa-drawer {
+    width: 100vw;
+    max-width: 100%;
+    height: 85dvh;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    transform: translateY(100%);
+  }
+
+  .mapa-drawer.is-open {
+    transform: translateY(0);
+  }
+
+  .mapa-drawer::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 4px;
+    background: var(--color-border-strong);
+    border-radius: 2px;
+  }
+
+  .roteiro-item {
+    grid-template-columns: 96px 1fr;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .mapa-interativo__title {
+    font-size: var(--font-size-2xl);
+  }
+}
