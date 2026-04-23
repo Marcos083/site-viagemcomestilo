@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como funciona — Viagem com Estilo</title>
+  <meta name="description"
+    content="Como a Viagem com Estilo resolve o que segura quem sonha em viajar: parcelamento em 48× no boleto sem juros, grupo já formado e acompanhamento do embarque ao retorno.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ---------- PAGE-LOCAL — .page-como ----------
+       Ajustes específicos da página Como Funciona.
+       Se virar padrão, migra para components.css. */
+
+    .page-como .objecoes {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    .page-como .objecao-prova {
+      margin-top: var(--space-6);
+      padding: var(--space-5) var(--space-6);
+      background: var(--color-brand-primary-subtle);
+      border-left: 3px solid var(--color-brand-primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-primary);
+      font-style: italic;
+    }
+
+    .page-como .objecao-prova__author {
+      display: block;
+      margin-top: var(--space-3);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-brand-primary);
+      font-style: normal;
+    }
+
+    .page-como .metodo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-7);
+    }
+
+    @media (max-width: 1100px) {
+      .page-como .metodo-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .page-como .metodo-grid { grid-template-columns: 1fr; gap: var(--space-9); }
+    }
+
+    .page-como .inclusos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .page-como .incluso-card {
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-7);
+      transition: all var(--duration-normal) var(--ease-default);
+    }
+
+    .page-como .incluso-card:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .page-como .incluso-card__icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-brand-primary-tint);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-5);
+    }
+
+    .page-como .incluso-card__icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--color-brand-primary);
+    }
+
+    .page-como .incluso-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+      line-height: var(--line-height-snug);
+    }
+
+    .page-como .incluso-card__desc {
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 900px) {
+      .page-como .inclusos { grid-template-columns: 1fr; }
+    }
+
+    .page-como .politica {
+      max-width: 720px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .page-como .politica__lista {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-8);
+      text-align: left;
+    }
+
+    .page-como .politica__item {
+      padding: var(--space-6);
+      background: var(--color-surface-warm);
+      border-radius: var(--radius-md);
+    }
+
+    .page-como .politica__item strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .page-como .politica__item span {
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 800px) {
+      .page-como .politica__lista { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body class="page-como">
+
+  <!-- ========================================
+       NAVBAR
+       Componente: .navbar (components.css)
+       Fixo: estrutura, links
+       Dinâmico (ACF Options Page): número WhatsApp, URL Instagram/YouTube
+       ======================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Viagem com Estilo — voltar à home">
+        <img
+          data-navbar-logo
+          data-logo-light="midia/Logo - branca1.webp"
+          data-logo-dark="midia/Logo - azul.webp"
+          src="midia/Logo - branca1.webp"
+          alt="Viagem com Estilo">
+      </a>
+
+      <div class="navbar__links" id="navbar-links">
+        <a href="index.html#roteiros">Roteiros</a>
+        <a href="como-funciona.html" aria-current="page">Como funciona</a>
+        <a href="depoimentos.html">Depoimentos</a>
+        <a href="blog.html">Blog</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="navbar__cta btn">
+          Fale conosco
+        </a>
+      </div>
+
+      <button class="navbar__toggle" aria-label="Abrir menu" aria-controls="navbar-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ========================================
+         1. HERO COMPACTO
+         Componente: .hero.hero--compact
+         Fixo: estrutura
+         Dinâmico (opções globais): imagem de fundo, título, subtítulo
+         ======================================== -->
+    <section class="hero hero--compact" aria-labelledby="hero-title">
+      <div class="hero__bg">
+        <img src="midia/Foto - Embarque.webp" alt="" loading="eager" width="1920" height="1080">
+      </div>
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span>Como a Viagem com Estilo funciona</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          Tudo o que <em>segurava você</em><br>
+          agora tem solução.
+        </h1>
+
+        <p class="hero__sub">
+          A maior parte das mulheres que sonham em conhecer o mundo trava em três coisas: o preço, viajar sozinha
+          e não falar outro idioma. A gente resolveu as três — e é por isso que este site existe.
+        </p>
+
+        <div class="hero__actions">
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="btn btn--primary">
+            Falar com a equipe no WhatsApp
+            <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" />
+            </svg>
+          </a>
+          <a href="#objecoes" class="btn btn--ghost">Ver as 3 soluções</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         2. TRÊS OBJEÇÕES PRINCIPAIS
+         Ordem real do cliente (ata 20/04/2026 § 6):
+           1. Não consigo pagar à vista → 48× boleto
+           2. Não tenho com quem ir    → grupo fechado (máx. 15)
+           3. Não falo inglês          → acompanhamento profissional
+         Componente: .card-manifesto.card-manifesto--spotlight
+         Dinâmico (ACF Options Page): número real de parcelas, tamanho do grupo,
+         citações de prova (nome + destino).
+         ======================================== -->
+    <section class="section" id="objecoes" aria-labelledby="objecoes-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">As três soluções</span>
+          <h2 class="section-title" id="objecoes-title">
+            Três motivos pelos quais <em>você ainda não viajou</em>.<br>
+            Três formas de resolver.
+          </h2>
+        </header>
+
+        <div class="objecoes">
+
+          <!-- [BLOCO 1 — Pagamento]
+               Fixo: layout de 2 colunas (imagem + conteúdo)
+               Dinâmico: imagem, citação de prova (nome, cidade/destino) -->
+          <article class="card-manifesto card-manifesto--spotlight">
+            <img src="midia/Card - Boleto.webp" alt="Parcelas no boleto sem juros" loading="lazy" width="800"
+              height="600"
+              style="border-radius: var(--radius-lg); width:100%; aspect-ratio: 4/3; object-fit: cover;">
+            <div>
+              <div class="card-manifesto__tag">Objeção 1 de 3 — Pagamento</div>
+              <h3 class="card-manifesto__question">&ldquo;Não consigo pagar à vista.&rdquo;</h3>
+              <div class="card-manifesto__divider" aria-hidden="true"></div>
+              <p class="card-manifesto__answer">
+                Parcele em até 48× no boleto bancário sem juros. Sem cartão, sem análise de crédito rigorosa,
+                sem tarifa escondida. O mesmo valor, dividido no tempo que cabe no seu orçamento.
+              </p>
+
+              <blockquote class="objecao-prova">
+                &ldquo;Eu achei que esse tipo de viagem era só para quem tinha muito dinheiro guardado. Quando vi
+                as parcelas caberem no meu salário, marquei no mesmo mês.&rdquo;
+                <span class="objecao-prova__author">— Cliente real, destino <!-- PLACEHOLDER --></span>
+              </blockquote>
+            </div>
+          </article>
+
+          <!-- [BLOCO 2 — Grupo] -->
+          <article class="card-manifesto card-manifesto--spotlight" style="direction: rtl;">
+            <img src="midia/Card - Destino.webp" alt="Grupo de viajantes exclusivo" loading="lazy" width="800"
+              height="600"
+              style="direction: ltr; border-radius: var(--radius-lg); width:100%; aspect-ratio: 4/3; object-fit: cover;">
+            <div style="direction: ltr;">
+              <div class="card-manifesto__tag">Objeção 2 de 3 — Companhia</div>
+              <h3 class="card-manifesto__question">&ldquo;Não tenho com quem ir.&rdquo;</h3>
+              <div class="card-manifesto__divider" aria-hidden="true"></div>
+              <p class="card-manifesto__answer">
+                O grupo já está formado. Máximo de 15 pessoas — pequeno o suficiente para ninguém sumir,
+                grande o suficiente para você nunca estar sozinha. Mulheres que compartilham o mesmo sonho.
+              </p>
+
+              <blockquote class="objecao-prova">
+                &ldquo;Embarquei achando que ia voltar com fotos. Voltei com três amigas para a vida.&rdquo;
+                <span class="objecao-prova__author">— Cliente real, destino <!-- PLACEHOLDER --></span>
+              </blockquote>
+            </div>
+          </article>
+
+          <!-- [BLOCO 3 — Idioma] -->
+          <article class="card-manifesto card-manifesto--spotlight">
+            <img src="midia/Card - Embarque.webp" alt="Acompanhamento profissional do embarque ao retorno" loading="lazy"
+              width="800" height="600"
+              style="border-radius: var(--radius-lg); width:100%; aspect-ratio: 4/3; object-fit: cover;">
+            <div>
+              <div class="card-manifesto__tag">Objeção 3 de 3 — Idioma</div>
+              <h3 class="card-manifesto__question">&ldquo;Não falo inglês.&rdquo;</h3>
+              <div class="card-manifesto__divider" aria-hidden="true"></div>
+              <p class="card-manifesto__answer">
+                Nosso guia acompanha o grupo do embarque ao retorno. Check-in, imigração, hotel, passeio,
+                restaurante — tudo em português. Você só precisa aproveitar.
+              </p>
+
+              <blockquote class="objecao-prova">
+                &ldquo;Nunca tinha saído do Brasil e tinha pavor de aeroporto. O guia ficou do meu lado do
+                primeiro ao último dia. Acabei indo para o segundo destino no ano seguinte.&rdquo;
+                <span class="objecao-prova__author">— Cliente real, destino <!-- PLACEHOLDER --></span>
+              </blockquote>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         3. O MÉTODO EM 5 PASSOS
+         Fixo: 5 passos (escolha → reserva → preparação → embarque → retorno)
+         Dinâmico: imagem e descrição de cada passo
+         Componente: .step (components.css)
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="metodo-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">O método</span>
+          <h2 class="section-title" id="metodo-title">
+            Cinco passos, do sonho ao <em>bom dia em outro fuso</em>.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Nenhuma etapa é feita sozinha. A equipe está com você do primeiro clique ao voo de volta.
+          </p>
+        </header>
+
+        <div class="metodo-grid">
+          <article class="step">
+            <div class="step__image">
+              <img src="midia/Card - Destino.webp" alt="" loading="lazy" width="600" height="450">
+            </div>
+            <div class="step__number" aria-hidden="true">01</div>
+            <h3 class="step__title">Escolha o destino</h3>
+            <p class="step__desc">Converse com a equipe no WhatsApp. A gente entende o que você busca e sugere
+              o roteiro certo.</p>
+          </article>
+
+          <article class="step">
+            <div class="step__image">
+              <img src="midia/Card - Boleto.webp" alt="" loading="lazy" width="600" height="450">
+            </div>
+            <div class="step__number" aria-hidden="true">02</div>
+            <h3 class="step__title">Reserve sua vaga</h3>
+            <p class="step__desc">Parcele em até 48× no boleto sem juros. Contrato claro, valor fechado, sem
+              surpresa.</p>
+          </article>
+
+          <article class="step">
+            <div class="step__image">
+              <img src="midia/Foto - Embarque.webp" alt="" loading="lazy" width="600" height="450">
+            </div>
+            <div class="step__number" aria-hidden="true">03</div>
+            <h3 class="step__title">Preparação assistida</h3>
+            <p class="step__desc">Passaporte, visto, documentos, seguro, vacinas, mala — a equipe monta o
+              checklist e revisa com você.</p>
+          </article>
+
+          <article class="step">
+            <div class="step__image">
+              <img src="midia/Card - Embarque.webp" alt="" loading="lazy" width="600" height="450">
+            </div>
+            <div class="step__number" aria-hidden="true">04</div>
+            <h3 class="step__title">Embarque e viagem</h3>
+            <p class="step__desc">Encontro no aeroporto, acompanhamento do check-in ao pouso, guia com o grupo
+              do início ao fim.</p>
+          </article>
+
+          <article class="step">
+            <div class="step__image">
+              <img src="midia/Itália.webp" alt="" loading="lazy" width="600" height="450">
+            </div>
+            <div class="step__number" aria-hidden="true">05</div>
+            <h3 class="step__title">Retorno e próximas</h3>
+            <p class="step__desc">Volta com o grupo, suporte pós-viagem e convite para as próximas. Quem viaja
+              uma vez, volta.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         4. O QUE ESTÁ SEMPRE INCLUÍDO
+         Fixo: seção de 6 itens (acompanhamento, grupo fechado, documentação,
+               assinatura de viagem, roteiros exclusivos, pós-viagem)
+         Dinâmico (opções globais): texto de cada item
+         ======================================== -->
+    <section class="section" aria-labelledby="inclusos-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">O que está sempre incluído</span>
+          <h2 class="section-title" id="inclusos-title">
+            Seis coisas que <em>vêm junto</em> com toda viagem.
+          </h2>
+        </header>
+
+        <div class="inclusos">
+
+          <article class="incluso-card">
+            <div class="incluso-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <h3 class="incluso-card__title">Grupo exclusivo</h3>
+            <p class="incluso-card__desc">Máximo de 15 pessoas por viagem. Você viaja com quem compartilha o
+              mesmo ritmo e os mesmos interesses.</p>
+          </article>
+
+          <article class="incluso-card">
+            <div class="incluso-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+                <circle cx="12" cy="7" r="4" />
+                <path d="M12 11v10" />
+              </svg>
+            </div>
+            <h3 class="incluso-card__title">Acompanhamento profissional</h3>
+            <p class="incluso-card__desc">Guia com o grupo do embarque ao retorno. Aeroporto, hotel, passeios,
+              imprevistos — sempre em português.</p>
+          </article>
+
+          <article class="incluso-card">
+            <div class="incluso-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+            </div>
+            <h3 class="incluso-card__title">Documentação assistida</h3>
+            <p class="incluso-card__desc">Passaporte, visto, seguro viagem, vacinas. A equipe te guia em cada
+              documento e confere antes do embarque.</p>
+          </article>
+
+          <article class="incluso-card">
+            <div class="incluso-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <h3 class="incluso-card__title">Assinatura de viagem</h3>
+            <p class="incluso-card__desc">Quer reservar vaga para a próxima antes mesmo de voltar? Um plano de
+              viagens recorrentes com condições especiais para quem já é da casa.</p>
+          </article>
+
+          <article class="incluso-card">
+            <div class="incluso-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </div>
+            <h3 class="incluso-card__title">Roteiros exclusivos</h3>
+            <p class="incluso-card__desc">Experiências que você não encontra em pacote de agência comum — lugares,
+              horários e encontros pensados para grupos pequenos.</p>
+          </article>
+
+          <article class="incluso-card">
+            <div class="incluso-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </div>
+            <h3 class="incluso-card__title">Suporte pós-viagem</h3>
+            <p class="incluso-card__desc">O contato com a equipe não termina no desembarque. Você continua
+              acompanhada para planejar a próxima.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. BLOCO DE PAGAMENTO (reforço do 48× boleto)
+         Componente: .bloco-pagamento (components.css)
+         Dinâmico (ACF Options Page): número de parcelas, texto dos pontos
+         ======================================== -->
+    <section class="section" aria-labelledby="pagamento-title">
+      <div class="container">
+        <div class="bloco-pagamento">
+          <div class="bloco-pagamento__content">
+            <span class="label label--on-dark">Pagamento</span>
+            <h2 class="bloco-pagamento__title" id="pagamento-title">
+              Em até <strong>48× no boleto</strong> sem juros.<br>
+              Sem cartão, sem surpresa.
+            </h2>
+
+            <ul class="bloco-pagamento__points">
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Mesmo valor à vista, dividido em até 48 meses
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Sem consulta rigorosa ao SPC/Serasa
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Sem IOF e sem tarifa de cartão
+              </li>
+            </ul>
+
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+              class="btn btn--white">
+              Simular as parcelas do meu roteiro
+              <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <path d="M4 10h12M12 6l4 4-4 4" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         6. POLÍTICA DE PAGAMENTO E CANCELAMENTO
+         Fixo: estrutura de 3 blocos
+         Dinâmico (ACF Options Page): texto de cada política
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="politica-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Transparência</span>
+          <h2 class="section-title" id="politica-title">
+            Política de pagamento e cancelamento<br>
+            em <em>linguagem simples</em>.
+          </h2>
+        </header>
+
+        <div class="politica">
+          <p style="font-size: var(--font-size-md); line-height: var(--line-height-relaxed); color: var(--color-text-secondary);">
+            Nada em letrinha miúda. Antes de você reservar, o contrato é enviado por escrito com tudo o que está
+            aqui embaixo — para você ler com calma e tirar qualquer dúvida.
+          </p>
+
+          <div class="politica__lista">
+            <div class="politica__item">
+              <strong>Entrada e parcelas</strong>
+              <span>Valor de entrada definido por roteiro. Demais parcelas no boleto, mensais, sem juros,
+                em até 48×.</span>
+            </div>
+            <div class="politica__item">
+              <strong>Cancelamento</strong>
+              <span>Prazos e devoluções definidos em contrato, respeitando o Código de Defesa do Consumidor.
+                Sem multa surpresa.</span>
+            </div>
+            <div class="politica__item">
+              <strong>Imprevistos</strong>
+              <span>Seguro viagem incluso. Em caso de doença ou emergência documentada, remarcação conforme
+                disponibilidade do próximo grupo.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         7. FAQ — objeções secundárias
+         Componente: .faq (components.css) — accordion acessível via ui.js
+         Fixo: estrutura do accordion
+         Dinâmico (CMS ou opções): perguntas e respostas (repeater ACF)
+         ======================================== -->
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Perguntas frequentes</span>
+          <h2 class="section-title" id="faq-title">
+            O que <em>ainda</em> te deixa em dúvida?
+          </h2>
+        </header>
+
+        <div class="faq">
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Nunca saí do Brasil. É seguro começar por uma viagem em grupo?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Sim — e é exatamente o cenário em que o grupo mais ajuda. Mais de 60% das nossas viajantes
+                saem do Brasil pela primeira vez com a gente. Você não precisa saber nada além de querer ir.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Tenho mais de 60 anos, ainda posso ir?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Pode. A maioria das nossas viajantes tem entre 45 e 75 anos. O ritmo dos roteiros é pensado
+                para ser confortável, com pausas, deslocamentos curtos entre hotéis e acompanhamento
+                personalizado se houver limitação física.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>E se eu não for com ninguém conhecido?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                A maioria vai sozinha. Antes do embarque, organizamos um encontro virtual para o grupo se
+                conhecer. Você chega no aeroporto já com rostos conhecidos.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>E se eu precisar desistir depois de ter pago algumas parcelas?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Cada contrato tem cláusula clara de desistência, dentro do Código de Defesa do Consumidor.
+                Em casos documentados (saúde, emergência), trabalhamos com remarcação para o próximo grupo.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Qual a diferença de vocês para uma agência tradicional?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Grupos pequenos (máx. 15), acompanhamento presencial em todas as viagens, parcelamento real
+                em 48× no boleto sem juros e roteiros curados — não somos intermediárias de pacote pronto.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>O que está incluso no valor do pacote?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Varia por roteiro (aéreo, hospedagem, refeições, passeios, seguro, guia). A página de cada
+                destino detalha o que está incluso e o que não está, sem ambiguidade.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         8. CTA FINAL
+         Componente: .cta-final (components.css)
+         Dinâmico (ACF Options Page): número WhatsApp
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-final">
+          <span class="section-line section-line--center section-line--on-dark" aria-hidden="true"></span>
+          <h2 class="cta-final__title" style="margin-top: var(--space-5);">
+            O mundo está esperando. E cabe no seu bolso.
+          </h2>
+          <p class="cta-final__sub">
+            Converse com a equipe no WhatsApp. A gente entende o que você busca, sugere o destino certo e
+            simula as parcelas com você — sem compromisso.
+          </p>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER
+       Componente: .footer (components.css)
+       Dinâmico (ACF Options Page): contato, redes, endereço
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" aria-label="Viagem com Estilo">
+            <img src="midia/Logo - branca1.webp" alt="Viagem com Estilo" width="120" height="auto">
+          </a>
+          <p class="footer__desc">
+            A solução para quem quer conhecer o mundo com segurança, conforto e parcelas que cabem no bolso.
+            Há 13 anos transformando sonhos em embarques.
+          </p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://youtube.com/@viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="footer__social"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegação</div>
+          <a href="index.html#roteiros">Roteiros</a>
+          <a href="como-funciona.html">Como funciona</a>
+          <a href="depoimentos.html">Depoimentos</a>
+          <a href="blog.html">Blog</a>
+          <a href="sobre.html">Sobre nós</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contato</div>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:contato@viagemcomestilo.com.br">E-mail</a>
+          <a href="https://www.google.com/maps/dir//Biosfera+Coworking" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>&copy; 2026 Viagem com Estilo. Todos os direitos reservados.</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Desenvolvido por</span>
+          <a href="https://www.instagram.com/agencia_rtt/" target="_blank" rel="noopener"
+            aria-label="RT Marketing">
+            <img src="midia/Logo-RT-Marketing (1) 1 (1).webp" alt="RT Marketing" width="108" height="35"
+              style="object-fit:cover; display:block;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ========================================
+       WHATSAPP FLOAT
+       Componente: .whatsapp-float (components.css)
+       ======================================== -->
+  <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+    class="whatsapp-float" aria-label="Falar com a equipe no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="js/ui.js"></script>
+</body>
+
+</html>

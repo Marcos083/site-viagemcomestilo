@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Depoimentos — Viagem com Estilo</title>
+  <meta name="description"
+    content="Mais de 2.000 mulheres já embarcaram com a Viagem com Estilo. Veja vídeos e relatos reais de quem viajou para a África do Sul, Europa, Ásia e Oriente Médio.">
+
+  <meta property="og:title" content="Depoimentos — Viagem com Estilo">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ---------- PAGE-LOCAL — .page-depoimentos ---------- */
+
+    .page-depoimentos .depo-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding: var(--space-7);
+      margin-bottom: var(--space-9);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .page-depoimentos .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7);
+    }
+    @media (max-width: 1024px) {
+      .page-depoimentos .videos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .page-depoimentos .videos-grid { grid-template-columns: 1fr; }
+    }
+
+    .page-depoimentos .video-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .page-depoimentos .video-item__caption {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .page-depoimentos .video-item__name {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+      line-height: var(--line-height-snug);
+    }
+    .page-depoimentos .video-item__dest {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+
+    .page-depoimentos .escritos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 1024px) {
+      .page-depoimentos .escritos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .page-depoimentos .escritos-grid { grid-template-columns: 1fr; }
+    }
+
+    .page-depoimentos .depo-empty {
+      padding: var(--space-10);
+      text-align: center;
+      color: var(--color-text-secondary);
+      background: var(--color-surface-warm);
+      border-radius: var(--radius-lg);
+      display: none;
+    }
+    .page-depoimentos [data-filter-root][data-empty="true"] .depo-empty { display: block; }
+    .page-depoimentos [data-filter-root][data-empty="true"] .videos-grid,
+    .page-depoimentos [data-filter-root][data-empty="true"] .escritos-grid { display: none; }
+  </style>
+</head>
+
+<body class="page-depoimentos">
+
+  <!-- ========================================
+       NAVBAR
+       Componente: .navbar (components.css)
+       Dinâmico (ACF Options Page): número WhatsApp
+       ======================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Viagem com Estilo — home">
+        <img
+          data-navbar-logo
+          data-logo-light="midia/Logo - branca1.webp"
+          data-logo-dark="midia/Logo - azul.webp"
+          src="midia/Logo - branca1.webp"
+          alt="Viagem com Estilo">
+      </a>
+
+      <div class="navbar__links" id="navbar-links">
+        <a href="index.html#roteiros">Roteiros</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="depoimentos.html" aria-current="page">Depoimentos</a>
+        <a href="blog.html">Blog</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="navbar__cta btn">
+          Fale conosco
+        </a>
+      </div>
+
+      <button class="navbar__toggle" aria-label="Abrir menu" aria-controls="navbar-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ========================================
+         1. HERO — compact, claro
+         Componente: .hero.hero--compact (components.css)
+         Dinâmico (ACF Options Page): numeros_trust_bar (viajantes, anos)
+         ======================================== -->
+    <section class="hero hero--compact" aria-labelledby="hero-title">
+      <div class="hero__bg">
+        <!-- [PLACEHOLDER: trocar por foto real de grupo em viagem] -->
+        <img src="midia/Grécia e Turquia.webp" alt="" loading="eager" width="1920" height="1080">
+      </div>
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span>Histórias reais de quem embarcou com a gente</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          Quem viaja com a gente <em>volta diferente</em>.
+        </h1>
+
+        <p class="hero__sub">
+          Mais de 2.000 mulheres já embarcaram em 13 anos. Abaixo estão os vídeos, fotos e relatos
+          delas — nas próprias palavras, sem edição comercial.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#videos" class="btn btn--primary">
+            Ver os vídeos
+            <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" />
+            </svg>
+          </a>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--ghost">
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         2. TRUST BAR — números reais
+         Componente: .trust-bar (components.css)
+         Dinâmico (ACF Options Page): numeros_trust_bar
+         ======================================== -->
+    <section class="trust-bar" aria-label="Números da Viagem com Estilo">
+      <div class="container">
+        <div class="trust-bar__inner">
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="2000">+2.000</div>
+            <div class="trust-item__label">viajantes embarcadas</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="13">13</div>
+            <div class="trust-item__label">anos de operação</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="20">+20</div>
+            <div class="trust-item__label">destinos por ano</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="78">78%</div>
+            <div class="trust-item__label">voltam para uma segunda</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         3. VÍDEOS — grid com .video-facade (carrega YouTube só no clique)
+         Componente: .video-facade (components.css)
+         JS: js/ui.js — #video-facade (click troca facade por <iframe>)
+         Fixo: estrutura do bloco
+         Dinâmico (CMS — Depoimento, filter: video_url ≠ vazio):
+           - video_url     → data-video (YouTube embed URL)
+           - video_thumb   → <img src>
+           - nome, cidade, destino → caption
+         ======================================== -->
+    <section class="section" id="videos" aria-labelledby="videos-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Depoimentos em vídeo</span>
+          <h2 class="section-title" id="videos-title">
+            Viajantes contando <em>no próprio tom</em>.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Gravados no hotel, no aeroporto, no ônibus entre uma cidade e outra. Sem roteiro, sem script —
+            só quem voltou de viagem.
+          </p>
+        </header>
+
+        <!-- [FILTRO DE DESTINO — compartilha padrão data-filter-root/data-value com a home]
+             JS: js/ui.js #5 (filter chips) -->
+        <div data-filter-root data-filter-target=".video-facade, .card-depoimento">
+          <div class="depo-toolbar">
+            <div class="filter-chips__group" role="group" aria-label="Filtrar por destino">
+              <span class="filter-chips__label">Filtrar por destino</span>
+              <div class="filter-chips__list">
+                <button type="button" class="chip is-active" data-filter="continente" data-value="todos">Todos</button>
+                <button type="button" class="chip" data-filter="continente" data-value="europa">Europa</button>
+                <button type="button" class="chip" data-filter="continente" data-value="america">América</button>
+                <button type="button" class="chip" data-filter="continente" data-value="africa">África</button>
+                <button type="button" class="chip" data-filter="continente" data-value="asia">Ásia</button>
+                <button type="button" class="chip" data-filter="continente" data-value="oriente-medio">Oriente Médio</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- [REPETIDOR: vídeos de depoimento]
+               Componente: .video-facade (components.css)
+               Dinâmico (CMS — Depoimento, loop filtrado):
+                 - data-continente ← taxonomia do destino vinculado
+                 - data-video      ← video_url (embed)
+                 - <img>           ← video_thumb (fallback: foto)
+                 - caption         ← nome, cidade, destino_id.titulo -->
+          <div class="videos-grid">
+
+            <!-- 1 -->
+            <div class="video-item" data-card-depoimento data-continente="africa">
+              <button class="video-facade"
+                data-video="https://www.youtube.com/embed/REPLACE_ID_1?autoplay=1"
+                aria-label="Assistir depoimento de Maria Helena em vídeo">
+                <!-- [CMS: video_thumb] -->
+                <img src="midia/Africa do Sul.webp" alt="" loading="lazy" width="800" height="450">
+                <span class="video-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7L8 5z" />
+                  </svg>
+                </span>
+              </button>
+              <div class="video-item__caption">
+                <div class="video-item__name">Maria Helena, 62 — Curitiba</div>
+                <div class="video-item__dest">África do Sul · 2025</div>
+              </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="video-item" data-card-depoimento data-continente="europa">
+              <button class="video-facade"
+                data-video="https://www.youtube.com/embed/REPLACE_ID_2?autoplay=1"
+                aria-label="Assistir depoimento de Lúcia em vídeo">
+                <img src="midia/Eurotrip Pocket.webp" alt="" loading="lazy" width="800" height="450">
+                <span class="video-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7L8 5z" />
+                  </svg>
+                </span>
+              </button>
+              <div class="video-item__caption">
+                <div class="video-item__name">Lúcia Andrade, 58 — São Paulo</div>
+                <div class="video-item__dest">Eurotrip Pocket · 2025</div>
+              </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="video-item" data-card-depoimento data-continente="asia">
+              <button class="video-facade"
+                data-video="https://www.youtube.com/embed/REPLACE_ID_3?autoplay=1"
+                aria-label="Assistir depoimento de Sônia em vídeo">
+                <img src="midia/Japão-card.webp" alt="" loading="lazy" width="800" height="450">
+                <span class="video-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7L8 5z" />
+                  </svg>
+                </span>
+              </button>
+              <div class="video-item__caption">
+                <div class="video-item__name">Sônia Ribeiro, 64 — Porto Alegre</div>
+                <div class="video-item__dest">Japão · 2024</div>
+              </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="video-item" data-card-depoimento data-continente="oriente-medio">
+              <button class="video-facade"
+                data-video="https://www.youtube.com/embed/REPLACE_ID_4?autoplay=1"
+                aria-label="Assistir depoimento de Cláudia em vídeo">
+                <img src="midia/Egito-card.webp" alt="" loading="lazy" width="800" height="450">
+                <span class="video-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7L8 5z" />
+                  </svg>
+                </span>
+              </button>
+              <div class="video-item__caption">
+                <div class="video-item__name">Cláudia Mendes, 55 — Belo Horizonte</div>
+                <div class="video-item__dest">Egito · 2024</div>
+              </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="video-item" data-card-depoimento data-continente="america">
+              <button class="video-facade"
+                data-video="https://www.youtube.com/embed/REPLACE_ID_5?autoplay=1"
+                aria-label="Assistir depoimento de Regina em vídeo">
+                <img src="midia/Galápagos-card.webp" alt="" loading="lazy" width="800" height="450">
+                <span class="video-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7L8 5z" />
+                  </svg>
+                </span>
+              </button>
+              <div class="video-item__caption">
+                <div class="video-item__name">Regina Costa, 60 — Florianópolis</div>
+                <div class="video-item__dest">Galápagos · 2024</div>
+              </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="video-item" data-card-depoimento data-continente="europa">
+              <button class="video-facade"
+                data-video="https://www.youtube.com/embed/REPLACE_ID_6?autoplay=1"
+                aria-label="Assistir depoimento de Beatriz em vídeo">
+                <img src="midia/Suiça.webp" alt="" loading="lazy" width="800" height="450">
+                <span class="video-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7L8 5z" />
+                  </svg>
+                </span>
+              </button>
+              <div class="video-item__caption">
+                <div class="video-item__name">Beatriz Almeida, 59 — Rio de Janeiro</div>
+                <div class="video-item__dest">Suíça · 2023</div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- ========================================
+               4. CASES ESCRITOS — foto + relato de 2–3 frases
+               Componente: .card-depoimento (components.css)
+               Dinâmico (CMS — Depoimento, filter: video_url vazio ou todos):
+                 - foto, nome, cidade, destino, estrelas, depoimento
+               ======================================== -->
+          <div style="margin-top: var(--space-12);">
+            <header class="section-header section-header--left" style="margin-bottom: var(--space-8);">
+              <span class="label">Cases escritos</span>
+              <h2 class="section-title" style="max-width: 720px;">
+                Relatos curtos — <em>para ler no café</em>.
+              </h2>
+            </header>
+
+            <div class="escritos-grid">
+
+              <article class="card-depoimento" data-card-depoimento data-continente="africa">
+                <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="card-depoimento__quote">
+                  "Eu nunca tinha entrado num avião sozinha. Cheguei em Joanesburgo achando que ia me perder
+                  no aeroporto e tinha alguém do grupo segurando uma plaquinha com meu nome. Dali em diante,
+                  não tive que pensar em logística nenhuma — só em olhar os leões."
+                </p>
+                <div class="card-depoimento__author">
+                  <div class="card-depoimento__avatar">
+                    <!-- [PLACEHOLDER: foto da viajante 800×800] -->
+                    <img src="midia/Africa do Sul.webp" alt="Vera, 67" width="56" height="56">
+                  </div>
+                  <div>
+                    <div class="card-depoimento__name">Vera Nogueira, 67</div>
+                    <div class="card-depoimento__dest">África do Sul · 12 dias · Curitiba</div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card-depoimento" data-card-depoimento data-continente="europa">
+                <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="card-depoimento__quote">
+                  "O parcelamento em 48× foi o que destravou a viagem — eu vinha adiando há sete anos. E
+                  quando vi, estava almoçando em Veneza pagando uma parcela no mês. Caiu a ficha."
+                </p>
+                <div class="card-depoimento__author">
+                  <div class="card-depoimento__avatar">
+                    <img src="midia/Itália.webp" alt="Cristina, 58" width="56" height="56">
+                  </div>
+                  <div>
+                    <div class="card-depoimento__name">Cristina Paiva, 58</div>
+                    <div class="card-depoimento__dest">Eurotrip Pocket · 12 dias · São Paulo</div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card-depoimento" data-card-depoimento data-continente="oriente-medio">
+                <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="card-depoimento__quote">
+                  "Minha irmã foi comigo. Ficamos com medo do deserto, do idioma, de tudo. O guia falava
+                  português o tempo inteiro, resolveu desde cartão de embarque até remédio de farmácia.
+                  Dormimos num acampamento no meio do deserto e não faltou nada."
+                </p>
+                <div class="card-depoimento__author">
+                  <div class="card-depoimento__avatar">
+                    <img src="midia/Egito-card.webp" alt="Angela, 61" width="56" height="56">
+                  </div>
+                  <div>
+                    <div class="card-depoimento__name">Angela Tavares, 61</div>
+                    <div class="card-depoimento__dest">Egito · 10 dias · Brasília</div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card-depoimento" data-card-depoimento data-continente="asia">
+                <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="card-depoimento__quote">
+                  "Fui para o Japão achando que ia me sentir estrangeira o tempo todo. Com o grupo pequeno,
+                  virou uma viagem de amigas — mesmo conhecendo todas ali. Voltei com 7 mulheres novas na
+                  minha vida."
+                </p>
+                <div class="card-depoimento__author">
+                  <div class="card-depoimento__avatar">
+                    <img src="midia/Japão-card.webp" alt="Teresa, 66" width="56" height="56">
+                  </div>
+                  <div>
+                    <div class="card-depoimento__name">Teresa Lacerda, 66</div>
+                    <div class="card-depoimento__dest">Japão · 14 dias · Recife</div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card-depoimento" data-card-depoimento data-continente="america">
+                <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="card-depoimento__quote">
+                  "Viajei com a minha mãe, que tem 82 anos. Eu estava segura com a equipe para qualquer
+                  eventualidade médica. Ela andou em Machu Picchu até onde quis e descansou no hotel quando
+                  não quis. Fluiu."
+                </p>
+                <div class="card-depoimento__author">
+                  <div class="card-depoimento__avatar">
+                    <img src="midia/San andres-card.webp" alt="Helena, 57" width="56" height="56">
+                  </div>
+                  <div>
+                    <div class="card-depoimento__name">Helena Ferreira, 57</div>
+                    <div class="card-depoimento__dest">Peru · 9 dias · Salvador</div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card-depoimento" data-card-depoimento data-continente="africa">
+                <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="card-depoimento__quote">
+                  "Passei 30 anos dizendo que 'um dia' iria a Marrakech. Com a Viagem com Estilo, esse um dia
+                  virou 12/11 do ano passado. O medo de viajar sozinha tinha ficado gigante — e não era real."
+                </p>
+                <div class="card-depoimento__author">
+                  <div class="card-depoimento__avatar">
+                    <img src="midia/Marrocos.webp" alt="Magali, 63" width="56" height="56">
+                  </div>
+                  <div>
+                    <div class="card-depoimento__name">Magali Duarte, 63</div>
+                    <div class="card-depoimento__dest">Marrocos · 10 dias · Goiânia</div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Estado vazio quando nenhum filtro casa -->
+          <div class="depo-empty">
+            Nenhum depoimento ainda nesse destino — mas isso deve mudar depois do próximo embarque.
+          </div>
+
+        </div><!-- /data-filter-root -->
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. CTA FINAL
+         Componente: .cta-final (components.css)
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-final">
+          <span class="section-line section-line--center section-line--on-dark" aria-hidden="true"></span>
+          <h2 class="cta-final__title" style="margin-top: var(--space-5);">
+            A próxima história pode ser a sua.
+          </h2>
+          <p class="cta-final__sub">
+            Manda uma mensagem no WhatsApp contando para onde você quer ir — a equipe sugere o roteiro
+            certo e simula as parcelas sem compromisso.
+          </p>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER (padrão — todas as páginas)
+       Componente: .footer (components.css)
+       Dinâmico (ACF Options Page): contato, redes, endereço
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" aria-label="Viagem com Estilo">
+            <img src="midia/Logo - branca1.webp" alt="Viagem com Estilo" width="120" height="auto">
+          </a>
+          <p class="footer__desc">
+            A solução para quem quer conhecer o mundo com segurança, conforto e parcelas que cabem
+            no bolso. Há 13 anos transformando sonhos em embarques.
+          </p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://youtube.com/@viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="footer__social"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegação</div>
+          <a href="index.html#roteiros">Roteiros</a>
+          <a href="como-funciona.html">Como funciona</a>
+          <a href="depoimentos.html">Depoimentos</a>
+          <a href="blog.html">Blog</a>
+          <a href="sobre.html">Sobre nós</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contato</div>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:contato@viagemcomestilo.com.br">E-mail</a>
+          <a href="https://www.google.com/maps/dir//Biosfera+Coworking" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>&copy; 2026 Viagem com Estilo. Todos os direitos reservados.</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Desenvolvido por</span>
+          <a href="https://www.instagram.com/agencia_rtt/" target="_blank" rel="noopener"
+            aria-label="RT Marketing">
+            <img src="midia/Logo-RT-Marketing (1) 1 (1).webp" alt="RT Marketing" width="108" height="35"
+              style="object-fit:cover; display:block;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+    class="whatsapp-float" aria-label="Falar com a equipe no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="js/ui.js"></script>
+</body>
+
+</html>

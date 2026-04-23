@@ -1,0 +1,17 @@
+/* =============================================
+   VIAGEM COM ESTILO — PAGES
+   Overrides específicos por página. Evitar ao máximo.
+   Se precisar mais de 2–3 regras por página, é sinal de que o
+   componente precisa virar um modificador em components.css.
+
+   Convenção: prefixo .page-<slug> no <body>.
+   Ex.: <body class="page-destino">
+   ============================================= */
+
+/* .page-home      { } */
+/* .page-destino   { } */
+/* .page-como      { } */
+/* .page-depoiment { } */
+/* .page-blog      { } */
+/* .page-post      { } */
+/* .page-sobre     { } */

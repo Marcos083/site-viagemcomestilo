@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- [SEO — CMS: campo meta_title (fallback: {titulo} | Viagem com Estilo)] -->
+  <title>África do Sul 2026 — Viagem com Estilo</title>
+
+  <!-- [SEO — CMS: campo meta_description] -->
+  <meta name="description"
+    content="Roteiro África do Sul 2026 em grupo exclusivo de até 15 pessoas. Safáris, Cidade do Cabo e rotas de vinho. Em até 48× no boleto sem juros.">
+
+  <!-- [SEO — CMS: campo og_image (fallback: hero_imagem)] -->
+  <meta property="og:image" content="midia/Africa do Sul.webp">
+  <meta property="og:title" content="África do Sul 2026 — Viagem com Estilo">
+  <meta property="og:type" content="article">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ---------- PAGE-LOCAL — .page-destino ---------- */
+
+    .page-destino .hero__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .page-destino .hero__badges .hero__badge { margin-bottom: 0; }
+
+    .page-destino .resumo {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      margin-top: calc(-1 * var(--space-10));
+      padding: var(--space-8);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      z-index: 20;
+    }
+    .page-destino .resumo__item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding-inline: var(--space-4);
+      border-left: 1px solid var(--color-border-subtle);
+    }
+    .page-destino .resumo__item:first-child { border-left: 0; padding-left: 0; }
+    .page-destino .resumo__label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .page-destino .resumo__value {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+      line-height: var(--line-height-snug);
+    }
+    @media (max-width: 900px) {
+      .page-destino .resumo {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-5);
+        margin-top: calc(-1 * var(--space-7));
+      }
+      .page-destino .resumo__item { border-left: 0; padding-left: 0; }
+    }
+    @media (max-width: 500px) {
+      .page-destino .resumo { grid-template-columns: 1fr; }
+    }
+
+    /* Itinerário dia a dia */
+    .page-destino .itinerario {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .page-destino .dia {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-8);
+      padding: var(--space-8);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      transition: all var(--duration-normal) var(--ease-default);
+    }
+    .page-destino .dia:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-md);
+    }
+    .page-destino .dia__marker {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding-right: var(--space-6);
+      border-right: 1px solid var(--color-border-subtle);
+    }
+    .page-destino .dia__num {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+    }
+    .page-destino .dia__label {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      line-height: var(--line-height-tight);
+      color: var(--color-text-primary);
+    }
+    .page-destino .dia__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-4);
+    }
+    .page-destino .dia__desc {
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+    .page-destino .dia__foto {
+      margin-top: var(--space-5);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      aspect-ratio: 16/9;
+    }
+    .page-destino .dia__foto img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) {
+      .page-destino .dia {
+        grid-template-columns: 1fr;
+        gap: var(--space-5);
+        padding: var(--space-6);
+      }
+      .page-destino .dia__marker {
+        flex-direction: row;
+        align-items: baseline;
+        gap: var(--space-3);
+        padding-right: 0;
+        padding-bottom: var(--space-4);
+        border-right: 0;
+        border-bottom: 1px solid var(--color-border-subtle);
+      }
+    }
+
+    /* Incluso / Não incluso */
+    .page-destino .inclusos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+    .page-destino .inclusos-col {
+      padding: var(--space-8);
+      border-radius: var(--radius-lg);
+    }
+    .page-destino .inclusos-col--yes {
+      background: var(--color-brand-primary-subtle);
+      border: 1px solid var(--color-border-subtle);
+    }
+    .page-destino .inclusos-col--no {
+      background: var(--color-surface-warm);
+      border: 1px solid var(--color-border-subtle);
+    }
+    .page-destino .inclusos-col__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .page-destino .inclusos-col__title svg { width: 22px; height: 22px; }
+    .page-destino .inclusos-col--yes .inclusos-col__title svg { color: var(--color-brand-primary); }
+    .page-destino .inclusos-col--no .inclusos-col__title svg { color: var(--color-text-muted); }
+    .page-destino .inclusos-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .page-destino .inclusos-col li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+    .page-destino .inclusos-col li svg {
+      width: 18px; height: 18px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+    .page-destino .inclusos-col--yes li svg { color: var(--color-brand-primary); }
+    .page-destino .inclusos-col--no li svg { color: var(--color-text-muted); }
+    @media (max-width: 800px) {
+      .page-destino .inclusos-grid { grid-template-columns: 1fr; gap: var(--space-5); }
+    }
+
+    /* Galeria */
+    .page-destino .galeria {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: var(--space-3);
+      aspect-ratio: 16/9;
+    }
+    .page-destino .galeria__item {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: var(--color-surface-warm);
+    }
+    .page-destino .galeria__item:first-child { grid-row: span 2; }
+    .page-destino .galeria__item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-slow) var(--ease-default);
+    }
+    .page-destino .galeria__item:hover img { transform: scale(1.05); }
+    @media (max-width: 700px) {
+      .page-destino .galeria {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        aspect-ratio: 1/1;
+      }
+      .page-destino .galeria__item:first-child { grid-column: span 2; grid-row: span 1; }
+    }
+
+    /* Relacionados */
+    .page-destino .relacionados-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) {
+      .page-destino .relacionados-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .page-destino .relacionados-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Barra sticky mobile de conversão (CTA rápido) */
+    .page-destino .sticky-bar {
+      display: none;
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: var(--z-header);
+      background: var(--color-surface-white);
+      border-top: 1px solid var(--color-border-subtle);
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-3);
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .page-destino .sticky-bar__price {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .page-destino .sticky-bar__hint {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+    .page-destino .sticky-bar__value {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      color: var(--color-text-primary);
+    }
+    .page-destino .sticky-bar .btn { flex-shrink: 0; min-height: 44px; padding: 10px 18px; font-size: var(--font-size-sm); }
+    @media (max-width: 700px) {
+      .page-destino .sticky-bar { display: flex; }
+      .page-destino main { padding-bottom: 80px; }
+      .page-destino .whatsapp-float { bottom: 84px; }
+    }
+  </style>
+</head>
+
+<body class="page-destino">
+
+  <!-- ========================================
+       NAVBAR
+       ======================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Viagem com Estilo — voltar à home">
+        <img
+          data-navbar-logo
+          data-logo-light="midia/Logo - branca1.webp"
+          data-logo-dark="midia/Logo - azul.webp"
+          src="midia/Logo - branca1.webp"
+          alt="Viagem com Estilo">
+      </a>
+
+      <div class="navbar__links" id="navbar-links">
+        <a href="index.html#roteiros">Roteiros</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="depoimentos.html">Depoimentos</a>
+        <a href="blog.html">Blog</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="navbar__cta btn">
+          Fale conosco
+        </a>
+      </div>
+
+      <button class="navbar__toggle" aria-label="Abrir menu" aria-controls="navbar-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ========================================
+         1. HERO
+         Componente: .hero.hero--compact
+         Fixo: estrutura, overlay, badges
+         Dinâmico (CMS — Destino):
+           - hero_imagem       → .hero__bg img src
+           - titulo            → H1
+           - subtitulo         → .hero__sub
+           - ano               → badge
+           - continente        → breadcrumb
+           - selo_destaque     → badge secundário
+         ======================================== -->
+    <section class="hero hero--compact" aria-labelledby="hero-title">
+      <div class="hero__bg">
+        <!-- [CMS: hero_imagem] -->
+        <img src="midia/Africa do Sul.webp" alt="" loading="eager" width="1920" height="1080">
+      </div>
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content">
+        <div class="hero__badges">
+          <div class="hero__badge">
+            <!-- [CMS: ano] -->
+            <span>Saída 2026</span>
+          </div>
+          <div class="hero__badge">
+            <span class="hero__badge-dot" aria-hidden="true"></span>
+            <!-- [FIXO: selo padrão de todo roteiro] -->
+            <span>Grupo exclusivo — máx. 15 pessoas</span>
+          </div>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          <!-- [CMS: titulo] -->
+          África do Sul:<br>
+          <em>safáris, vinhos e o fim do mundo.</em>
+        </h1>
+
+        <p class="hero__sub">
+          <!-- [CMS: subtitulo] -->
+          12 dias entre Joanesburgo, Kruger e Cidade do Cabo. Big Five, Cabo da Boa Esperança, rotas de vinho
+          e pores do sol que você não vai esquecer.
+        </p>
+
+        <div class="hero__actions">
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="btn btn--primary">
+            Quero este roteiro
+            <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" />
+            </svg>
+          </a>
+          <a href="#itinerario" class="btn btn--ghost">Ver o itinerário</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         2. BREADCRUMB + RESUMO (card flutuante)
+         Componente: .breadcrumb (components.css) + page-local .resumo
+         Dinâmico (CMS):
+           - continente       → breadcrumb
+           - duracao_dias     → resumo
+           - data_saida       → resumo
+           - resumo_bullets   → resumo (repeater)
+         ======================================== -->
+    <section class="section" style="padding-top: var(--space-7); padding-bottom: 0;">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <a href="index.html#roteiros">Roteiros</a>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <!-- [CMS: continente] -->
+          <a href="index.html?continente=africa">África</a>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <!-- [CMS: titulo] -->
+          <span>África do Sul 2026</span>
+        </nav>
+
+        <!-- [SEÇÃO: resumo do roteiro]
+             Componente: .resumo (page-local)
+             Fixo: 4 colunas de destaque
+             Dinâmico (CMS — Destino): repeater resumo_bullets { label, value } -->
+        <div class="resumo">
+          <div class="resumo__item">
+            <span class="resumo__label">Duração</span>
+            <span class="resumo__value">12 dias</span>
+          </div>
+          <div class="resumo__item">
+            <span class="resumo__label">Cidades</span>
+            <span class="resumo__value">Joanesburgo, Kruger, Cidade do Cabo</span>
+          </div>
+          <div class="resumo__item">
+            <span class="resumo__label">Ponto forte</span>
+            <span class="resumo__value">Safári com Big Five</span>
+          </div>
+          <div class="resumo__item">
+            <span class="resumo__label">Próxima saída</span>
+            <span class="resumo__value">Setembro/2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         3. BLOCO PAGAMENTO (reforço do 48× boleto)
+         Componente: .bloco-pagamento (components.css)
+         Dinâmico (CMS — Destino):
+           - valor_total
+           - parcelas
+           - valor_parcela (calculável)
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="bloco-pagamento">
+          <div class="bloco-pagamento__content">
+            <span class="label label--on-dark">Investimento</span>
+            <h2 class="bloco-pagamento__title">
+              <!-- [CMS: valor_total, parcelas, valor_parcela] -->
+              A partir de <strong>R$ 42.800</strong><br>
+              ou <strong>48× de R$ 891,66</strong> no boleto sem juros.
+            </h2>
+
+            <ul class="bloco-pagamento__points">
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Sem consulta ao SPC/Serasa
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Sem IOF, sem cartão
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Mesmo valor à vista
+              </li>
+            </ul>
+
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="btn btn--white">
+              Quero reservar minha vaga
+              <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <path d="M4 10h12M12 6l4 4-4 4" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         4. ITINERÁRIO DIA A DIA
+         Componente: page-local .itinerario / .dia
+         Fixo: estrutura de cada dia (marker + título + descrição + foto opcional)
+         Dinâmico (CMS — Destino): repeater itinerario { dia, titulo, descricao, foto? }
+         ======================================== -->
+    <section class="section section--warm" id="itinerario" aria-labelledby="itinerario-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Itinerário</span>
+          <h2 class="section-title" id="itinerario-title">
+            12 dias, dia a dia.
+          </h2>
+          <p class="section-subtitle">
+            Da aterrissagem em Joanesburgo ao voo de volta saindo da Cidade do Cabo. Sem pressa, com tempo
+            para descansar entre cada etapa.
+          </p>
+        </header>
+
+        <div class="itinerario">
+
+          <!-- [CMS: itinerario[0]] -->
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 01</span>
+              <span class="dia__label">Chegada a Joanesburgo</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Recepção no aeroporto e check-in</h3>
+              <p class="dia__desc">
+                Encontro com a equipe no aeroporto Oliver Tambo. Transfer em van privativa até o hotel na
+                região de Sandton. Jantar de boas-vindas em grupo, alinhamento do roteiro e descanso.
+              </p>
+            </div>
+          </article>
+
+          <!-- [CMS: itinerario[1]] -->
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 02</span>
+              <span class="dia__label">Soweto e história</span>
+            </div>
+            <div>
+              <h3 class="dia__title">City tour por Joanesburgo e Soweto</h3>
+              <p class="dia__desc">
+                Manhã no Apartheid Museum. À tarde, visita guiada a Soweto, incluindo a casa-museu de Nelson
+                Mandela e almoço típico em restaurante local. Retorno ao hotel no final da tarde.
+              </p>
+            </div>
+          </article>
+
+          <!-- [CMS: itinerario[2]] — com foto -->
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 03</span>
+              <span class="dia__label">Parque Kruger</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Voo interno + primeiro safári</h3>
+              <p class="dia__desc">
+                Voo curto até Nelspruit/Skukuza. Transfer para o lodge dentro da reserva. Após o almoço,
+                primeiro game drive ao entardecer — uma das melhores janelas para ver leões e elefantes.
+              </p>
+              <!-- [CMS: itinerario[2].foto] -->
+              <div class="dia__foto">
+                <img src="midia/Africa do Sul.webp" alt="Safári no Parque Kruger" loading="lazy" width="800" height="450">
+              </div>
+            </div>
+          </article>
+
+          <!-- [CMS: itinerario[3]] -->
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 04</span>
+              <span class="dia__label">Kruger</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Dia inteiro de safári</h3>
+              <p class="dia__desc">
+                Duas saídas de game drive (amanhecer e fim de tarde), com almoço no lodge e tempo para
+                descanso. Chance real de completar os Big Five em 48h.
+              </p>
+            </div>
+          </article>
+
+          <!-- [CMS: itinerario[4]] -->
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 05</span>
+              <span class="dia__label">Kruger → Cape Town</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Voo para a Cidade do Cabo</h3>
+              <p class="dia__desc">
+                Último game drive pela manhã, transfer ao aeroporto e voo para Cape Town. Check-in no hotel
+                na V&amp;A Waterfront. Noite livre para explorar o porto.
+              </p>
+            </div>
+          </article>
+
+          <!-- [CMS: itinerario[5..9]] — dias seguintes -->
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 06</span>
+              <span class="dia__label">Table Mountain</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Table Mountain e centro histórico</h3>
+              <p class="dia__desc">
+                Subida de teleférico à Table Mountain com vista panorâmica. À tarde, caminhada pelo
+                Bo-Kaap (o bairro colorido) e Companhia's Garden.
+              </p>
+            </div>
+          </article>
+
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 07</span>
+              <span class="dia__label">Península do Cabo</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Cabo da Boa Esperança e pinguins</h3>
+              <p class="dia__desc">
+                Dia inteiro pela península: farol do Cape Point, Cabo da Boa Esperança e a colônia de
+                pinguins em Boulders Beach. Almoço à beira-mar.
+              </p>
+            </div>
+          </article>
+
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 08</span>
+              <span class="dia__label">Rota dos vinhos</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Stellenbosch e Franschhoek</h3>
+              <p class="dia__desc">
+                Passeio guiado por vinícolas clássicas da região, com degustação harmonizada e almoço
+                regional. Volta à Cidade do Cabo no fim da tarde.
+              </p>
+            </div>
+          </article>
+
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dias 09–11</span>
+              <span class="dia__label">Cidade do Cabo</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Robben Island, Kalk Bay e tempo livre</h3>
+              <p class="dia__desc">
+                Visita guiada a Robben Island, manhã em Kalk Bay, compras na V&amp;A Waterfront e tempo livre
+                para você explorar no seu ritmo. Jantar de encerramento no dia 11.
+              </p>
+            </div>
+          </article>
+
+          <article class="dia">
+            <div class="dia__marker">
+              <span class="dia__num">Dia 12</span>
+              <span class="dia__label">Retorno ao Brasil</span>
+            </div>
+            <div>
+              <h3 class="dia__title">Transfer ao aeroporto</h3>
+              <p class="dia__desc">
+                Transfer em horário compatível com o voo de retorno. Acompanhamento da equipe até o check-in.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. INCLUSO / NÃO INCLUSO
+         Fixo: estrutura de 2 colunas
+         Dinâmico (CMS — Destino):
+           - incluso       (repeater de texto)
+           - nao_incluso   (repeater de texto)
+         ======================================== -->
+    <section class="section" aria-labelledby="incluso-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Transparência</span>
+          <h2 class="section-title" id="incluso-title">
+            O que está e o que <em>não está</em> no valor.
+          </h2>
+        </header>
+
+        <div class="inclusos-grid">
+
+          <!-- [CMS: repeater incluso] -->
+          <div class="inclusos-col inclusos-col--yes">
+            <h3 class="inclusos-col__title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Está incluso
+            </h3>
+            <ul>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Passagens aéreas internacionais e voos internos (classe econômica)</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>11 noites de hospedagem em hotéis 4★ e lodge no Kruger</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Todos os traslados em van privativa</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Game drives, passeios e ingressos listados no itinerário</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Café da manhã diário e refeições marcadas no programa</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Guia brasileiro acompanhando do embarque ao retorno</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Seguro viagem internacional com cobertura para 60+</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- [CMS: repeater nao_incluso] -->
+          <div class="inclusos-col inclusos-col--no">
+            <h3 class="inclusos-col__title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+              Não está incluso
+            </h3>
+            <ul>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span>Refeições não mencionadas no itinerário</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span>Bebidas alcoólicas e extras de minibar</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span>Despesas de caráter pessoal (lavanderia, ligações, lembranças)</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span>Gorjetas para guia local e motoristas</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span>Passeios opcionais não listados no itinerário</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                <span>Taxa de reciprocidade / vistos, quando aplicáveis</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         6. GALERIA
+         Componente: page-local .galeria
+         Fixo: mosaico 3 colunas × 2 linhas no desktop, 2 × 3 no mobile
+         Dinâmico (CMS — Destino): gallery (5 imagens usadas; mais podem virar lightbox futuro)
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="galeria-title">
+      <div class="container">
+        <header class="section-header section-header--left">
+          <span class="section-line" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Galeria</span>
+          <h2 class="section-title" id="galeria-title">
+            A África do Sul que <em>a gente conhece</em>.
+          </h2>
+        </header>
+
+        <div class="galeria" role="list">
+          <!-- [CMS: galeria[0] — destaque] -->
+          <div class="galeria__item" role="listitem">
+            <img src="midia/Africa do Sul.webp" alt="Paisagem da África do Sul" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="midia/Foto - Embarque.webp" alt="" loading="lazy" width="600" height="450">
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="midia/Card - Destino.webp" alt="" loading="lazy" width="600" height="450">
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="midia/Card - Embarque.webp" alt="" loading="lazy" width="600" height="450">
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="midia/Card - Boleto.webp" alt="" loading="lazy" width="600" height="450">
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         7. DEPOIMENTOS (filtrados por destino)
+         Componente: .card-depoimento (components.css)
+         Dinâmico (CMS): depoimentos com destino_id = este destino.
+         Se não houver, cair para depoimentos gerais.
+         ======================================== -->
+    <section class="section" aria-labelledby="dep-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Quem já foi</span>
+          <h2 class="section-title" id="dep-title">
+            Depoimentos de quem embarcou<br>
+            neste <em>mesmo roteiro</em>.
+          </h2>
+        </header>
+
+        <div class="relacionados-grid">
+
+          <!-- [CMS: depoimentos filtrados por destino_id] -->
+          <article class="card-depoimento">
+            <div class="card-depoimento__stars" aria-label="5 estrelas">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+            </div>
+            <p class="card-depoimento__quote">
+              "Ver um leão a 10 metros de distância em silêncio é uma coisa que a gente não esquece. E ter
+              alguém da equipe do nosso lado o tempo todo fez eu me sentir em casa."
+            </p>
+            <div class="card-depoimento__author">
+              <div class="card-depoimento__avatar" aria-hidden="true"></div>
+              <div>
+                <div class="card-depoimento__name"><!-- PLACEHOLDER --></div>
+                <div class="card-depoimento__dest">África do Sul 2025</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-depoimento">
+            <div class="card-depoimento__stars" aria-label="5 estrelas">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+            </div>
+            <p class="card-depoimento__quote">
+              "Eu não falo inglês e estava com muito medo. O guia resolveu tudo — e eu consegui aproveitar
+              cada jantar, cada vinícola, cada passeio sem ansiedade."
+            </p>
+            <div class="card-depoimento__author">
+              <div class="card-depoimento__avatar" aria-hidden="true"></div>
+              <div>
+                <div class="card-depoimento__name"><!-- PLACEHOLDER --></div>
+                <div class="card-depoimento__dest">África do Sul 2024</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-depoimento">
+            <div class="card-depoimento__stars" aria-label="5 estrelas">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+            </div>
+            <p class="card-depoimento__quote">
+              "Parcelar no boleto em 48 vezes foi o que fez a viagem sair do papel. Terminei de pagar um ano
+              depois de voltar — e com as fotos na parede."
+            </p>
+            <div class="card-depoimento__author">
+              <div class="card-depoimento__avatar" aria-hidden="true"></div>
+              <div>
+                <div class="card-depoimento__name"><!-- PLACEHOLDER --></div>
+                <div class="card-depoimento__dest">África do Sul 2025</div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         8. FAQ ESPECÍFICO DO DESTINO
+         Componente: .faq (components.css)
+         Dinâmico (CMS — Destino): repeater faq_destino { pergunta, resposta }
+         Fallback: FAQ geral se não houver itens específicos.
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="faq-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Dúvidas sobre este destino</span>
+          <h2 class="section-title" id="faq-title">
+            Documentação, clima, moeda<br>
+            e tudo o mais.
+          </h2>
+        </header>
+
+        <div class="faq">
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Preciso de visto para a África do Sul?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Brasileiros não precisam de visto de turista para estadias de até 90 dias. Basta passaporte
+                válido por pelo menos 30 dias após a data prevista de retorno e duas páginas em branco.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Qual a melhor época para visitar?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Nossa saída de setembro é a janela ideal: primavera sul-africana, temperaturas amenas e a
+                melhor época para safári — vegetação baixa aumenta a visibilidade dos animais.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Que vacinas são exigidas?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Febre amarela é obrigatória para viajantes vindos do Brasil (Certificado Internacional — CIVP).
+                A equipe te orienta em qual posto emitir e organiza a documentação antes do embarque.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Qual moeda e como levar dinheiro?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                A moeda oficial é o Rand sul-africano (ZAR). Recomendamos levar parte em dólar para trocar
+                no destino (melhor câmbio) e um cartão pré-pago ou internacional para pequenas compras.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Quanto tempo de voo é?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Voo direto São Paulo → Joanesburgo leva cerca de 9h. A diferença de fuso é pequena (5h a
+                mais do Brasil), o que ajuda a evitar jet lag.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>É seguro? O guia fica com o grupo o tempo todo?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Sim. O guia brasileiro acompanha o grupo do embarque em Guarulhos até o retorno — aeroporto,
+                transfers, hotel, passeios. O roteiro prioriza áreas turísticas consolidadas e hotéis com
+                boa avaliação em segurança.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         9. ROTEIROS RELACIONADOS
+         Componente: .card-roteiro (components.css)
+         Dinâmico (CMS): 3 destinos do mesmo continente (África) ou do mesmo ano
+         ======================================== -->
+    <section class="section" aria-labelledby="rel-title">
+      <div class="container">
+        <header class="section-header section-header--left">
+          <span class="section-line" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Você também pode gostar</span>
+          <h2 class="section-title" id="rel-title">
+            Outros roteiros na <em>África</em> e Oriente Médio.
+          </h2>
+        </header>
+
+        <div class="relacionados-grid">
+
+          <!-- [CMS: card-roteiro WP Query — continente = africa, exclui atual, limite 3] -->
+          <a href="destino.html" class="card-roteiro">
+            <div class="card-roteiro__image">
+              <img src="midia/Marrocos.webp" alt="Marrocos" loading="lazy" width="800" height="600">
+              <span class="card-roteiro__year">2026</span>
+            </div>
+            <div class="card-roteiro__body">
+              <div>
+                <span class="card-roteiro__cluster">África</span>
+                <h3 class="card-roteiro__name">Marrocos — Marrakech e o deserto</h3>
+                <div class="card-roteiro__meta">
+                  <span>10 dias</span>
+                  <span>Máx. 15 pessoas</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">a partir de</span>
+                  <span class="card-roteiro__price-value">R$ 36.400</span>
+                  <span class="card-roteiro__price-period">ou 48× no boleto</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="destino.html" class="card-roteiro">
+            <div class="card-roteiro__image">
+              <img src="midia/Egito-card.webp" alt="Egito" loading="lazy" width="800" height="600"
+                onerror="this.src='midia/Card - Destino.webp'">
+              <span class="card-roteiro__year">2026</span>
+            </div>
+            <div class="card-roteiro__body">
+              <div>
+                <span class="card-roteiro__cluster">África &amp; Oriente Médio</span>
+                <h3 class="card-roteiro__name">Egito — cruzeiro no Nilo e pirâmides</h3>
+                <div class="card-roteiro__meta">
+                  <span>11 dias</span>
+                  <span>Máx. 15 pessoas</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">a partir de</span>
+                  <span class="card-roteiro__price-value">R$ 39.900</span>
+                  <span class="card-roteiro__price-period">ou 48× no boleto</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="destino.html" class="card-roteiro">
+            <div class="card-roteiro__image">
+              <img src="midia/Africa do Sul.webp" alt="Safári Tanzânia" loading="lazy" width="800" height="600">
+              <span class="card-roteiro__year">2027</span>
+            </div>
+            <div class="card-roteiro__body">
+              <div>
+                <span class="card-roteiro__cluster">África</span>
+                <h3 class="card-roteiro__name">Tanzânia — Serengeti e Zanzibar</h3>
+                <div class="card-roteiro__meta">
+                  <span>13 dias</span>
+                  <span>Máx. 15 pessoas</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">a partir de</span>
+                  <span class="card-roteiro__price-value">R$ 48.200</span>
+                  <span class="card-roteiro__price-period">ou 48× no boleto</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         10. CTA FINAL
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-final">
+          <span class="section-line section-line--center section-line--on-dark" aria-hidden="true"></span>
+          <h2 class="cta-final__title" style="margin-top: var(--space-5);">
+            Vaga limitada a 15 pessoas.<br>
+            <em style="color: rgba(255,255,255,0.7);">Quer a sua?</em>
+          </h2>
+          <p class="cta-final__sub">
+            Fale com a equipe no WhatsApp para confirmar disponibilidade, tirar dúvidas e simular as parcelas
+            deste roteiro sem compromisso.
+          </p>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="btn btn--whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Quero falar sobre a África do Sul
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" aria-label="Viagem com Estilo">
+            <img src="midia/Logo - branca1.webp" alt="Viagem com Estilo" width="120" height="auto">
+          </a>
+          <p class="footer__desc">
+            A solução para quem quer conhecer o mundo com segurança, conforto e parcelas que cabem no bolso.
+            Há 13 anos transformando sonhos em embarques.
+          </p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://youtube.com/@viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="footer__social"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegação</div>
+          <a href="index.html#roteiros">Roteiros</a>
+          <a href="como-funciona.html">Como funciona</a>
+          <a href="depoimentos.html">Depoimentos</a>
+          <a href="blog.html">Blog</a>
+          <a href="sobre.html">Sobre nós</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contato</div>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:contato@viagemcomestilo.com.br">E-mail</a>
+          <a href="https://www.google.com/maps/dir//Biosfera+Coworking" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>&copy; 2026 Viagem com Estilo. Todos os direitos reservados.</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Desenvolvido por</span>
+          <a href="https://www.instagram.com/agencia_rtt/" target="_blank" rel="noopener" aria-label="RT Marketing">
+            <img src="midia/Logo-RT-Marketing (1) 1 (1).webp" alt="RT Marketing" width="108" height="35"
+              style="object-fit:cover; display:block;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ========================================
+       STICKY BAR MOBILE (CTA rápido)
+       Componente: page-local .sticky-bar
+       Dinâmico (CMS — Destino): valor_total, parcelas, valor_parcela
+       Aparece apenas em telas ≤ 700px.
+       ======================================== -->
+  <div class="sticky-bar" role="complementary" aria-label="Resumo e ação rápida">
+    <div class="sticky-bar__price">
+      <span class="sticky-bar__hint">48× de</span>
+      <span class="sticky-bar__value">R$ 891,66</span>
+    </div>
+    <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="btn btn--primary">
+      Quero este roteiro
+    </a>
+  </div>
+
+
+  <!-- ========================================
+       WHATSAPP FLOAT
+       ======================================== -->
+  <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+    class="whatsapp-float" aria-label="Falar com a equipe no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="js/ui.js"></script>
+</body>
+
+</html>

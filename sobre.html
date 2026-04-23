@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sobre — Viagem com Estilo</title>
+  <meta name="description"
+    content="Há 13 anos transformando o sonho de viajar em embarque real. Conheça quem está por trás da Viagem com Estilo — a história, o propósito e as mulheres que conduzem cada grupo.">
+
+  <meta property="og:title" content="Sobre — Viagem com Estilo">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ---------- PAGE-LOCAL — .page-sobre ---------- */
+
+    .page-sobre .proposito {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .page-sobre .proposito { grid-template-columns: 1fr; gap: var(--space-8); }
+    }
+    .page-sobre .proposito__eyebrow { color: var(--color-text-muted); }
+    .page-sobre .proposito__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-3xl);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-primary);
+      margin-top: var(--space-4);
+    }
+    .page-sobre .proposito__title em {
+      font-style: italic;
+      color: var(--color-brand-primary);
+    }
+    .page-sobre .proposito__body p {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-5);
+    }
+
+    /* Timeline vertical — 13 anos de história */
+    .page-sobre .timeline {
+      position: relative;
+      padding-left: var(--space-8);
+    }
+    .page-sobre .timeline::before {
+      content: '';
+      position: absolute;
+      top: var(--space-2);
+      bottom: 0;
+      left: 0;
+      width: 2px;
+      background: var(--color-border-subtle);
+    }
+    .page-sobre .timeline__item {
+      position: relative;
+      padding-bottom: var(--space-9);
+    }
+    .page-sobre .timeline__item:last-child { padding-bottom: 0; }
+    .page-sobre .timeline__item::before {
+      content: '';
+      position: absolute;
+      top: var(--space-2);
+      left: calc(-1 * var(--space-8) - 1px);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color-brand-primary);
+      border: 4px solid var(--color-surface-base);
+      box-shadow: 0 0 0 2px var(--color-brand-primary);
+    }
+    .page-sobre .timeline__year {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      display: block;
+      margin-bottom: var(--space-2);
+    }
+    .page-sobre .timeline__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+    }
+    .page-sobre .timeline__desc {
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+
+    /* Galeria de bastidores — grid irregular */
+    .page-sobre .bastidores {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 200px;
+      gap: var(--space-4);
+    }
+    .page-sobre .bastidores__item {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: var(--color-surface-warm);
+    }
+    .page-sobre .bastidores__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-slow) var(--ease-out);
+    }
+    .page-sobre .bastidores__item:hover img { transform: scale(1.05); }
+    .page-sobre .bastidores__item--tall { grid-row: span 2; }
+    .page-sobre .bastidores__item--wide { grid-column: span 2; }
+    @media (max-width: 900px) {
+      .page-sobre .bastidores { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      .page-sobre .bastidores__item--tall { grid-row: span 2; }
+      .page-sobre .bastidores__item--wide { grid-column: span 2; }
+    }
+    @media (max-width: 500px) {
+      .page-sobre .bastidores { grid-template-columns: 1fr; }
+      .page-sobre .bastidores__item--tall,
+      .page-sobre .bastidores__item--wide { grid-column: 1; grid-row: auto; }
+    }
+
+    /* Valores */
+    .page-sobre .valores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7);
+    }
+    @media (max-width: 900px) {
+      .page-sobre .valores { grid-template-columns: 1fr; }
+    }
+    .page-sobre .valor {
+      padding: var(--space-8);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      transition: all var(--duration-normal) var(--ease-default);
+    }
+    .page-sobre .valor:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .page-sobre .valor__num {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+    .page-sobre .valor__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-4);
+    }
+    .page-sobre .valor__desc {
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+
+<body class="page-sobre">
+
+  <!-- ========================================
+       NAVBAR
+       ======================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Viagem com Estilo — home">
+        <img
+          data-navbar-logo
+          data-logo-light="midia/Logo - branca1.webp"
+          data-logo-dark="midia/Logo - azul.webp"
+          src="midia/Logo - branca1.webp"
+          alt="Viagem com Estilo">
+      </a>
+
+      <div class="navbar__links" id="navbar-links">
+        <a href="index.html#roteiros">Roteiros</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="depoimentos.html">Depoimentos</a>
+        <a href="blog.html">Blog</a>
+        <a href="sobre.html" aria-current="page">Sobre</a>
+        <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="navbar__cta btn">
+          Fale conosco
+        </a>
+      </div>
+
+      <button class="navbar__toggle" aria-label="Abrir menu" aria-controls="navbar-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ========================================
+         1. HERO — compact
+         Componente: .hero.hero--compact
+         ======================================== -->
+    <section class="hero hero--compact" aria-labelledby="hero-title">
+      <div class="hero__bg">
+        <!-- [PLACEHOLDER: foto de bastidores — grupo em viagem] -->
+        <img src="midia/Foto - Embarque.webp" alt="" loading="eager" width="1920" height="1080">
+      </div>
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span>Quem faz a Viagem com Estilo</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          Há 13 anos transformando <em>o primeiro carimbo</em> no passaporte.
+        </h1>
+
+        <p class="hero__sub">
+          A gente não nasceu grande. Nasceu quando a Patrícia decidiu levar um grupo de amigas para a Europa
+          em 2013 — e percebeu que tinha muita mulher querendo ir e achando que não podia.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#proposito" class="btn btn--primary">
+            Nossa história
+            <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" />
+            </svg>
+          </a>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--ghost">
+            Falar com a equipe
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         2. PROPÓSITO — duas colunas (texto + quote)
+         Dinâmico (CMS — Sobre, ACF simples): proposito_titulo, proposito_texto, frase_destaque
+         ======================================== -->
+    <section class="section" id="proposito" aria-labelledby="proposito-title">
+      <div class="container">
+        <div class="proposito">
+          <div>
+            <span class="label">Propósito</span>
+            <h2 class="section-title proposito__title" id="proposito-title" style="margin-top: var(--space-4);">
+              Viajar bem não precisa ser <em>coisa de quem tem tempo sobrando</em>.
+            </h2>
+          </div>
+
+          <div class="proposito__body">
+            <!-- [CMS: Sobre → proposito_texto (3 parágrafos)] -->
+            <p>
+              A Viagem com Estilo existe para destravar um desejo que muita mulher adulta carrega há décadas
+              e adia por razões bem concretas: preço à vista, medo de viajar sozinha, inglês que nunca veio
+              e agenda cheia com família. A gente atacou os quatro de uma vez.
+            </p>
+            <p>
+              Parcelamento em 48× no boleto, grupo fechado de no máximo 15 pessoas, guia brasileiro presente
+              do embarque ao retorno e roteiros desenhados para caber numa janela de 10–14 dias. Sem
+              venda forçada de passeio opcional no meio da viagem. Sem surpresa no cartão.
+            </p>
+            <p>
+              Em 13 anos, foram mais de 2.000 mulheres embarcadas para 40+ destinos. 78% delas voltam
+              para uma segunda viagem com a gente — o número que mais orgulha a equipe.
+            </p>
+
+            <div class="founder__quote" style="margin-top: var(--space-7);">
+              <!-- [CMS: Sobre → frase_destaque] -->
+              <p>
+                "A maior barreira para uma mulher de 55 anos embarcar não é o dinheiro. É o 'e se'.
+                A gente existe para responder cada um deles antes da pergunta aparecer."
+              </p>
+              <div style="margin-top: var(--space-3); font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: normal;">
+                — Patrícia Meireles, fundadora
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         3. FUNDADORA — bloco .founder (reutilizado da home)
+         Componente: .founder (components.css)
+         Dinâmico (CMS — Sobre): foto_fundador, bio_fundador (150–250 palavras)
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="founder-title">
+      <div class="container">
+        <header class="section-header section-header--left" style="margin-bottom: var(--space-10);">
+          <span class="section-line" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top: var(--space-4);">Fundadora</span>
+          <h2 class="section-title" id="founder-title">
+            Quem conduz <em>cada embarque</em>.
+          </h2>
+        </header>
+
+        <div class="founder">
+          <div class="founder__image">
+            <!-- [PLACEHOLDER: foto vertical 3:4 da Patrícia] -->
+            <img src="midia/Foto - Embarque.webp" alt="Patrícia Meireles — fundadora da Viagem com Estilo"
+              width="800" height="1000" loading="lazy">
+          </div>
+
+          <div>
+            <span class="label">Patrícia Meireles</span>
+            <h3 class="founder__name">Trinta anos guiando grupos. Treze à frente da agência.</h3>
+
+            <div class="founder__bio">
+              <!-- [CMS: Sobre → bio_fundador] -->
+              <p>
+                Formada em Turismo, Patrícia começou como guia freelancer em 1995, acompanhando grupos de
+                escolas e empresas pela Europa e pela América do Sul. Em 2013, fundou a Viagem com Estilo
+                depois de perceber que o mercado de viagens em grupo não atendia a mulher que ela mais
+                ouvia nas conversas: a que queria ir, tinha como parcelar, mas não tinha com quem.
+              </p>
+              <p>
+                Hoje a agência opera com um time de 6 guias brasileiros — todos com mais de uma década de
+                estrada — e um back-office que cuida de documentação, logística e imprevistos para que a
+                viajante só precise chegar no aeroporto com o passaporte.
+              </p>
+              <p>
+                A Patrícia ainda acompanha pessoalmente 3 a 4 saídas por ano, sempre em destinos novos
+                ou em grupos com muitas primeiras-vezes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         4. TIMELINE — 13 anos de história
+         Page-local .timeline
+         Dinâmico (CMS — Sobre): repeater linha_do_tempo { ano, titulo, descricao }
+         ======================================== -->
+    <section class="section" aria-labelledby="timeline-title">
+      <div class="container" style="max-width: 820px;">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Nossa história</span>
+          <h2 class="section-title" id="timeline-title">
+            De um grupo de amigas a <em>2.000 embarques</em>.
+          </h2>
+        </header>
+
+        <div class="timeline">
+
+          <div class="timeline__item">
+            <span class="timeline__year">2013</span>
+            <h3 class="timeline__title">O primeiro grupo</h3>
+            <p class="timeline__desc">
+              12 amigas e conhecidas embarcam para uma eurotrip de 14 dias. Patrícia organiza tudo
+              em uma planilha. A viagem volta com nome: Viagem com Estilo.
+            </p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__year">2016</span>
+            <h3 class="timeline__title">Primeira saída para a África</h3>
+            <p class="timeline__desc">
+              Roteiro de 12 dias pela África do Sul com safári e Cidade do Cabo. A demanda surpreende
+              a agência — a fila de espera dobra o roteiro no ano seguinte.
+            </p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__year">2019</span>
+            <h3 class="timeline__title">O modelo do 48× no boleto</h3>
+            <p class="timeline__desc">
+              Depois de ouvir o mesmo "ah, não cabe no meu orçamento" dezenas de vezes, a agência estrutura
+              o parcelamento próprio no boleto. Em 6 meses, o número de viajantes de primeira viagem dobra.
+            </p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__year">2020–2021</span>
+            <h3 class="timeline__title">A pausa forçada</h3>
+            <p class="timeline__desc">
+              A pandemia trava todos os embarques. Em vez de encerrar, a agência migra toda a base para um
+              relacionamento por WhatsApp e newsletter — e volta em 2022 com as vagas de toda saída lotadas.
+            </p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__year">2024</span>
+            <h3 class="timeline__title">Expansão para a Ásia</h3>
+            <p class="timeline__desc">
+              Japão entra no catálogo. Seguido por Índia + Nepal e Grécia + Turquia. O time de guias
+              dobra para dar conta da demanda — todos com dupla certificação (Brasil + local).
+            </p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__year">2026</span>
+            <h3 class="timeline__title">Mais de 2.000 viajantes</h3>
+            <p class="timeline__desc">
+              A agência ultrapassa 2.000 mulheres embarcadas. 78% delas voltaram para uma segunda
+              viagem — número que pauta a estratégia de produto para os próximos anos.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. VALORES — 3 colunas
+         Dinâmico (CMS — Sobre): repeater valores { titulo, descricao }
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="valores-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Como a gente opera</span>
+          <h2 class="section-title" id="valores-title">
+            Três princípios que <em>não negociamos</em>.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Se algum dia você perceber que a gente abriu mão de um desses, pode cobrar — é por eles que
+            a operação existe.
+          </p>
+        </header>
+
+        <div class="valores">
+          <article class="valor">
+            <span class="valor__num">01</span>
+            <h3 class="valor__title">Grupo pequeno, sempre.</h3>
+            <p class="valor__desc">
+              Máximo de 15 pessoas por embarque. Abaixo disso a viagem pode não sair — acima disso,
+              deixa de ser uma viagem e vira excursão. A gente prefere recusar uma saída a ferir esse limite.
+            </p>
+          </article>
+
+          <article class="valor">
+            <span class="valor__num">02</span>
+            <h3 class="valor__title">Sem venda no meio da viagem.</h3>
+            <p class="valor__desc">
+              O que você pagou no contrato é tudo o que você vai pagar. Se tem passeio opcional durante
+              a viagem, é cortesia ou é dinheiro do grupo — nunca reapresentação do pacote.
+            </p>
+          </article>
+
+          <article class="valor">
+            <span class="valor__num">03</span>
+            <h3 class="valor__title">Guia brasileira do embarque ao retorno.</h3>
+            <p class="valor__desc">
+              Não usamos operador local que some após o check-in. Uma guia brasileira acompanha o grupo
+              desde o aeroporto de origem até o retorno — e resolve tudo em português, do câmbio à farmácia.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         6. BASTIDORES — galeria irregular
+         Dinâmico (CMS — Sobre): gallery bastidores (8–12 imagens)
+         ======================================== -->
+    <section class="section" aria-labelledby="bastidores-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Bastidores</span>
+          <h2 class="section-title" id="bastidores-title">
+            Como é, <em>de verdade</em>.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Fotos soltas de embarques recentes — das viajantes, não do marketing.
+          </p>
+        </header>
+
+        <!-- [REPETIDOR: galeria bastidores]
+             Dinâmico (CMS — Sobre): gallery bastidores { imagem, alt }
+             Placeholders enquanto o cliente não entrega — ver assets-pendentes.md -->
+        <div class="bastidores">
+          <div class="bastidores__item bastidores__item--tall">
+            <img src="midia/Africa do Sul.webp" alt="Grupo em safári na África do Sul" loading="lazy" width="600" height="800">
+          </div>
+          <div class="bastidores__item">
+            <img src="midia/Japão-card.webp" alt="Rua em Tóquio com o grupo" loading="lazy" width="400" height="400">
+          </div>
+          <div class="bastidores__item bastidores__item--wide">
+            <img src="midia/Eurotrip primavera.webp" alt="Grupo em frente a ponto turístico na Europa" loading="lazy" width="800" height="400">
+          </div>
+          <div class="bastidores__item">
+            <img src="midia/Marrocos.webp" alt="Viajantes nas medinas do Marrocos" loading="lazy" width="400" height="400">
+          </div>
+          <div class="bastidores__item">
+            <img src="midia/Egito-card.webp" alt="Pirâmides do Egito ao fundo" loading="lazy" width="400" height="400">
+          </div>
+          <div class="bastidores__item bastidores__item--wide">
+            <img src="midia/Grécia e Turquia.webp" alt="Grupo em Santorini" loading="lazy" width="800" height="400">
+          </div>
+          <div class="bastidores__item bastidores__item--tall">
+            <img src="midia/Itália.webp" alt="Restaurante em Roma" loading="lazy" width="600" height="800">
+          </div>
+          <div class="bastidores__item">
+            <img src="midia/Suiça.webp" alt="Montanhas da Suíça" loading="lazy" width="400" height="400">
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         7. BLOCO PAGAMENTO — reforço do 48×
+         Componente: .bloco-pagamento (components.css)
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="bloco-pagamento">
+          <div class="bloco-pagamento__content">
+            <span class="label label--on-dark">Como funciona o pagamento</span>
+            <h2 class="bloco-pagamento__title" style="margin-top: var(--space-4);">
+              Você escolhe o destino. A gente parcela em até 48×, sem juros, no boleto.
+            </h2>
+            <div class="bloco-pagamento__points">
+              <div class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Sem análise de cartão de crédito — pagamento 100% no boleto</span>
+              </div>
+              <div class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Mesma parcela ao longo do contrato — nenhum reajuste surpresa</span>
+              </div>
+              <div class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Política de cancelamento transparente, assinada antes da primeira parcela</span>
+              </div>
+            </div>
+            <div style="margin-top: var(--space-8);">
+              <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+                class="btn btn--white">
+                Simular parcelas no WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         8. CTA FINAL
+         Componente: .cta-final (components.css)
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-final">
+          <span class="section-line section-line--center section-line--on-dark" aria-hidden="true"></span>
+          <h2 class="cta-final__title" style="margin-top: var(--space-5);">
+            O próximo embarque está aberto.
+          </h2>
+          <p class="cta-final__sub">
+            Conta onde você sempre quis ir — a equipe indica o roteiro, a data e simula as parcelas.
+            Sem compromisso e sem venda forçada.
+          </p>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER (padrão — todas as páginas)
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" aria-label="Viagem com Estilo">
+            <img src="midia/Logo - branca1.webp" alt="Viagem com Estilo" width="120" height="auto">
+          </a>
+          <p class="footer__desc">
+            A solução para quem quer conhecer o mundo com segurança, conforto e parcelas que cabem
+            no bolso. Há 13 anos transformando sonhos em embarques.
+          </p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://youtube.com/@viagemcomestilo" target="_blank" rel="noopener" class="footer__social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="footer__social" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegação</div>
+          <a href="index.html#roteiros">Roteiros</a>
+          <a href="como-funciona.html">Como funciona</a>
+          <a href="depoimentos.html">Depoimentos</a>
+          <a href="blog.html">Blog</a>
+          <a href="sobre.html">Sobre nós</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contato</div>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:contato@viagemcomestilo.com.br">E-mail</a>
+          <a href="https://www.google.com/maps/dir//Biosfera+Coworking" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>&copy; 2026 Viagem com Estilo. Todos os direitos reservados.</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Desenvolvido por</span>
+          <a href="https://www.instagram.com/agencia_rtt/" target="_blank" rel="noopener" aria-label="RT Marketing">
+            <img src="midia/Logo-RT-Marketing (1) 1 (1).webp" alt="RT Marketing" width="108" height="35" style="object-fit:cover; display:block;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+    class="whatsapp-float" aria-label="Falar com a equipe no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="js/ui.js"></script>
+</body>
+
+</html>

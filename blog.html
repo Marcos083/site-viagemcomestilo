@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Blog Viver de Ar — Viagem com Estilo</title>
+  <meta name="description"
+    content="Dicas, destinos e preparação para quem viaja pela primeira vez — ou pela décima. O blog da Viagem com Estilo, escrito para mulheres 50+ que querem conhecer o mundo com tranquilidade.">
+
+  <meta property="og:title" content="Blog Viver de Ar — Viagem com Estilo">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ---------- PAGE-LOCAL — .page-blog ---------- */
+
+    /* Post em destaque (primeiro post da listagem) */
+    .page-blog .destaque {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-10);
+      align-items: center;
+      padding: var(--space-10);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-12);
+    }
+    @media (max-width: 900px) {
+      .page-blog .destaque { grid-template-columns: 1fr; padding: var(--space-7); gap: var(--space-7); }
+    }
+    .page-blog .destaque__image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background: var(--color-surface-warm);
+    }
+    .page-blog .destaque__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-slow) var(--ease-out);
+    }
+    .page-blog .destaque:hover .destaque__image img { transform: scale(1.03); }
+    .page-blog .destaque__category {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-brand-primary);
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+    .page-blog .destaque__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-3xl);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-5);
+    }
+    .page-blog .destaque__title a { color: inherit; }
+    .page-blog .destaque__excerpt {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-6);
+    }
+    .page-blog .destaque__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-7);
+    }
+
+    /* Toolbar — busca + categorias */
+    .page-blog .blog-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-6) var(--space-7);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-9);
+    }
+    .page-blog .blog-search {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-5);
+      min-height: var(--tap-min);
+      background: var(--color-surface-warm);
+      border-radius: var(--radius-pill);
+    }
+    .page-blog .blog-search svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+    }
+    .page-blog .blog-search input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      font-size: var(--font-size-body);
+      color: var(--color-text-primary);
+    }
+    .page-blog .blog-search input::placeholder { color: var(--color-text-muted); }
+
+    /* Grid */
+    .page-blog .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7);
+    }
+    @media (max-width: 1024px) {
+      .page-blog .posts-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .page-blog .posts-grid { grid-template-columns: 1fr; }
+    }
+
+    .page-blog .posts-empty {
+      padding: var(--space-10);
+      text-align: center;
+      color: var(--color-text-secondary);
+      background: var(--color-surface-warm);
+      border-radius: var(--radius-lg);
+      display: none;
+    }
+    .page-blog [data-filter-root][data-empty="true"] .posts-empty { display: block; }
+    .page-blog [data-filter-root][data-empty="true"] .posts-grid { display: none; }
+
+    /* Paginação */
+    .page-blog .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-10);
+    }
+    .page-blog .pagination a,
+    .page-blog .pagination span {
+      min-width: var(--tap-min);
+      min-height: var(--tap-min);
+      padding: 0 var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      transition: all var(--duration-normal);
+    }
+    .page-blog .pagination a:hover {
+      background: var(--color-surface-warm);
+      color: var(--color-brand-primary);
+    }
+    .page-blog .pagination .is-active {
+      background: var(--color-brand-primary);
+      color: var(--color-text-on-dark);
+      font-weight: var(--font-weight-semibold);
+    }
+    .page-blog .pagination .is-disabled {
+      color: var(--color-text-muted);
+      cursor: default;
+    }
+
+    /* Newsletter */
+    .page-blog .newsletter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      align-items: center;
+      padding: var(--space-10);
+      background: var(--color-surface-inverse);
+      color: var(--color-text-on-dark);
+      border-radius: var(--radius-2xl);
+    }
+    @media (max-width: 800px) {
+      .page-blog .newsletter { grid-template-columns: 1fr; padding: var(--space-8); }
+    }
+    .page-blog .newsletter__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-on-dark);
+    }
+    .page-blog .newsletter__sub {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-on-dark-muted);
+      margin-top: var(--space-4);
+    }
+    .page-blog .newsletter__form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .page-blog .newsletter__input {
+      min-height: var(--tap-min);
+      padding: var(--space-4) var(--space-5);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--color-border-on-dark);
+      border-radius: var(--radius-md);
+      color: var(--color-text-on-dark);
+      font-size: var(--font-size-body);
+    }
+    .page-blog .newsletter__input::placeholder { color: var(--color-text-on-dark-muted); }
+    .page-blog .newsletter__input:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.12);
+    }
+    .page-blog .newsletter__hint {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-on-dark-muted);
+    }
+  </style>
+</head>
+
+<body class="page-blog">
+
+  <!-- ========================================
+       NAVBAR
+       ======================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Viagem com Estilo — home">
+        <img
+          data-navbar-logo
+          data-logo-light="midia/Logo - branca1.webp"
+          data-logo-dark="midia/Logo - azul.webp"
+          src="midia/Logo - branca1.webp"
+          alt="Viagem com Estilo">
+      </a>
+
+      <div class="navbar__links" id="navbar-links">
+        <a href="index.html#roteiros">Roteiros</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="depoimentos.html">Depoimentos</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="navbar__cta btn">
+          Fale conosco
+        </a>
+      </div>
+
+      <button class="navbar__toggle" aria-label="Abrir menu" aria-controls="navbar-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ========================================
+         1. HERO — compact, claro
+         Variante: .hero--light (fundo claro)
+         ======================================== -->
+    <section class="hero hero--compact hero--light" aria-labelledby="hero-title">
+      <div class="hero__content" style="padding-top: 160px; padding-bottom: var(--space-12);">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span>Blog Viver de Ar</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          Respostas para quem <em>sempre quis viajar</em> — e nunca achou o momento.
+        </h1>
+
+        <p class="hero__sub">
+          Histórias, dicas e planejamento para a sua primeira (ou décima) viagem internacional.
+          Sem jargão de agência, com o que realmente importa antes de embarcar.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         2. POST EM DESTAQUE
+         Dinâmico (CMS — posts, filter: is_featured=true OR mais recente):
+           - imagem_capa, categoria, titulo, sumario/excerpt, autora, tempo_leitura, data
+         ======================================== -->
+    <section class="section" style="padding-top: 0;" aria-labelledby="destaque-title">
+      <div class="container">
+        <article class="destaque">
+          <a href="blog-post.html" class="destaque__image">
+            <!-- [CMS: imagem_capa] -->
+            <img src="midia/Eurotrip primavera.webp" alt="Mulher olhando a vista da sacada de um hotel em Roma"
+              loading="lazy" width="1200" height="900">
+          </a>
+          <div>
+            <span class="destaque__category">
+              <!-- [CMS: categoria] -->Primeira viagem
+            </span>
+            <h2 class="destaque__title" id="destaque-title">
+              <a href="blog-post.html">
+                <!-- [CMS: titulo] -->
+                Passaporte, visto e vacinas: o checklist completo para sua primeira viagem internacional
+              </a>
+            </h2>
+            <p class="destaque__excerpt">
+              <!-- [CMS: sumario / manual excerpt] -->
+              Tudo o que você precisa preparar nos 90 dias antes de embarcar — e o que a agência faz por
+              você. Um guia passo a passo para quem nunca pisou num aeroporto internacional, com prazos
+              reais para tirar e renovar cada documento.
+            </p>
+            <div class="destaque__meta">
+              <!-- [CMS: autora] --><span>Por Patrícia Meireles</span>
+              <span>·</span>
+              <!-- [CMS: tempo_leitura_min] --><span>12 min de leitura</span>
+              <span>·</span>
+              <!-- [CMS: data de publicação] --><span>15/04/2026</span>
+            </div>
+            <a href="blog-post.html" class="btn btn--primary">
+              Ler o artigo
+              <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <path d="M4 10h12M12 6l4 4-4 4" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         3. LISTAGEM — busca + filtro por categoria + grid + paginação
+         Componente: .card-post (components.css) + .chip (components.css)
+         Dinâmico (CMS — posts):
+           - taxonomy `category` → chips
+           - posts paginados 9 por página
+         JS: js/ui.js — #5 filter chips + #6 busca textual (a implementar)
+         ======================================== -->
+    <section class="section section--warm" id="posts" aria-labelledby="posts-title">
+      <div class="container">
+        <header class="section-header section-header--left" style="margin-bottom: var(--space-9);">
+          <span class="section-line" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top: var(--space-4);">Todos os artigos</span>
+          <h2 class="section-title" id="posts-title" style="max-width: 720px;">
+            O que nosso blog <em>anda escrevendo</em>.
+          </h2>
+        </header>
+
+        <div data-filter-root data-filter-target=".card-post">
+
+          <div class="blog-toolbar">
+            <label class="blog-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <span class="sr-only">Buscar no blog</span>
+              <input type="search" placeholder="Buscar por destino, dúvida ou palavra-chave" data-blog-search>
+            </label>
+
+            <div class="filter-chips__group" role="group" aria-label="Filtrar por categoria"
+              style="margin-bottom: 0;">
+              <div class="filter-chips__list">
+                <button type="button" class="chip is-active" data-filter="categoria" data-value="todos">Todos</button>
+                <button type="button" class="chip" data-filter="categoria" data-value="destinos">Destinos</button>
+                <button type="button" class="chip" data-filter="categoria" data-value="dicas">Dicas</button>
+                <button type="button" class="chip" data-filter="categoria" data-value="primeira-viagem">Primeira viagem</button>
+                <button type="button" class="chip" data-filter="categoria" data-value="documentacao">Documentação</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- [REPETIDOR: posts do blog]
+               Componente: .card-post (components.css)
+               Dinâmico (CMS — post, loop paginado):
+                 - data-categoria ← slug da categoria (para filtro)
+                 - imagem_capa, categoria, titulo, sumario, tempo_leitura, data -->
+          <div class="posts-grid">
+
+            <article class="card-post" data-categoria="dicas">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Eurotrip primavera.webp" alt="Mala aberta com roupas organizadas"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Dicas</span>
+                <h3 class="card-post__title"><a href="blog-post.html">O que cabe numa mala de 23kg para uma eurotrip de 15 dias</a></h3>
+                <p class="card-post__excerpt">
+                  Lista por clima, por ocasião e por nível de conforto — com foto do que realmente funciona.
+                </p>
+                <div class="card-post__meta">
+                  <span>7 min de leitura</span>
+                  <span>02/04/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="destinos">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Marrocos.webp" alt="Paisagem do Marrocos ao pôr do sol"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Destinos</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Marrocos para quem nunca foi à África: o roteiro mais fácil para começar</a></h3>
+                <p class="card-post__excerpt">
+                  Por que começar pelo norte da África é mais tranquilo do que parece — e o que esperar.
+                </p>
+                <div class="card-post__meta">
+                  <span>9 min de leitura</span>
+                  <span>28/03/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="documentacao">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/China.webp" alt="Detalhes de um passaporte brasileiro"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Documentação</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Visto para os Estados Unidos em 2026: o passo a passo sem advogado</a></h3>
+                <p class="card-post__excerpt">
+                  Como preencher o DS-160, agendar a entrevista e o que levar no dia — com tempo médio real.
+                </p>
+                <div class="card-post__meta">
+                  <span>15 min de leitura</span>
+                  <span>22/03/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="destinos">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Japão-card.webp" alt="Torii em Kyoto"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Destinos</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Japão em 10 dias: Tóquio, Kyoto e o trem-bala sem drama</a></h3>
+                <p class="card-post__excerpt">
+                  Como montar um roteiro que não te deixe exausta e ainda vê o essencial — sem correr.
+                </p>
+                <div class="card-post__meta">
+                  <span>11 min de leitura</span>
+                  <span>18/03/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="primeira-viagem">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Foto - Embarque.webp" alt="Mulher em sala de embarque olhando o painel"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Primeira viagem</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Como se comportar numa conexão internacional sem entrar em pânico</a></h3>
+                <p class="card-post__excerpt">
+                  Imigração, retirada de bagagem, troca de terminal — traduzido passo a passo, em português.
+                </p>
+                <div class="card-post__meta">
+                  <span>8 min de leitura</span>
+                  <span>11/03/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="dicas">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Card - Boleto.webp" alt="Calculadora, agenda e caderno planejando orçamento"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Dicas</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Quanto custa uma viagem internacional além do pacote? O guia dos gastos invisíveis</a></h3>
+                <p class="card-post__excerpt">
+                  Gorjetas, transporte de aeroporto, seguro, chip internacional, cartão de crédito global.
+                  Tudo discriminado.
+                </p>
+                <div class="card-post__meta">
+                  <span>10 min de leitura</span>
+                  <span>05/03/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="destinos">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Grécia e Turquia.webp" alt="Casas brancas e azuis de Santorini"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Destinos</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Grécia + Turquia: o combo que vale por três viagens</a></h3>
+                <p class="card-post__excerpt">
+                  Por que esses dois países juntos rendem mais do que qualquer eurotrip clássica.
+                </p>
+                <div class="card-post__meta">
+                  <span>9 min de leitura</span>
+                  <span>27/02/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="primeira-viagem">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Africa do Sul.webp" alt="Mulher sorrindo em safári na África"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Primeira viagem</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Viajar sozinha depois dos 55: o que ninguém te conta (e era pra contar)</a></h3>
+                <p class="card-post__excerpt">
+                  Relato real de uma viajante que começou a viajar em grupo aos 59. O que mudou de fato.
+                </p>
+                <div class="card-post__meta">
+                  <span>13 min de leitura</span>
+                  <span>19/02/2026</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card-post" data-categoria="documentacao">
+              <a href="blog-post.html" class="card-post__image">
+                <img src="midia/Maldivas.webp" alt="Farmácia com caixinha de remédios"
+                  loading="lazy" width="800" height="450">
+              </a>
+              <div class="card-post__body">
+                <span class="card-post__category">Documentação</span>
+                <h3 class="card-post__title"><a href="blog-post.html">Febre amarela, certificado internacional e a vacina que ninguém lembra</a></h3>
+                <p class="card-post__excerpt">
+                  Quais destinos exigem comprovante, onde tirar o CIVP e em quanto tempo a vacina faz efeito.
+                </p>
+                <div class="card-post__meta">
+                  <span>6 min de leitura</span>
+                  <span>12/02/2026</span>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Estado vazio quando nenhum filtro casa -->
+          <div class="posts-empty">
+            Nenhum artigo encontrado com esses filtros. Tente limpar a busca ou escolher outra categoria.
+          </div>
+
+        </div><!-- /data-filter-root -->
+
+        <!-- Paginação — renderizada pelo servidor no WordPress, estática aqui -->
+        <nav class="pagination" aria-label="Paginação do blog">
+          <span class="is-disabled" aria-hidden="true">←</span>
+          <a href="#" class="is-active" aria-current="page">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <span>…</span>
+          <a href="#">7</a>
+          <a href="#" aria-label="Próxima página">→</a>
+        </nav>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         4. NEWSLETTER
+         Dinâmico (ACF Options Page): newsletter_provider (endpoint de inscrição)
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="newsletter">
+          <div>
+            <span class="label label--on-dark">Newsletter Viver de Ar</span>
+            <h2 class="newsletter__title" style="margin-top: var(--space-4);">
+              Um e-mail por mês. Com <em style="color: var(--color-brand-accent-gold); font-style: italic;">destino, dica e data de saída</em>.
+            </h2>
+            <p class="newsletter__sub">
+              Escrito pela Patrícia, direto do aeroporto ou do próximo roteiro.
+              Nunca enviamos promoção forçada.
+            </p>
+          </div>
+          <form class="newsletter__form" onsubmit="event.preventDefault(); alert('Inscrição — a integrar com provedor de newsletter');">
+            <label class="sr-only" for="newsletter-email">E-mail</label>
+            <input type="email" id="newsletter-email" class="newsletter__input"
+              placeholder="Seu melhor e-mail" required>
+            <button type="submit" class="btn btn--white">Quero receber</button>
+            <p class="newsletter__hint">Leva 10 segundos. Cancela quando quiser.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. CTA FINAL
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-final">
+          <span class="section-line section-line--center section-line--on-dark" aria-hidden="true"></span>
+          <h2 class="cta-final__title" style="margin-top: var(--space-5);">
+            Depois de ler, conversa com a equipe.
+          </h2>
+          <p class="cta-final__sub">
+            Tudo aqui é informação — mas nada substitui uma conversa curta para entender o que encaixa
+            com a sua agenda, seu bolso e seu sonho de viagem.
+          </p>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER (padrão — todas as páginas)
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" aria-label="Viagem com Estilo">
+            <img src="midia/Logo - branca1.webp" alt="Viagem com Estilo" width="120" height="auto">
+          </a>
+          <p class="footer__desc">
+            A solução para quem quer conhecer o mundo com segurança, conforto e parcelas que cabem
+            no bolso. Há 13 anos transformando sonhos em embarques.
+          </p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://youtube.com/@viagemcomestilo" target="_blank" rel="noopener" class="footer__social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="footer__social" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegação</div>
+          <a href="index.html#roteiros">Roteiros</a>
+          <a href="como-funciona.html">Como funciona</a>
+          <a href="depoimentos.html">Depoimentos</a>
+          <a href="blog.html">Blog</a>
+          <a href="sobre.html">Sobre nós</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contato</div>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:contato@viagemcomestilo.com.br">E-mail</a>
+          <a href="https://www.google.com/maps/dir//Biosfera+Coworking" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>&copy; 2026 Viagem com Estilo. Todos os direitos reservados.</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Desenvolvido por</span>
+          <a href="https://www.instagram.com/agencia_rtt/" target="_blank" rel="noopener" aria-label="RT Marketing">
+            <img src="midia/Logo-RT-Marketing (1) 1 (1).webp" alt="RT Marketing" width="108" height="35" style="object-fit:cover; display:block;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+    class="whatsapp-float" aria-label="Falar com a equipe no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="js/ui.js"></script>
+</body>
+
+</html>

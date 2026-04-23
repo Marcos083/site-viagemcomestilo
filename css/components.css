@@ -1,0 +1,1287 @@
+/* =============================================
+   VIAGEM COM ESTILO — COMPONENTES DO DS
+   BEM simplificado. Um componente por bloco, reutilizável entre
+   todas as páginas. Overrides específicos vão em pages.css.
+
+   Índice:
+     1.  Button            .btn
+     2.  Navbar            .navbar
+     3.  Hero              .hero
+     4.  Trust bar         .trust-bar
+     5.  Card manifesto    .card-manifesto
+     6.  Step              .step
+     7.  Card roteiro      .card-roteiro
+     8.  Filter chips      .filter-chips
+     9.  Diferencial row   .diferencial
+     10. Card depoimento   .card-depoimento
+     11. Video facade      .video-facade
+     12. Founder block     .founder
+     13. Pagamento bloco   .bloco-pagamento
+     14. FAQ               .faq
+     15. Form              .form
+     16. CTA final         .cta-final
+     17. Footer            .footer
+     18. WhatsApp float    .whatsapp-float
+     19. Breadcrumb        .breadcrumb
+     20. Blog post card    .card-post
+   ============================================= */
+
+/* =============================================
+   1. BUTTON  — .btn
+   Alvo mínimo de toque 48px (ICP 50+).
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: var(--tap-min);
+  padding: 16px 32px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-default);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--color-brand-primary);
+  color: var(--color-surface-white);
+  box-shadow: var(--shadow-cta);
+}
+.btn--primary:hover {
+  background: var(--color-brand-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 1, 249, 0.4);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+.btn--outline:hover {
+  background: var(--color-brand-primary);
+  color: var(--color-surface-white);
+  transform: translateY(-2px);
+}
+
+.btn--white {
+  background: var(--color-surface-white);
+  color: var(--color-brand-primary);
+}
+.btn--white:hover {
+  background: #F0F0FF;
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-surface-white);
+  border-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+.btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn--whatsapp {
+  background: var(--color-feedback-whatsapp);
+  color: var(--color-surface-white);
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+}
+.btn--whatsapp:hover {
+  background: #1FB858;
+  transform: translateY(-2px);
+}
+
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.btn__arrow {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  transition: transform var(--duration-normal) var(--ease-default);
+}
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+
+/* =============================================
+   2. NAVBAR  — .navbar
+   Logo branca sobre hero escuro → troca para azul em scrolled (via JS).
+   ============================================= */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-header);
+  padding: 20px 0;
+  transition: all var(--duration-slow) var(--ease-default);
+}
+.navbar.is-scrolled {
+  background: rgba(253, 253, 251, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 12px 0;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+}
+
+.navbar__inner {
+  width: var(--container-wide);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.navbar__logo { display: inline-flex; }
+.navbar__logo img { height: 40px; width: auto; }
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.navbar__links a {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.85);
+  transition: color var(--duration-normal);
+  padding: 12px 0;
+}
+.navbar__links a:hover { color: var(--color-surface-white); }
+.navbar.is-scrolled .navbar__links a { color: var(--color-text-secondary); }
+.navbar.is-scrolled .navbar__links a:hover { color: var(--color-brand-primary); }
+
+.navbar__cta {
+  font-size: var(--font-size-sm) !important;
+  padding: 12px 22px !important;
+  min-height: 44px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-pill);
+  color: var(--color-surface-white);
+  backdrop-filter: blur(10px);
+  transition: all var(--duration-normal) var(--ease-default);
+}
+.navbar.is-scrolled .navbar__cta {
+  background: var(--color-brand-primary) !important;
+  color: var(--color-surface-white) !important;
+  border-color: var(--color-brand-primary) !important;
+}
+
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}
+.navbar__toggle span {
+  width: 24px; height: 2px;
+  background: var(--color-surface-white);
+  border-radius: 2px;
+  transition: all var(--duration-normal);
+}
+.navbar.is-scrolled .navbar__toggle span { background: var(--color-text-primary); }
+
+@media (max-width: 900px) {
+  .navbar__toggle { display: flex; }
+
+  .navbar__links {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--color-surface-inverse);
+    z-index: calc(var(--z-header) - 1);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-6);
+  }
+  .navbar__links.is-open { display: flex; }
+  .navbar__links a {
+    font-size: 22px;
+    color: var(--color-surface-white) !important;
+  }
+  .navbar__toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .navbar__toggle.is-open span:nth-child(2) { opacity: 0; }
+  .navbar__toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+
+/* =============================================
+   3. HERO  — .hero
+   Variante escura (padrão), clara, compacta (páginas internas).
+   ============================================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-surface-inverse);
+}
+
+.hero--compact {
+  min-height: 60vh;
+}
+
+.hero--light {
+  background: var(--color-surface-warm);
+  color: var(--color-text-primary);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero__bg img,
+.hero__bg video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hero__overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(180deg, rgba(7, 13, 36, 0.45) 0%, rgba(7, 13, 36, 0.75) 100%);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 10;
+  width: var(--container-base);
+  margin-inline: auto;
+  padding-top: 140px;
+  padding-bottom: var(--space-12);
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px 20px;
+  margin-bottom: var(--space-8);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(20px);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.85);
+}
+.hero--light .hero__badge {
+  background: var(--color-brand-primary-tint);
+  border-color: var(--color-border-subtle);
+  color: var(--color-brand-primary);
+}
+
+.hero__badge-dot {
+  width: 8px; height: 8px;
+  background: var(--color-feedback-success);
+  border-radius: 50%;
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-hero);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-surface-white);
+  max-width: 900px;
+  margin-bottom: var(--space-7);
+}
+.hero--light .hero__title { color: var(--color-text-primary); }
+.hero__title em { font-style: italic; color: rgba(255, 255, 255, 0.7); }
+.hero--light .hero__title em { color: var(--color-brand-primary); }
+
+.hero--compact .hero__title { font-size: var(--font-size-4xl); }
+
+.hero__sub {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-surface-white);
+  max-width: 600px;
+  margin-bottom: var(--space-9);
+}
+.hero--light .hero__sub { color: var(--color-text-secondary); }
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+
+/* =============================================
+   4. TRUST BAR  — .trust-bar
+   ============================================= */
+.trust-bar {
+  background: var(--color-surface-white);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--space-9) 0;
+}
+.trust-bar__inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-7);
+}
+.trust-item { text-align: center; position: relative; }
+.trust-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 1px; height: 40px;
+  background: var(--color-border-subtle);
+}
+.trust-item__number {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  color: var(--color-brand-primary);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.trust-item__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+@media (max-width: 700px) {
+  .trust-bar__inner { grid-template-columns: repeat(2, 1fr); gap: var(--space-9); }
+  .trust-item:nth-child(2)::after { display: none; }
+}
+
+
+/* =============================================
+   5. CARD MANIFESTO  — .card-manifesto
+   Bloco de objeção em voz do cliente + resposta.
+   Usado em Home, Como Funciona, template Destino.
+   ============================================= */
+.card-manifesto {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-9);
+  transition: all var(--duration-slow) var(--ease-default);
+}
+.card-manifesto:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+.card-manifesto__tag {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+.card-manifesto__question {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-snug);
+  margin-bottom: var(--space-5);
+}
+.card-manifesto__divider {
+  width: 40px;
+  height: 2px;
+  background: var(--color-brand-primary);
+  border-radius: 2px;
+  margin-bottom: var(--space-5);
+}
+.card-manifesto__answer {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-primary);
+  line-height: var(--line-height-snug);
+}
+
+/* Variante larga: bloco grande de objeção (página Como Funciona) */
+.card-manifesto--spotlight {
+  padding: var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+.card-manifesto--spotlight .card-manifesto__question { font-size: var(--font-size-3xl); }
+.card-manifesto--spotlight .card-manifesto__answer  { font-size: var(--font-size-lg); }
+@media (max-width: 900px) {
+  .card-manifesto--spotlight { grid-template-columns: 1fr; padding: var(--space-8); }
+}
+
+
+/* =============================================
+   6. STEP (método numerado)  — .step
+   Usado em Como Funciona e template Destino.
+   ============================================= */
+.step {
+  position: relative;
+}
+.step__image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+  background: var(--color-surface-warm);
+}
+.step__image img { width: 100%; height: 100%; object-fit: cover; }
+
+.step__number {
+  font-family: var(--font-heading);
+  font-size: 72px;
+  line-height: 1;
+  color: var(--color-brand-primary);
+  opacity: 0.15;
+  margin-bottom: var(--space-3);
+}
+.step__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+.step__desc {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+
+/* =============================================
+   7. CARD ROTEIRO  — .card-roteiro
+   Componente central. Usado na home (grid filtrável),
+   na página de destinos e como posts relacionados.
+   ============================================= */
+.card-roteiro {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--duration-slow) var(--ease-default);
+}
+.card-roteiro:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-border-strong);
+}
+
+.card-roteiro__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.card-roteiro__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-roteiro__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 14px;
+  background: rgba(0, 1, 249, 0.92);
+  color: var(--color-surface-white);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+.card-roteiro__year {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 5px 12px;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--color-surface-white);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+.card-roteiro__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-7);
+  gap: var(--space-5);
+}
+
+.card-roteiro__cluster {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+.card-roteiro__name {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-primary);
+  margin-top: var(--space-2);
+}
+.card-roteiro__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.card-roteiro__footer {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.card-roteiro__price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.card-roteiro__price-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+.card-roteiro__price-value {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+}
+.card-roteiro__price-period {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-regular);
+}
+
+
+/* =============================================
+   8. FILTER CHIPS  — .filter-chips
+   Filtro da home (ano / continente). Chips grandes, 50+-friendly.
+   ============================================= */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.filter-chips__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.filter-chips__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.filter-chips__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  background: var(--color-surface-white);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+.chip:hover {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+.chip.is-active {
+  background: var(--color-brand-primary);
+  color: var(--color-surface-white);
+  border-color: var(--color-brand-primary);
+}
+
+
+/* =============================================
+   9. DIFERENCIAL ROW  — .diferencial
+   Linha alternada imagem/texto. Home e Como Funciona.
+   ============================================= */
+.diferencial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+  margin-bottom: var(--space-13);
+}
+.diferencial:last-child { margin-bottom: 0; }
+.diferencial--reverse { direction: rtl; }
+.diferencial--reverse > * { direction: ltr; }
+
+.diferencial__image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--color-surface-warm);
+}
+.diferencial__image img { width: 100%; height: 100%; object-fit: cover; }
+
+.diferencial__content { max-width: 480px; }
+.diferencial__icon {
+  width: 56px; height: 56px;
+  background: var(--color-brand-primary-tint);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+}
+.diferencial__icon svg {
+  width: 24px; height: 24px;
+  color: var(--color-brand-primary);
+}
+.diferencial__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+.diferencial__desc {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+@media (max-width: 900px) {
+  .diferencial { grid-template-columns: 1fr; gap: var(--space-6); }
+  .diferencial--reverse { direction: ltr; }
+}
+
+
+/* =============================================
+   10. CARD DEPOIMENTO  — .card-depoimento
+   ============================================= */
+.card-depoimento {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  transition: all var(--duration-normal) var(--ease-default);
+}
+.card-depoimento:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+
+.card-depoimento__stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: var(--space-4);
+  color: var(--color-feedback-warning);
+}
+.card-depoimento__stars svg { width: 16px; height: 16px; }
+
+.card-depoimento__quote {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  font-style: italic;
+  margin-bottom: var(--space-6);
+}
+.card-depoimento__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+.card-depoimento__avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--color-surface-warm);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.card-depoimento__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.card-depoimento__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+.card-depoimento__dest {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+
+/* =============================================
+   11. VIDEO FACADE  — .video-facade
+   Thumb + botão play. Só carrega o embed no clique.
+   (Controlado por ui.js)
+   ============================================= */
+.video-facade {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--color-surface-inverse);
+}
+.video-facade img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.video-facade__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px;
+  background: var(--color-brand-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-cta);
+  transition: transform var(--duration-normal) var(--ease-default);
+  z-index: 2;
+  pointer-events: none;
+}
+.video-facade:hover .video-facade__play {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.video-facade__play svg {
+  width: 22px; height: 22px;
+  margin-left: 3px;
+  color: var(--color-surface-white);
+}
+.video-facade::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%);
+  pointer-events: none;
+}
+
+
+/* =============================================
+   12. FOUNDER BLOCK  — .founder
+   ============================================= */
+.founder {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-13);
+  align-items: center;
+}
+.founder__image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  background: var(--color-surface-warm);
+}
+.founder__image img { width: 100%; height: 100%; object-fit: cover; }
+.founder__image::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: calc(var(--radius-xl) + 4px);
+  z-index: -1;
+}
+.founder__name {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-primary);
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+.founder__bio p {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-5);
+}
+.founder__quote {
+  padding: var(--space-6);
+  border-left: 3px solid var(--color-brand-primary);
+  background: var(--color-brand-primary-subtle);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-top: var(--space-6);
+}
+.founder__quote p {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-style: italic;
+  color: var(--color-text-primary);
+  line-height: var(--line-height-snug);
+}
+@media (max-width: 900px) {
+  .founder { grid-template-columns: 1fr; gap: var(--space-8); }
+  .founder__image { max-width: 400px; }
+}
+
+
+/* =============================================
+   13. BLOCO PAGAMENTO  — .bloco-pagamento
+   Bloco azul reutilizável: diferencial 48x boleto.
+   ============================================= */
+.bloco-pagamento {
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-12);
+  position: relative;
+  overflow: hidden;
+}
+.bloco-pagamento::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.bloco-pagamento__content { position: relative; z-index: 2; }
+.bloco-pagamento__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-snug);
+  max-width: 700px;
+  margin-bottom: var(--space-8);
+}
+.bloco-pagamento__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+.bloco-pagamento__point {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.85);
+}
+.bloco-pagamento__point svg {
+  width: 20px; height: 20px;
+  color: var(--color-feedback-success);
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .bloco-pagamento { padding: var(--space-9) var(--space-7); }
+  .bloco-pagamento__points { flex-direction: column; gap: var(--space-4); }
+}
+
+
+/* =============================================
+   14. FAQ  — .faq
+   Accordion acessível (aria-expanded via ui.js).
+   ============================================= */
+.faq {
+  max-width: 800px;
+  margin-inline: auto;
+}
+.faq__item {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-6) 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--duration-normal);
+}
+.faq__question:hover { color: var(--color-brand-primary); }
+
+.faq__icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-normal) var(--ease-default);
+}
+.faq__icon svg {
+  width: 14px; height: 14px;
+  color: var(--color-text-muted);
+}
+.faq__item.is-open .faq__icon {
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+  transform: rotate(45deg);
+}
+.faq__item.is-open .faq__icon svg { color: var(--color-surface-white); }
+
+.faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-slow) var(--ease-default);
+}
+.faq__answer-inner {
+  padding-bottom: var(--space-7);
+  max-width: 640px;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+
+/* =============================================
+   15. FORM  — .form
+   Inputs 50+-friendly: labels visíveis, alvos grandes, foco nítido.
+   ============================================= */
+.form {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-9);
+  box-shadow: var(--shadow-lg);
+}
+.form__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+.form__group {
+  margin-bottom: var(--space-5);
+}
+.form__label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+.form__input,
+.form__select,
+.form__textarea {
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: 14px 18px;
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+  background: var(--color-surface-base);
+  outline: none;
+  transition: all var(--duration-normal) var(--ease-default);
+  appearance: none;
+}
+.form__input::placeholder,
+.form__textarea::placeholder { color: var(--color-text-muted); }
+.form__input:focus,
+.form__select:focus,
+.form__textarea:focus {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 0 0 3px var(--color-brand-primary-tint);
+}
+.form__select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23555' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+.form__textarea { min-height: 140px; resize: vertical; }
+
+
+/* =============================================
+   16. CTA FINAL  — .cta-final
+   Bloco de fechamento reutilizável entre páginas.
+   ============================================= */
+.cta-final {
+  text-align: center;
+  padding: var(--space-13) var(--space-6);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-2xl);
+}
+.cta-final__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-snug);
+  max-width: 700px;
+  margin: 0 auto var(--space-6);
+}
+.cta-final__sub {
+  font-size: var(--font-size-md);
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 560px;
+  margin: 0 auto var(--space-8);
+  line-height: var(--line-height-relaxed);
+}
+
+
+/* =============================================
+   17. FOOTER  — .footer
+   ============================================= */
+.footer {
+  background: var(--color-surface-inverse);
+  color: var(--color-text-on-dark-muted);
+  padding: var(--space-13) 0 var(--space-7);
+}
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: var(--space-9);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.footer__logo { margin-bottom: var(--space-5); }
+.footer__logo img { width: 120px; height: auto; }
+.footer__desc {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  max-width: 340px;
+  margin-bottom: var(--space-6);
+}
+.footer__socials {
+  display: flex;
+  gap: var(--space-3);
+}
+.footer__social {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-normal);
+}
+.footer__social:hover {
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+.footer__social svg {
+  width: 18px; height: 18px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.footer__col-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: var(--space-5);
+}
+.footer__col a {
+  display: block;
+  padding: 8px 0;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--duration-normal);
+}
+.footer__col a:hover { color: var(--color-surface-white); }
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  flex-wrap: wrap;
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.4);
+}
+@media (max-width: 800px) {
+  .footer__top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .footer__top { grid-template-columns: 1fr; gap: var(--space-7); }
+}
+
+
+/* =============================================
+   18. WHATSAPP FLOAT  — .whatsapp-float
+   Botão flutuante fixo. CTA primário no mobile.
+   Marcador: <!-- WHATSAPP_NUMBER --> na âncora href.
+   ============================================= */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: var(--z-float);
+  width: 60px; height: 60px;
+  background: var(--color-feedback-whatsapp);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: all var(--duration-normal) var(--ease-default);
+}
+.whatsapp-float:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+}
+.whatsapp-float svg {
+  width: 30px; height: 30px;
+  color: var(--color-surface-white);
+}
+
+/* Variante expandida: mostra texto no mobile para reforçar ação */
+.whatsapp-float--labeled {
+  width: auto;
+  padding: 0 20px 0 16px;
+  gap: var(--space-3);
+  border-radius: var(--radius-pill);
+}
+.whatsapp-float--labeled .whatsapp-float__text {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-surface-white);
+  white-space: nowrap;
+}
+
+
+/* =============================================
+   19. BREADCRUMB  — .breadcrumb
+   ============================================= */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-7);
+}
+.breadcrumb a {
+  color: var(--color-text-secondary);
+  transition: color var(--duration-normal);
+}
+.breadcrumb a:hover { color: var(--color-brand-primary); }
+.breadcrumb__sep {
+  color: var(--color-text-muted);
+}
+
+
+/* =============================================
+   20. CARD POST  — .card-post (listagem blog)
+   ============================================= */
+.card-post {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-default);
+}
+.card-post:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-border-strong);
+}
+.card-post__image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--color-surface-warm);
+}
+.card-post__image img { width: 100%; height: 100%; object-fit: cover; }
+.card-post__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+}
+.card-post__category {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+.card-post__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-snug);
+  color: var(--color-text-primary);
+}
+.card-post__excerpt {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+.card-post__meta {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: flex;
+  gap: var(--space-3);
+}
+
+
+/* =============================================
+   MOBILE OVERRIDES GLOBAIS
+   ============================================= */
+@media (max-width: 600px) {
+  .hero__content { padding-top: 100px; padding-bottom: var(--space-8); }
+  .hero__actions .btn { width: 100%; }
+  .form { padding: var(--space-7); }
+  .whatsapp-float {
+    bottom: 16px;
+    right: 16px;
+  }
+}

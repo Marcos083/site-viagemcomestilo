@@ -1,0 +1,153 @@
+/* =============================================
+   VIAGEM COM ESTILO — DESIGN TOKENS
+   Extraídos da landing existente (index.html) com ajustes
+   obrigatórios para ICP mulheres 50+ (tipografia ≥ 17px mobile /
+   ≥ 18px desktop, contraste AA mínimo / AAA em CTAs e headlines).
+   Nomes em inglês e semânticos — mapear para Elementor depois.
+   ============================================= */
+
+:root {
+  /* ---------- COLOR — BRAND ---------- */
+  --color-brand-primary:        #0001F9;
+  --color-brand-primary-hover:  #0001C7;
+  --color-brand-primary-active: #00019A;
+  --color-brand-primary-tint:   rgba(0, 1, 249, 0.08);
+  --color-brand-primary-subtle: rgba(0, 1, 249, 0.04);
+  --color-brand-accent-gold:    #C9A96E;
+
+  /* ---------- COLOR — SURFACE ---------- */
+  --color-surface-base:     #FDFDFB;
+  --color-surface-warm:     #F5F4F0;
+  --color-surface-white:    #FFFFFF;
+  --color-surface-inverse:  #070D24;
+
+  /* ---------- COLOR — TEXT ---------- */
+  --color-text-primary:        #1A1A2E;
+  --color-text-secondary:      #555566;
+  --color-text-muted:          #8888A0;
+  --color-text-on-dark:        #FDFDFB;
+  --color-text-on-dark-muted:  rgba(253, 253, 251, 0.65);
+
+  /* ---------- COLOR — BORDER ---------- */
+  --color-border-subtle:  rgba(0, 1, 249, 0.10);
+  --color-border-strong:  rgba(0, 1, 249, 0.20);
+  --color-border-on-dark: rgba(255, 255, 255, 0.12);
+
+  /* ---------- COLOR — FEEDBACK ---------- */
+  --color-feedback-success: #4ADE80;
+  --color-feedback-warning: #F59E0B;
+  --color-feedback-whatsapp: #25D366;
+
+  /* ---------- TYPOGRAPHY — FAMILY ---------- */
+  --font-heading: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:    'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ---------- TYPOGRAPHY — SIZE ----------
+     Piso de 17px no mobile e 18px no desktop para body,
+     exigência do ICP 50+. Não reduzir. */
+  --font-size-xs:    clamp(13px, 0.85vw, 14px);   /* labels / meta */
+  --font-size-sm:    clamp(15px, 0.95vw, 16px);   /* legendas, detalhes */
+  --font-size-body:  clamp(17px, 1.15vw, 18px);   /* corpo padrão 50+ */
+  --font-size-md:    clamp(18px, 1.3vw, 20px);    /* corpo com ênfase */
+  --font-size-lg:    clamp(20px, 1.5vw, 24px);    /* subtítulos */
+  --font-size-xl:    clamp(24px, 1.9vw, 30px);    /* h3 */
+  --font-size-2xl:   clamp(28px, 2.4vw, 36px);    /* h2 pequeno */
+  --font-size-3xl:   clamp(32px, 3vw, 44px);      /* h2 */
+  --font-size-4xl:   clamp(36px, 3.8vw, 56px);    /* h1 secundário / hero interno */
+  --font-size-5xl:   clamp(40px, 4.5vw, 68px);    /* hero home */
+  --font-size-hero:  clamp(42px, 5.5vw, 80px);    /* hero landing */
+
+  /* ---------- TYPOGRAPHY — WEIGHT ---------- */
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* ---------- TYPOGRAPHY — LINE HEIGHT ---------- */
+  --line-height-tight:   1.05;
+  --line-height-snug:    1.2;
+  --line-height-normal:  1.5;
+  --line-height-relaxed: 1.7;   /* corpo de blog 50+ */
+
+  /* ---------- TYPOGRAPHY — TRACKING ---------- */
+  --tracking-tight:  -0.03em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.08em;
+  --tracking-wider:   0.14em;
+
+  /* ---------- SPACING (4px scale) ---------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  48px;
+  --space-10: 56px;
+  --space-11: 64px;
+  --space-12: 80px;
+  --space-13: 96px;
+  --space-14: 120px;
+  --space-15: 150px;
+  --space-section: 120px;   /* padding vertical de seções no desktop */
+
+  /* ---------- RADIUS ---------- */
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   20px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-pill: 100px;
+
+  /* ---------- SHADOW ---------- */
+  --shadow-xs:   0 1px 2px  rgba(0, 1, 249, 0.04);
+  --shadow-sm:   0 2px 8px  rgba(0, 1, 249, 0.06);
+  --shadow-md:   0 4px 20px rgba(0, 1, 249, 0.08);
+  --shadow-lg:   0 8px 32px rgba(0, 1, 249, 0.10);
+  --shadow-xl:   0 16px 48px rgba(0, 1, 249, 0.12);
+  --shadow-card: 0 2px 24px rgba(0, 1, 249, 0.07);
+  --shadow-cta:  0 4px 24px rgba(0, 1, 249, 0.30);
+
+  /* ---------- MOTION ---------- */
+  --ease-default: cubic-bezier(0.14, 0, 0, 1.01);
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast:   0.2s;
+  --duration-normal: 0.3s;
+  --duration-slow:   0.5s;
+
+  /* ---------- LAYOUT ---------- */
+  --container-narrow: min(800px, 88vw);
+  --container-base:   min(1200px, 90vw);
+  --container-wide:   min(1400px, 94vw);
+  --container-reading: min(680px, 88vw); /* largura de leitura para blog */
+
+  /* ---------- Z-INDEX ---------- */
+  --z-base:     1;
+  --z-overlay:  50;
+  --z-header:   100;
+  --z-menu:     999;
+  --z-float:    1000;
+
+  /* ---------- TOUCH TARGET (mobile-first, 50+) ---------- */
+  --tap-min: 48px;
+}
+
+/* =============================================
+   BREAKPOINTS (referência — usar em min-width)
+   - 375px  base (mobile)
+   - 768px  tablet (opcional, só se a seção quebrar)
+   - 1024px desktop
+   - 1440px container máx.
+   Custom properties não funcionam dentro de @media,
+   então breakpoints são valores literais no código.
+   ============================================= */
+
+/* Ajustes de densidade no mobile */
+@media (max-width: 600px) {
+  :root {
+    --space-section: 64px;
+  }
+}

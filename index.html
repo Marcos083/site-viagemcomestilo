@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viagem com Estilo — Viagens internacionais em grupo, no boleto, com acompanhamento</title>
+  <meta name="description"
+    content="Roteiros em grupo fechado para mulheres 50+. Parcele em até 48× no boleto sem juros, viaje com guia que fala português do embarque ao retorno.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ---------- PAGE-LOCAL — .page-home ----------
+       Overrides específicos da home institucional.
+       Se virar padrão, migra para components.css. */
+
+    .page-home .hero__title { max-width: 900px; }
+
+    /* Bloco de filtros + grid de roteiros */
+    .page-home .roteiros-toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      margin-bottom: var(--space-9);
+      padding: var(--space-7);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (max-width: 800px) {
+      .page-home .roteiros-toolbar { grid-template-columns: 1fr; gap: var(--space-6); padding: var(--space-6); }
+    }
+
+    .page-home .roteiros-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7);
+    }
+
+    @media (max-width: 1024px) {
+      .page-home .roteiros-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .page-home .roteiros-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    }
+
+    .page-home .roteiros-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: var(--space-10);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+      background: var(--color-surface-warm);
+      border-radius: var(--radius-lg);
+      display: none;
+    }
+    .page-home .roteiros-grid[data-empty="true"] .roteiros-empty { display: block; }
+
+    .page-home .roteiros__footer {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-8);
+    }
+
+    /* Posts recentes — 3 colunas */
+    .page-home .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) {
+      .page-home .posts-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Depoimentos preview — 3 colunas */
+    .page-home .depoimentos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) {
+      .page-home .depoimentos-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Section header alinhado à esquerda com CTA à direita */
+    .page-home .section-header--split {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-6);
+      text-align: left;
+      margin-bottom: var(--space-9);
+    }
+    .page-home .section-header--split .section-title { max-width: 720px; }
+    .page-home .section-header--split .section-line { margin-left: 0; }
+    @media (max-width: 800px) {
+      .page-home .section-header--split { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body class="page-home">
+
+  <!-- ========================================
+       NAVBAR
+       Componente: .navbar (components.css)
+       Dinâmico (ACF Options Page): número WhatsApp, URL Instagram/YouTube
+       ======================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Viagem com Estilo — home">
+        <img
+          data-navbar-logo
+          data-logo-light="midia/Logo - branca1.webp"
+          data-logo-dark="midia/Logo - azul.webp"
+          src="midia/Logo - branca1.webp"
+          alt="Viagem com Estilo">
+      </a>
+
+      <div class="navbar__links" id="navbar-links">
+        <a href="#roteiros" aria-current="page">Roteiros</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="depoimentos.html">Depoimentos</a>
+        <a href="blog.html">Blog</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="navbar__cta btn">
+          Fale conosco
+        </a>
+      </div>
+
+      <button class="navbar__toggle" aria-label="Abrir menu" aria-controls="navbar-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ========================================
+         1. HERO
+         Componente: .hero (components.css)
+         Fixo: estrutura, CTA WhatsApp
+         Dinâmico (ACF Options Page): vídeo/imagem de fundo, título, subtítulo
+         ======================================== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__bg">
+        <!-- Trocar por <video> quando o cliente entregar o hero em MP4 (< 8 MB) -->
+        <img src="midia/Foto - Embarque.webp" alt="" loading="eager" width="2400" height="1400">
+      </div>
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span>Há 13 anos guiando mulheres ao redor do mundo</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          O mundo inteiro cabe <em>no seu bolso</em><br>
+          e na sua agenda.
+        </h1>
+
+        <p class="hero__sub">
+          Viagens internacionais em grupo fechado, com parcelamento em até 48× no boleto sem juros
+          e acompanhamento em português do embarque ao retorno. Sem viajar sozinha, sem falar inglês,
+          sem pagar à vista.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#roteiros" class="btn btn--primary">
+            Ver roteiros
+            <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" />
+            </svg>
+          </a>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--ghost">
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         2. TRUST BAR — números reais
+         Componente: .trust-bar (components.css)
+         Dinâmico (ACF Options Page): numeros_trust_bar (viajantes, anos, destinos, retorno)
+         Placeholders a substituir com dados reais — ver assets-pendentes.md.
+         ======================================== -->
+    <section class="trust-bar" aria-label="Números da Viagem com Estilo">
+      <div class="container">
+        <div class="trust-bar__inner">
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="2000">+2.000</div>
+            <div class="trust-item__label">viajantes embarcadas</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="13">13</div>
+            <div class="trust-item__label">anos de operação</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="20">+20</div>
+            <div class="trust-item__label">destinos por ano</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item__number" data-count="78">78%</div>
+            <div class="trust-item__label">voltam para uma segunda</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         3. ROTEIROS — GRID FILTRÁVEL por ano + continente
+         Componente: .card-roteiro + .filter-chips (components.css)
+         JS: js/ui.js #5 (filtro vive em data-filter-root)
+         Fixo: estrutura dos filtros
+         Dinâmico (CMS — Destino):
+           - lista de roteiros (post-type `destino`)
+           - taxonomias: `ano`, `continente`
+           - campos: hero_imagem, titulo, duracao_dias, continente,
+                     valor_total, parcelas, valor_parcela, selo_destaque
+         ======================================== -->
+    <section class="section section--warm" id="roteiros" aria-labelledby="roteiros-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Roteiros abertos</span>
+          <h2 class="section-title" id="roteiros-title">
+            Escolha o <em>próximo embarque</em>.<br>
+            Por ano, por continente, pelo sonho.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Todos os nossos grupos têm no máximo 15 pessoas, acompanhamento presencial e
+            parcelamento em até 48× no boleto sem juros.
+          </p>
+        </header>
+
+        <!-- [SEÇÃO: filtros + grid da home]
+             Componente: .filter-chips + .card-roteiro (components.css)
+             JS: js/ui.js #5 — filtra [data-card-roteiro] por data-ano / data-continente
+             Fixo: rótulos "Ano" / "Continente", chip "Todos"
+             Dinâmico: opções geradas a partir das taxonomias `ano` e `continente` -->
+        <div data-filter-root>
+        <div class="roteiros-toolbar">
+          <div class="filter-chips__group" role="group" aria-label="Filtrar por ano">
+            <span class="filter-chips__label">Por ano</span>
+            <div class="filter-chips__list">
+              <button type="button" class="chip is-active" data-filter="ano" data-value="todos">Todos</button>
+              <button type="button" class="chip" data-filter="ano" data-value="2026">2026</button>
+              <button type="button" class="chip" data-filter="ano" data-value="2027">2027</button>
+              <button type="button" class="chip" data-filter="ano" data-value="2028">2028</button>
+              <button type="button" class="chip" data-filter="ano" data-value="2029">2029</button>
+            </div>
+          </div>
+
+          <div class="filter-chips__group" role="group" aria-label="Filtrar por continente">
+            <span class="filter-chips__label">Por continente</span>
+            <div class="filter-chips__list">
+              <button type="button" class="chip is-active" data-filter="continente" data-value="todos">Todos</button>
+              <button type="button" class="chip" data-filter="continente" data-value="europa">Europa</button>
+              <button type="button" class="chip" data-filter="continente" data-value="america">América</button>
+              <button type="button" class="chip" data-filter="continente" data-value="africa">África</button>
+              <button type="button" class="chip" data-filter="continente" data-value="asia">Ásia</button>
+              <button type="button" class="chip" data-filter="continente" data-value="oriente-medio">Oriente Médio</button>
+              <button type="button" class="chip" data-filter="continente" data-value="oceania">Oceania</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="roteiros-grid">
+          <!-- [REPETIDOR: card-roteiro]
+               Componente: .card-roteiro (components.css)
+               Fixo: estrutura do card (imagem, badges, nome, meta, preço)
+               Dinâmico (CMS — Destino, loop):
+                 - ano, continente → data-attributes (para filtro)
+                 - hero_imagem, titulo, continente, duracao_dias
+                 - data_saida (formatada), valor_total, parcelas, valor_parcela
+                 - selo_destaque (se preenchido) → .card-roteiro__badge
+          -->
+
+          <!-- 1. África do Sul -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2026" data-continente="africa">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__badge">Mais vendido</span>
+              <span class="card-roteiro__year">2026</span>
+              <img src="midia/Africa do Sul.webp" alt="África do Sul — Cidade do Cabo, safáris e rota dos vinhos"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">África</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">África do Sul — safáris, vinhos e o fim do mundo</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>12 dias</span>
+                  <span>Saída 15/09/2026</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 891,66</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Eurotrip Pocket -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2026" data-continente="europa">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__badge">Últimas vagas</span>
+              <span class="card-roteiro__year">2026</span>
+              <img src="midia/Eurotrip Pocket.webp" alt="Eurotrip Pocket — Itália, França e Suíça em 12 dias"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">Europa</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Eurotrip Pocket — Itália, França e Suíça</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>12 dias</span>
+                  <span>Saída 08/10/2026</span>
+                  <span>Últimas 3 vagas</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 1.041,66</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Marrocos -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2026" data-continente="africa">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__year">2026</span>
+              <img src="midia/Marrocos.webp" alt="Marrocos — Marrakech, deserto e Chefchaouen"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">África</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Marrocos — deserto, medinas e o azul de Chefchaouen</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>10 dias</span>
+                  <span>Saída 12/11/2026</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 733,33</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. Grécia e Turquia -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2026" data-continente="europa">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__year">2026</span>
+              <img src="midia/Grécia e Turquia.webp" alt="Grécia e Turquia — Atenas, Santorini, Capadócia e Istambul"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">Europa · Oriente Médio</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Grécia e Turquia — dois continentes, uma viagem</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>14 dias</span>
+                  <span>Saída 03/06/2026</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 1.187,50</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. Maldivas -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2027" data-continente="asia">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__badge">Grupo exclusivo</span>
+              <span class="card-roteiro__year">2027</span>
+              <img src="midia/Maldivas.webp" alt="Maldivas — bangalôs sobre a água e snorkel"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">Ásia</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Maldivas — 8 dias de água cristalina</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>8 dias</span>
+                  <span>Saída 22/02/2027</span>
+                  <span>Grupo de 10</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 1.572,91</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. Eurotrip primavera -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2027" data-continente="europa">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__year">2027</span>
+              <img src="midia/Eurotrip primavera.webp" alt="Eurotrip primavera — Amsterdã, Paris e Roma em flor"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">Europa</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Eurotrip primavera — Amsterdã, Paris e Roma</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>15 dias</span>
+                  <span>Saída 14/04/2027</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 1.225,00</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7. Punta Cana -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2027" data-continente="america">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__year">2027</span>
+              <img src="midia/Punta Cana.webp" alt="Punta Cana — all inclusive, praia e descanso"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">América</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Punta Cana — all inclusive, praia e descanso</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>7 dias</span>
+                  <span>Saída 05/07/2027</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 558,33</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 8. China -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2027" data-continente="asia">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__year">2027</span>
+              <img src="midia/China.webp" alt="China — Pequim, Xangai e Muralha"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">Ásia</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">China — Muralha, Pequim e Xangai</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>13 dias</span>
+                  <span>Saída 09/09/2027</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 1.145,83</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 9. Leste Europeu -->
+          <article class="card-roteiro" data-card-roteiro data-ano="2028" data-continente="europa">
+            <a href="destino.html" class="card-roteiro__image">
+              <span class="card-roteiro__year">2028</span>
+              <img src="midia/Leste Europeu.webp" alt="Leste Europeu — Praga, Budapeste e Viena"
+                loading="lazy" width="800" height="600">
+            </a>
+            <div class="card-roteiro__body">
+              <div>
+                <div class="card-roteiro__cluster">Europa</div>
+                <h3 class="card-roteiro__name"><a href="destino.html">Leste Europeu — Praga, Budapeste e Viena</a></h3>
+                <div class="card-roteiro__meta">
+                  <span>12 dias</span>
+                  <span>Saída 18/05/2028</span>
+                  <span>Grupo fechado</span>
+                </div>
+              </div>
+              <div class="card-roteiro__footer">
+                <div class="card-roteiro__price">
+                  <span class="card-roteiro__price-hint">em até 48× de</span>
+                  <span class="card-roteiro__price-value">R$ 995,83</span>
+                  <span class="card-roteiro__price-period">no boleto, sem juros</span>
+                </div>
+                <a href="destino.html" class="btn btn--outline" style="padding: 10px 20px; min-height: 44px;">Ver roteiro</a>
+              </div>
+            </div>
+          </article>
+
+          <div class="roteiros-empty">
+            Nenhum roteiro encontrado para esta combinação de filtros.
+            Tente outra combinação ou <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">fale com a equipe no WhatsApp</a>.
+          </div>
+        </div>
+        </div><!-- /[data-filter-root] -->
+
+        <div class="roteiros__footer">
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--primary">
+            Não achou o destino? Fale com a equipe
+            <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         4. DIFERENCIAIS — 3 linhas alternadas
+         Componente: .diferencial (components.css)
+         Ordem real do cliente (ata 20/04/2026 § 6):
+           1. Pagamento (48× boleto)
+           2. Grupo fechado (máx. 15)
+           3. Acompanhamento + idioma
+         Dinâmico (ACF Options Page): imagens, números
+         ======================================== -->
+    <section class="section" aria-labelledby="diferenciais-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Por que com a gente</span>
+          <h2 class="section-title" id="diferenciais-title">
+            Três coisas que <em>mudam tudo</em>.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            O que separa quem sonha em viajar de quem realmente embarca é o tipo de agência
+            que faz os três pontos abaixo do mesmo jeito.
+          </p>
+        </header>
+
+        <div class="diferenciais">
+
+          <!-- Diferencial 1 — Pagamento -->
+          <article class="diferencial">
+            <div class="diferencial__image">
+              <img src="midia/Card - Boleto.webp" alt="Parcelas em até 48× no boleto sem juros"
+                loading="lazy" width="900" height="675">
+            </div>
+            <div class="diferencial__content">
+              <div class="diferencial__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <line x1="2" y1="10" x2="22" y2="10" />
+                </svg>
+              </div>
+              <h3 class="diferencial__title">48× no boleto, sem juros</h3>
+              <p class="diferencial__desc">
+                O valor cheio da viagem, dividido em até 48 parcelas iguais no boleto bancário.
+                Sem cartão, sem tarifa escondida, sem entrada obrigatória que dobra a primeira.
+                <strong>O mesmo preço à vista</strong> — só que cabendo na sua agenda financeira.
+              </p>
+              <a href="como-funciona.html#pagamento" class="btn btn--outline" style="margin-top: var(--space-5);">
+                Como funciona o parcelamento
+              </a>
+            </div>
+          </article>
+
+          <!-- Diferencial 2 — Grupo (imagem à direita) -->
+          <article class="diferencial diferencial--reverse">
+            <div class="diferencial__image">
+              <img src="midia/Card - Destino.webp" alt="Grupo fechado de mulheres viajantes"
+                loading="lazy" width="900" height="675">
+            </div>
+            <div class="diferencial__content">
+              <div class="diferencial__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <h3 class="diferencial__title">Grupo fechado de no máximo 15</h3>
+              <p class="diferencial__desc">
+                Você nunca viaja sozinha, nunca se perde num ônibus de 50. O grupo é pequeno
+                o bastante para a equipe conhecer o nome de cada viajante, grande o bastante
+                para você não ter medo de jantar fora. <strong>Quem parte conosco volta com amigas para a vida.</strong>
+              </p>
+              <a href="como-funciona.html#grupo" class="btn btn--outline" style="margin-top: var(--space-5);">
+                Como funciona o grupo
+              </a>
+            </div>
+          </article>
+
+          <!-- Diferencial 3 — Acompanhamento/Idioma -->
+          <article class="diferencial">
+            <div class="diferencial__image">
+              <img src="midia/Card - Embarque.webp" alt="Acompanhamento em português do embarque ao retorno"
+                loading="lazy" width="900" height="675">
+            </div>
+            <div class="diferencial__content">
+              <div class="diferencial__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+              </div>
+              <h3 class="diferencial__title">Guia em português, do embarque ao retorno</h3>
+              <p class="diferencial__desc">
+                Você não precisa falar inglês. Nunca. Nossa equipe acompanha o grupo no aeroporto,
+                no check-in, na imigração, no hotel, no passeio, no jantar, no imprevisto.
+                <strong>Tudo em português</strong> — do primeiro ao último minuto da viagem.
+              </p>
+              <a href="como-funciona.html#idioma" class="btn btn--outline" style="margin-top: var(--space-5);">
+                Como funciona o acompanhamento
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. BLOCO PAGAMENTO — reforço 48× no meio da página
+         Componente: .bloco-pagamento (components.css)
+         Dinâmico (ACF Options Page): número máximo de parcelas,
+         título e pontos de reforço.
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="bloco-pagamento">
+          <div class="bloco-pagamento__content">
+            <h2 class="bloco-pagamento__title">
+              Você vai dividir sua viagem em até 48 vezes. <em>Sem juros, de verdade.</em>
+            </h2>
+            <ul class="bloco-pagamento__points">
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Boleto bancário — sem depender de limite de cartão
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Mesmo preço à vista — zero tarifa escondida
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Contrato claro, valor fechado na reserva
+              </li>
+              <li class="bloco-pagamento__point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Simulação em poucos minutos pelo WhatsApp
+              </li>
+            </ul>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+              class="btn btn--white" style="margin-top: var(--space-8);">
+              Simular as parcelas do meu roteiro
+              <svg class="btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <path d="M4 10h12M12 6l4 4-4 4" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         6. DEPOIMENTOS (preview)
+         Componente: .card-depoimento (components.css)
+         Fixo: 3 cards
+         Dinâmico (CMS — Depoimento): listagem filtrada para destaque,
+         campos: foto, nome, cidade, destino, depoimento, estrelas
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="depoimentos-title">
+      <div class="container">
+        <header class="section-header section-header--split">
+          <div>
+            <span class="section-line" aria-hidden="true"></span>
+            <span class="label" style="display:block; margin-top:var(--space-4);">Quem já embarcou</span>
+            <h2 class="section-title" id="depoimentos-title">
+              <em>2.000 mulheres</em><br>
+              voltaram para contar.
+            </h2>
+          </div>
+          <a href="depoimentos.html" class="btn btn--outline">Ver todos os depoimentos</a>
+        </header>
+
+        <div class="depoimentos-grid">
+          <!-- [REPETIDOR: card-depoimento — preview home]
+               Componente: .card-depoimento
+               Dinâmico: foto, nome, cidade, destino, depoimento, estrelas -->
+
+          <article class="card-depoimento">
+            <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+            </div>
+            <blockquote class="card-depoimento__quote">
+              &ldquo;Eu achava que esse tipo de viagem não era para mim. Quando vi as parcelas caberem
+              no orçamento, marquei no mesmo mês — e a África do Sul me devolveu uma versão minha
+              que eu tinha esquecido.&rdquo;
+            </blockquote>
+            <div class="card-depoimento__author">
+              <div class="card-depoimento__avatar">
+                <!-- PLACEHOLDER — foto 800×800 -->
+                <img src="midia/Africa do Sul.webp" alt="" loading="lazy" width="96" height="96">
+              </div>
+              <div>
+                <div class="card-depoimento__name">Regina, 58 anos</div>
+                <div class="card-depoimento__dest">Curitiba · África do Sul 2026</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-depoimento">
+            <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+            </div>
+            <blockquote class="card-depoimento__quote">
+              &ldquo;Nunca tinha saído do Brasil. Tinha pavor de aeroporto. O guia ficou do meu lado do
+              primeiro ao último dia — e eu voltei tão confiante que já marquei a próxima.&rdquo;
+            </blockquote>
+            <div class="card-depoimento__author">
+              <div class="card-depoimento__avatar">
+                <img src="midia/Eurotrip Pocket.webp" alt="" loading="lazy" width="96" height="96">
+              </div>
+              <div>
+                <div class="card-depoimento__name">Marlene, 62 anos</div>
+                <div class="card-depoimento__dest">São Paulo · Eurotrip Pocket 2025</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-depoimento">
+            <div class="card-depoimento__stars" aria-label="5 de 5 estrelas">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,8.5 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 9,8.5" /></svg>
+            </div>
+            <blockquote class="card-depoimento__quote">
+              &ldquo;Embarquei achando que voltaria com fotos. Voltei com três amigas para a vida e
+              uma segunda viagem já agendada com o mesmo grupo.&rdquo;
+            </blockquote>
+            <div class="card-depoimento__author">
+              <div class="card-depoimento__avatar">
+                <img src="midia/Marrocos.webp" alt="" loading="lazy" width="96" height="96">
+              </div>
+              <div>
+                <div class="card-depoimento__name">Cristina, 55 anos</div>
+                <div class="card-depoimento__dest">Florianópolis · Marrocos 2025</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         7. FOUNDER (preview) — bloco curto
+         Componente: .founder (components.css)
+         Fixo: estrutura
+         Dinâmico (CMS — Página Sobre): foto, nome, bio curta, citação
+         ======================================== -->
+    <section class="section" aria-labelledby="founder-title">
+      <div class="container">
+        <div class="founder">
+          <div class="founder__image">
+            <!-- PLACEHOLDER — foto do(s) fundador(es) 1200×1500 -->
+            <img src="midia/Foto - Embarque.webp" alt="Equipe fundadora Viagem com Estilo"
+              loading="lazy" width="800" height="1000">
+          </div>
+          <div>
+            <span class="label">Quem está por trás</span>
+            <h2 class="founder__name" id="founder-title">
+              A gente não vende pacote.<br>
+              <em>A gente atravessa o mundo com você.</em>
+            </h2>
+            <div class="founder__bio">
+              <p>
+                Há 13 anos estamos do lado de mulheres que um dia pensaram que viajar para fora
+                era coisa de cinema. Em cada grupo que embarca, a equipe vai junto — do check-in
+                ao último jantar.
+              </p>
+              <p>
+                Não terceirizamos guia, não repassamos pacote pronto, não fingimos que o boleto
+                tem juros que não tem. O que a gente entrega é o que a gente mesma pegaria.
+              </p>
+            </div>
+            <blockquote class="founder__quote">
+              <p>&ldquo;Se é para viajar só uma vez na vida, que seja bem acompanhada.&rdquo;</p>
+            </blockquote>
+            <a href="sobre.html" class="btn btn--outline" style="margin-top: var(--space-7);">
+              Conhecer nossa história
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         8. POSTS RECENTES — preview do blog
+         Componente: .card-post (components.css)
+         Fixo: 3 cards + CTA "ver todos os posts"
+         Dinâmico (CMS — post nativo): últimos 3 posts publicados,
+         campos: imagem_capa, category, titulo, sumario, data, tempo_leitura
+         Briefing § 5: volume alto esperado (blog com IA "Viver de Ar")
+         ======================================== -->
+    <section class="section section--warm" aria-labelledby="blog-title">
+      <div class="container">
+        <header class="section-header section-header--split">
+          <div>
+            <span class="section-line" aria-hidden="true"></span>
+            <span class="label" style="display:block; margin-top:var(--space-4);">Leituras do blog</span>
+            <h2 class="section-title" id="blog-title">
+              Antes do embarque,<br>
+              <em>a gente prepara o terreno</em>.
+            </h2>
+          </div>
+          <a href="blog.html" class="btn btn--outline">Ver todos os posts</a>
+        </header>
+
+        <div class="posts-grid">
+          <article class="card-post">
+            <a href="blog-post.html" class="card-post__image">
+              <img src="midia/Africa do Sul.webp" alt="" loading="lazy" width="800" height="450">
+            </a>
+            <div class="card-post__body">
+              <span class="card-post__category">Primeira viagem</span>
+              <h3 class="card-post__title"><a href="blog-post.html">Passaporte, visto e vacinas: o checklist completo para sua primeira viagem internacional</a></h3>
+              <p class="card-post__excerpt">
+                Tudo o que você precisa preparar nos 90 dias antes de embarcar — e o que a agência faz por você.
+              </p>
+              <div class="card-post__meta">
+                <span>12 min de leitura</span>
+                <span>15/04/2026</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-post">
+            <a href="blog-post.html" class="card-post__image">
+              <img src="midia/Eurotrip primavera.webp" alt="" loading="lazy" width="800" height="450">
+            </a>
+            <div class="card-post__body">
+              <span class="card-post__category">Dicas</span>
+              <h3 class="card-post__title"><a href="blog-post.html">O que cabe numa mala de 23kg para uma eurotrip de 15 dias</a></h3>
+              <p class="card-post__excerpt">
+                Lista por clima, por ocasião e por nível de conforto — com foto do que realmente funciona.
+              </p>
+              <div class="card-post__meta">
+                <span>7 min de leitura</span>
+                <span>02/04/2026</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-post">
+            <a href="blog-post.html" class="card-post__image">
+              <img src="midia/Marrocos.webp" alt="" loading="lazy" width="800" height="450">
+            </a>
+            <div class="card-post__body">
+              <span class="card-post__category">Destinos</span>
+              <h3 class="card-post__title"><a href="blog-post.html">Marrocos para quem nunca foi à África: o roteiro mais fácil para começar</a></h3>
+              <p class="card-post__excerpt">
+                Por que começar pelo norte da África é mais tranquilo do que parece — e o que esperar.
+              </p>
+              <div class="card-post__meta">
+                <span>9 min de leitura</span>
+                <span>28/03/2026</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         9. FAQ TOP — objeções principais
+         Componente: .faq (components.css)
+         JS: js/ui.js #3 (accordion com aria-expanded)
+         Fixo: 5 perguntas-top da home
+         Dinâmico (ACF Options Page): lista de pergunta+resposta
+         ======================================== -->
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container" style="max-width: 820px;">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Perguntas frequentes</span>
+          <h2 class="section-title" id="faq-title">
+            As 5 dúvidas que <em>aparecem sempre</em>.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Se a sua não estiver aqui, manda no WhatsApp — a gente responde o dia inteiro.
+          </p>
+        </header>
+
+        <div class="faq">
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Como funciona o parcelamento em 48×?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                O valor total do roteiro é dividido em até 48 parcelas iguais no boleto bancário,
+                sem juros. O mesmo preço à vista — só distribuído no tempo que cabe no seu orçamento.
+                Não precisa de cartão de crédito nem de análise rigorosa.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Preciso falar inglês para viajar?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Não. Nosso guia acompanha o grupo do embarque ao retorno, falando português
+                em todas as etapas — aeroporto, imigração, hotel, passeio, restaurante e imprevistos.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>Posso viajar sozinha? Vou ficar isolada no grupo?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Pode sim — e a maioria embarca assim. O grupo tem no máximo 15 pessoas,
+                mulheres em perfil parecido ao seu. Em 13 anos, nunca tivemos alguém que
+                passasse o roteiro sozinha.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>E se eu precisar cancelar a viagem?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                A política de cancelamento é apresentada e assinada no contrato antes da primeira parcela.
+                O valor já pago pode ser transferido para outra viagem da agência em muitos casos —
+                converse com a equipe para entender como se aplica ao seu contrato.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <button class="faq__question" type="button">
+              <span>O que está incluso no valor do pacote?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">
+                Varia por roteiro (aéreo, hospedagem, refeições, passeios, seguro, guia).
+                A página de cada destino detalha o que está incluso e o que não está, sem ambiguidade.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-8);">
+          <a href="como-funciona.html#faq" class="btn btn--outline">Ver todas as perguntas</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         10. CTA FINAL
+         Componente: .cta-final (components.css)
+         Dinâmico (ACF Options Page): número WhatsApp
+         ======================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-final">
+          <span class="section-line section-line--center section-line--on-dark" aria-hidden="true"></span>
+          <h2 class="cta-final__title" style="margin-top: var(--space-5);">
+            O mundo está esperando. E cabe no seu bolso.
+          </h2>
+          <p class="cta-final__sub">
+            Converse com a equipe no WhatsApp. A gente entende o que você busca, sugere o destino
+            certo e simula as parcelas com você — sem compromisso.
+          </p>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+            class="btn btn--whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Falar com a equipe no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER
+       Componente: .footer (components.css)
+       Dinâmico (ACF Options Page): contato, redes, endereço
+       ======================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo" aria-label="Viagem com Estilo">
+            <img src="midia/Logo - branca1.webp" alt="Viagem com Estilo" width="120" height="auto">
+          </a>
+          <p class="footer__desc">
+            A solução para quem quer conhecer o mundo com segurança, conforto e parcelas que cabem
+            no bolso. Há 13 anos transformando sonhos em embarques.
+          </p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://youtube.com/@viagemcomestilo" target="_blank" rel="noopener" class="footer__social"
+              aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener" class="footer__social"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegação</div>
+          <a href="#roteiros">Roteiros</a>
+          <a href="como-funciona.html">Como funciona</a>
+          <a href="depoimentos.html">Depoimentos</a>
+          <a href="blog.html">Blog</a>
+          <a href="sobre.html">Sobre nós</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contato</div>
+          <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="mailto:contato@viagemcomestilo.com.br">E-mail</a>
+          <a href="https://www.google.com/maps/dir//Biosfera+Coworking" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://instagram.com/viagemcomestilo" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>&copy; 2026 Viagem com Estilo. Todos os direitos reservados.</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span>Desenvolvido por</span>
+          <a href="https://www.instagram.com/agencia_rtt/" target="_blank" rel="noopener"
+            aria-label="RT Marketing">
+            <img src="midia/Logo-RT-Marketing (1) 1 (1).webp" alt="RT Marketing" width="108" height="35"
+              style="object-fit:cover; display:block;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ========================================
+       WHATSAPP FLOAT
+       Componente: .whatsapp-float (components.css)
+       ======================================== -->
+  <a href="https://wa.me/<!-- WHATSAPP_NUMBER -->" target="_blank" rel="noopener"
+    class="whatsapp-float" aria-label="Falar com a equipe no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="js/ui.js"></script>
+</body>
+
+</html>
