@@ -415,6 +415,31 @@
 
 /* Mobile */
 @media (max-width: 600px) {
+  .mapa-interativo {
+    padding: var(--space-6) 0;
+  }
+
+  .mapa-interativo__stage {
+    padding: var(--space-2);
+    border-radius: var(--radius-lg);
+  }
+
+  .mapa-svg {
+    max-height: none;
+  }
+
+  .mapa-svg__badge-text {
+    font-size: 20px;
+  }
+
+  .mapa-svg__badge-bg {
+    stroke-width: 4;
+  }
+
+  .mapa-svg__label {
+    font-size: 16px;
+  }
+
   .mapa-drawer {
     width: 100vw;
     max-width: 100%;

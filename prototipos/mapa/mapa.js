@@ -50,10 +50,16 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
     return;
   }
 
-  // Projeção Natural Earth, ajustada para a viewBox com margem
+  // Projeção Natural Earth, ajustada para a viewBox com margem mínima.
+  // Filtra países sem continente (ex.: Antártida) para não desperdiçar
+  // espaço vertical e dar mais "zoom" nas massas continentais.
   const allFeatures = feature(world, world.objects.countries);
+  const renderedFeatures = {
+    type: 'FeatureCollection',
+    features: allFeatures.features.filter(f => isoMap[Number(f.id)])
+  };
   const projection = geoNaturalEarth1()
-    .fitExtent([[20, 30], [980, 470]], allFeatures);
+    .fitExtent([[8, 8], [992, 492]], renderedFeatures);
   const pathGen = geoPath(projection);
 
   // Roteamento a nível de polígono:
