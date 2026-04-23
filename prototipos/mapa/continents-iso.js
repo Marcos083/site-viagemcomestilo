@@ -2,13 +2,16 @@
  * Mapeamento ISO numérico (3166-1) → continente para agrupar os países
  * do Natural Earth 110m por continente.
  *
- * Nota: países com territórios ultramarinos (França, Reino Unido, EUA,
- * Países Baixos) aparecem geograficamente no continente do território
- * mas o id do país é único. Para o MVP, isso não é problema — o clique
- * vale o continente do país "mãe".
+ * Atribuição primária por país (ISO). Em runtime, cada polígono individual
+ * é re-roteado pelo centroide (ver CONTINENT_BBOX abaixo) para lidar com
+ * territórios ultramarinos (ex.: Guiana Francesa, que é ISO 250 "França"
+ * mas geograficamente está na América do Sul).
+ *
+ * América Central é uma categoria do site (não ISO oficial) — agrupa
+ * México, América Central continental e Caribe.
  */
 window.VCE_CONTINENT_BY_ISO = {
-  // ÁFRICA (54)
+  // ÁFRICA
   12:'africa', 24:'africa', 72:'africa', 86:'africa', 108:'africa', 120:'africa',
   132:'africa', 140:'africa', 148:'africa', 174:'africa', 178:'africa', 180:'africa',
   204:'africa', 226:'africa', 231:'africa', 232:'africa', 262:'africa', 266:'africa',
@@ -20,7 +23,7 @@ window.VCE_CONTINENT_BY_ISO = {
   748:'africa', 768:'africa', 788:'africa', 800:'africa', 818:'africa', 834:'africa',
   854:'africa', 894:'africa',
 
-  // ÁSIA (49 — exclui Rússia, classificada como Europa aqui)
+  // ÁSIA
   4:'asia',   31:'asia',  48:'asia',  50:'asia',  51:'asia',  64:'asia',
   96:'asia',  104:'asia', 116:'asia', 144:'asia', 156:'asia', 158:'asia',
   196:'asia', 268:'asia', 344:'asia', 356:'asia', 360:'asia', 364:'asia',
@@ -31,7 +34,7 @@ window.VCE_CONTINENT_BY_ISO = {
   760:'asia', 762:'asia', 764:'asia', 784:'asia', 792:'asia', 795:'asia',
   860:'asia', 887:'asia',
 
-  // EUROPA (47 — inclui Rússia e Turquia fica na Ásia)
+  // EUROPA (inclui Rússia inteira — ver WHOLE_COUNTRIES)
   8:'europa',  20:'europa',  40:'europa',  56:'europa',  70:'europa', 100:'europa',
   112:'europa', 191:'europa', 203:'europa', 208:'europa', 233:'europa', 234:'europa',
   246:'europa', 248:'europa', 250:'europa', 276:'europa', 292:'europa', 300:'europa',
@@ -41,48 +44,81 @@ window.VCE_CONTINENT_BY_ISO = {
   643:'europa', 674:'europa', 688:'europa', 703:'europa', 705:'europa', 724:'europa',
   752:'europa', 756:'europa', 804:'europa', 807:'europa', 826:'europa',
 
-  // AMÉRICA DO NORTE (inclui América Central e Caribe, ~41)
-  28:'america-norte',  44:'america-norte',  52:'america-norte',  60:'america-norte',
-  84:'america-norte',  92:'america-norte', 124:'america-norte', 136:'america-norte',
-  188:'america-norte', 192:'america-norte', 212:'america-norte', 214:'america-norte',
-  222:'america-norte', 238:'america-norte', 308:'america-norte', 320:'america-norte',
-  332:'america-norte', 340:'america-norte', 388:'america-norte', 474:'america-norte',
-  484:'america-norte', 500:'america-norte', 531:'america-norte', 533:'america-norte',
-  534:'america-norte', 535:'america-norte', 558:'america-norte', 591:'america-norte',
-  630:'america-norte', 652:'america-norte', 659:'america-norte', 660:'america-norte',
-  662:'america-norte', 663:'america-norte', 666:'america-norte', 670:'america-norte',
-  780:'america-norte', 796:'america-norte', 840:'america-norte', 850:'america-norte',
-  882:'america-norte',
+  // AMÉRICA DO NORTE (Canadá, EUA, Groenlândia, ilhas próximas ao Canadá)
+  124:'america-norte', 304:'america-norte', 666:'america-norte',
+  840:'america-norte',
 
-  // AMÉRICA DO SUL (13)
+  // AMÉRICA CENTRAL + CARIBE
+  28:'america-central',  44:'america-central',  52:'america-central',
+  60:'america-central',  84:'america-central',  92:'america-central',
+  136:'america-central', 188:'america-central', 192:'america-central',
+  212:'america-central', 214:'america-central', 222:'america-central',
+  308:'america-central', 320:'america-central', 332:'america-central',
+  340:'america-central', 388:'america-central', 474:'america-central',
+  484:'america-central', 500:'america-central', 531:'america-central',
+  533:'america-central', 534:'america-central', 535:'america-central',
+  558:'america-central', 591:'america-central', 630:'america-central',
+  652:'america-central', 659:'america-central', 660:'america-central',
+  662:'america-central', 663:'america-central', 670:'america-central',
+  780:'america-central', 796:'america-central', 850:'america-central',
+
+  // AMÉRICA DO SUL
   32:'america-sul',  68:'america-sul',  76:'america-sul', 152:'america-sul',
-  170:'america-sul', 218:'america-sul', 254:'america-sul', 328:'america-sul',
-  600:'america-sul', 604:'america-sul', 740:'america-sul', 858:'america-sul',
-  862:'america-sul',
+  170:'america-sul', 218:'america-sul', 238:'america-sul', 254:'america-sul',
+  328:'america-sul', 600:'america-sul', 604:'america-sul', 740:'america-sul',
+  858:'america-sul', 862:'america-sul',
 
-  // OCEANIA (25)
+  // OCEANIA
   16:'oceania',  36:'oceania',  90:'oceania', 162:'oceania', 166:'oceania',
   184:'oceania', 242:'oceania', 258:'oceania', 296:'oceania', 316:'oceania',
   334:'oceania', 527:'oceania', 540:'oceania', 548:'oceania', 554:'oceania',
   570:'oceania', 574:'oceania', 580:'oceania', 581:'oceania', 583:'oceania',
   584:'oceania', 585:'oceania', 598:'oceania', 612:'oceania', 772:'oceania',
-  776:'oceania', 798:'oceania', 876:'oceania'
-
-  // Antártida (10) omitida — não há roteiros
+  776:'oceania', 798:'oceania', 876:'oceania', 882:'oceania'
 };
 
 /**
- * Overrides de posição (x, y em coordenadas viewBox 1000x500) para
- * posicionar o badge numa região visualmente "óbvia" do continente,
- * em vez do centroide matemático — que pode cair fora da massa principal
- * quando há muitas ilhas (Oceania, Ásia).
- * Se ausente, usamos o centroide calculado por d3-geo.
+ * Bounding boxes geográficas (lon/lat) para roteamento a nível de polígono.
+ * Cada polígono de país tem seu centroide comparado à bbox do continente
+ * atribuído pelo ISO:
+ *  - se cair dentro da bbox do "seu" continente → mantém
+ *  - se cair fora → é re-roteado para o continente cuja bbox o contém
+ *
+ * Isso resolve: Guiana Francesa (ISO França=europa, centroide em
+ * america-sul bbox → vai pra américa-sul); Guadalupe/Martinica (idem →
+ * america-central); Chagos/Reunião (UK/FR → africa); etc.
+ */
+window.VCE_CONTINENT_BBOX = {
+  'america-central': { minLon: -117, maxLon: -58, minLat:  7,   maxLat:  33 },
+  'america-sul':     { minLon:  -85, maxLon: -30, minLat: -60,  maxLat:  13 },
+  'america-norte':   { minLon: -170, maxLon: -50, minLat:  15,  maxLat:  85 },
+  'europa':          { minLon:  -30, maxLon:  60, minLat:  35,  maxLat:  72 },
+  'africa':          { minLon:  -20, maxLon:  55, minLat: -40,  maxLat:  38 },
+  'asia':            { minLon:   25, maxLon: 180, minLat: -10,  maxLat:  80 },
+  'oceania':         { minLon:  105, maxLon: 180, minLat: -50,  maxLat:   0 }
+};
+
+/**
+ * Países cujo território deve ser tratado como UM bloco inteiro,
+ * ignorando o roteamento por polígono. Uso: países que cruzam bboxes
+ * mas que o editorial prefere manter visualmente coesos.
+ *   - Rússia (643): se roteado por polígono, se divide nos Urais.
+ *     Mantemos inteira em "europa" por simplicidade visual.
+ */
+window.VCE_WHOLE_COUNTRIES = new Set([643]);
+
+/**
+ * Posição do badge/label por continente, em coordenadas da viewBox
+ * (1000×500). Ajustado para ficar visualmente centralizado na massa
+ * principal de cada continente (não no centroide matemático, que cai
+ * em lugares estranhos quando há ilhas).
  */
 window.VCE_BADGE_OVERRIDES = {
-  'america-norte': [240, 170],
-  'america-sul':   [320, 360],
-  'europa':        [510, 155],
-  'africa':        [540, 295],
-  'asia':          [720, 180],
-  'oceania':       [830, 370]
+  'america-norte':   [205, 160],
+  'america-central': [260, 260],
+  'america-sul':     [320, 370],
+  'europa':          [515, 125],
+  'africa':          [540, 315],
+  'asia':            [705, 175],
+  'oceania':         [855, 395]
 };

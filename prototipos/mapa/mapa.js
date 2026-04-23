@@ -5,8 +5,8 @@
  * (evita dependência de CDN externo em produção).
  */
 
-import { geoNaturalEarth1, geoPath } from 'https://esm.sh/d3-geo@3';
-import { feature, merge }             from 'https://esm.sh/topojson-client@3';
+import { geoNaturalEarth1, geoPath, geoCentroid } from 'https://esm.sh/d3-geo@3';
+import { feature }                                 from 'https://esm.sh/topojson-client@3';
 
 const WORLD_ATLAS_URL = 'https://unpkg.com/world-atlas@2/countries-110m.json';
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -14,9 +14,11 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 (async function () {
   'use strict';
 
-  const data = window.VCE_MAPA_DATA;
-  const isoMap = window.VCE_CONTINENT_BY_ISO;
-  const overrides = window.VCE_BADGE_OVERRIDES || {};
+  const data      = window.VCE_MAPA_DATA;
+  const isoMap    = window.VCE_CONTINENT_BY_ISO;
+  const bboxMap   = window.VCE_CONTINENT_BBOX   || {};
+  const whole     = window.VCE_WHOLE_COUNTRIES  || new Set();
+  const overrides = window.VCE_BADGE_OVERRIDES  || {};
   if (!data || !isoMap) {
     console.error('[VCE Mapa] Dados ou mapping ISO ausentes.');
     return;
@@ -48,25 +50,62 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
     return;
   }
 
-  // Agrupa geometrias de país por continente (mapping ISO numérico)
-  const geomsByContinent = {};
-  world.objects.countries.geometries.forEach(g => {
-    const iso = Number(g.id);
-    const continent = isoMap[iso];
-    if (!continent) return;
-    (geomsByContinent[continent] ||= []).push(g);
-  });
-
   // Projeção Natural Earth, ajustada para a viewBox com margem
   const allFeatures = feature(world, world.objects.countries);
   const projection = geoNaturalEarth1()
     .fitExtent([[20, 30], [980, 470]], allFeatures);
   const pathGen = geoPath(projection);
 
-  // Render: um <path> merged por continente
-  Object.entries(geomsByContinent).forEach(([contId, geoms]) => {
-    const merged = merge(world, geoms);
-    const d = pathGen(merged);
+  // Roteamento a nível de polígono:
+  //   - país com ISO → continente default
+  //   - cada polígono (para MultiPolygon) tem seu centroide verificado
+  //     contra a bbox do continente. Se cair fora, é re-roteado para o
+  //     continente cuja bbox o contém. Resolve territórios ultramarinos
+  //     (Guiana Francesa, Guadalupe, Reunião, Chagos…).
+  //   - países em WHOLE_COUNTRIES (ex.: Rússia) ignoram o roteamento.
+  const inBBox = (lon, lat, b) =>
+    lon >= b.minLon && lon <= b.maxLon && lat >= b.minLat && lat <= b.maxLat;
+
+  const routePolygon = (coords, defaultCont) => {
+    const poly = { type: 'Polygon', coordinates: coords };
+    const [lon, lat] = geoCentroid(poly);
+    const defBBox = bboxMap[defaultCont];
+    if (defBBox && inBBox(lon, lat, defBBox)) return defaultCont;
+    for (const [contId, bbox] of Object.entries(bboxMap)) {
+      if (contId === defaultCont) continue;
+      if (inBBox(lon, lat, bbox)) return contId;
+    }
+    return defaultCont;
+  };
+
+  const polysByContinent = {};
+  allFeatures.features.forEach(f => {
+    const iso = Number(f.id);
+    const defaultCont = isoMap[iso];
+    if (!defaultCont) return;
+    const { geometry } = f;
+    if (!geometry) return;
+    const polys = geometry.type === 'Polygon'
+      ? [geometry.coordinates]
+      : geometry.type === 'MultiPolygon'
+        ? geometry.coordinates
+        : [];
+    const forceWhole = whole.has(iso);
+    polys.forEach(coords => {
+      const cont = forceWhole ? defaultCont : routePolygon(coords, defaultCont);
+      (polysByContinent[cont] ||= []).push(coords);
+    });
+  });
+
+  // Render: um <path> por continente, cada um como MultiPolygon
+  const featuresByContinent = {};
+  Object.entries(polysByContinent).forEach(([contId, polys]) => {
+    const f = {
+      type: 'Feature',
+      geometry: { type: 'MultiPolygon', coordinates: polys }
+    };
+    featuresByContinent[contId] = f;
+    const d = pathGen(f);
     if (!d) return;
     const el = document.createElementNS(SVG_NS, 'path');
     el.setAttribute('class', 'mapa-svg__continent');
@@ -86,14 +125,13 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
     return acc;
   }, {});
 
-  // Posição de cada continente (override > centroide d3)
+  // Posição de cada continente (override > centroide d3 da feature continental)
   const positions = {};
-  Object.entries(geomsByContinent).forEach(([contId, geoms]) => {
+  Object.entries(featuresByContinent).forEach(([contId, f]) => {
     if (overrides[contId]) {
       positions[contId] = overrides[contId];
     } else {
-      const merged = merge(world, geoms);
-      positions[contId] = pathGen.centroid(merged);
+      positions[contId] = pathGen.centroid(f);
     }
   });
 

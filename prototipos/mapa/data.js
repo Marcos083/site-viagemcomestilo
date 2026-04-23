@@ -9,12 +9,13 @@
  */
 window.VCE_MAPA_DATA = {
   continents: [
-    { id: 'america-norte', name: 'América do Norte' },
-    { id: 'america-sul',   name: 'América do Sul'   },
-    { id: 'europa',        name: 'Europa'           },
-    { id: 'africa',        name: 'África'           },
-    { id: 'asia',          name: 'Ásia'             },
-    { id: 'oceania',       name: 'Oceania'          }
+    { id: 'america-norte',   name: 'América do Norte' },
+    { id: 'america-central', name: 'América Central'  },
+    { id: 'america-sul',     name: 'América do Sul'   },
+    { id: 'europa',          name: 'Europa'           },
+    { id: 'africa',          name: 'África'           },
+    { id: 'asia',            name: 'Ásia'             },
+    { id: 'oceania',         name: 'Oceania'          }
   ],
   roteiros: [
     {
@@ -117,7 +118,7 @@ window.VCE_MAPA_DATA = {
     },
     {
       id: 'cancun',
-      continent: 'america-norte',
+      continent: 'america-central',
       paises: ['México'],
       titulo: 'Cancún & Riviera Maya',
       subtitulo: 'All-inclusive + Chichén Itzá e cenotes',
@@ -129,7 +130,7 @@ window.VCE_MAPA_DATA = {
     },
     {
       id: 'punta-cana',
-      continent: 'america-norte',
+      continent: 'america-central',
       paises: ['República Dominicana'],
       titulo: 'Punta Cana',
       subtitulo: 'Resort 5★ com pensão completa',
