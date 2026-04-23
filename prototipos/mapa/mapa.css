@@ -97,11 +97,15 @@
   stroke: var(--color-surface-warm);
   stroke-width: 1.5;
   cursor: pointer;
+  outline: none;
   transition: fill var(--duration-fast) var(--ease-default),
               transform var(--duration-fast) var(--ease-default);
   transform-origin: center;
   transform-box: fill-box;
 }
+
+.mapa-svg__continent:focus { outline: none; }
+.mapa-svg__continent::-moz-focus-inner { border: 0; }
 
 .mapa-svg__continent[data-count="0"] {
   cursor: default;
