@@ -55,51 +55,54 @@
 
           <title>Mapa-múndi — clique num continente para ver os roteiros</title>
 
-          <!-- OCEANO -->
+          <!-- OCEANO (fora do grupo de zoom — serve de plano de fundo) -->
           <rect class="mapa-svg__ocean" x="0" y="0" width="1000" height="500" />
 
-          <!-- PATHS DINÂMICOS: populados em runtime por mapa.js -->
-          <g data-continent-paths></g>
+          <!-- GRUPO DE ZOOM: tudo que deve animar ao clicar num continente -->
+          <g class="mapa-svg__zoom" data-mapa-zoom>
+            <!-- PATHS DINÂMICOS: populados em runtime por mapa.js -->
+            <g data-continent-paths></g>
 
-          <!-- LABELS -->
-          <g class="mapa-svg__labels">
-            <text class="mapa-svg__label" data-label="america-norte">América do Norte</text>
-            <text class="mapa-svg__label" data-label="america-central">América Central</text>
-            <text class="mapa-svg__label" data-label="america-sul">América do Sul</text>
-            <text class="mapa-svg__label" data-label="europa">Europa</text>
-            <text class="mapa-svg__label" data-label="africa">África</text>
-            <text class="mapa-svg__label" data-label="asia">Ásia</text>
-            <text class="mapa-svg__label" data-label="oceania">Oceania</text>
-          </g>
+            <!-- LABELS -->
+            <g class="mapa-svg__labels">
+              <text class="mapa-svg__label" data-label="america-norte">América do Norte</text>
+              <text class="mapa-svg__label" data-label="america-central">América Central</text>
+              <text class="mapa-svg__label" data-label="america-sul">América do Sul</text>
+              <text class="mapa-svg__label" data-label="europa">Europa</text>
+              <text class="mapa-svg__label" data-label="africa">África</text>
+              <text class="mapa-svg__label" data-label="asia">Ásia</text>
+              <text class="mapa-svg__label" data-label="oceania">Oceania</text>
+            </g>
 
-          <!-- BADGES de contagem -->
-          <g class="mapa-svg__badge" data-badge="america-norte">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
-          </g>
-          <g class="mapa-svg__badge" data-badge="america-central">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
-          </g>
-          <g class="mapa-svg__badge" data-badge="america-sul">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
-          </g>
-          <g class="mapa-svg__badge" data-badge="europa">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
-          </g>
-          <g class="mapa-svg__badge" data-badge="africa">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
-          </g>
-          <g class="mapa-svg__badge" data-badge="asia">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
-          </g>
-          <g class="mapa-svg__badge" data-badge="oceania">
-            <circle class="mapa-svg__badge-bg" r="18" />
-            <text class="mapa-svg__badge-text">0</text>
+            <!-- BADGES de contagem -->
+            <g class="mapa-svg__badge" data-badge="america-norte">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
+            <g class="mapa-svg__badge" data-badge="america-central">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
+            <g class="mapa-svg__badge" data-badge="america-sul">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
+            <g class="mapa-svg__badge" data-badge="europa">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
+            <g class="mapa-svg__badge" data-badge="africa">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
+            <g class="mapa-svg__badge" data-badge="asia">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
+            <g class="mapa-svg__badge" data-badge="oceania">
+              <circle class="mapa-svg__badge-bg" r="18" />
+              <text class="mapa-svg__badge-text">0</text>
+            </g>
           </g>
         </svg>
       </div>

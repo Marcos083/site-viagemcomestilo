@@ -25,6 +25,7 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
   }
 
   const svg       = document.querySelector('[data-mapa-svg]');
+  const zoomG     = svg?.querySelector('[data-mapa-zoom]');
   const pathsG    = svg?.querySelector('[data-continent-paths]');
   const loading   = document.querySelector('[data-mapa-loading]');
   const drawer    = document.querySelector('[data-mapa-drawer]');
@@ -186,7 +187,40 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
     lbl.setAttribute('y', cy + 38);
   });
 
-  /* ---------- 3. Drawer ---------- */
+  /* ---------- 3. Tap-to-zoom no continente clicado ---------- */
+
+  const VIEWBOX_W = 1000;
+  const VIEWBOX_H = 500;
+  const ZOOM_PAD  = 0.25; // 25% de folga ao redor do continente zoomado
+
+  const setOverlayHidden = (hidden) => {
+    svg.querySelectorAll('.mapa-svg__badge, .mapa-svg__labels').forEach(el => {
+      el.style.visibility = hidden ? 'hidden' : '';
+      el.style.opacity = hidden ? '0' : '';
+    });
+  };
+
+  const applyZoom = (pathEl) => {
+    const bbox = pathEl.getBBox();
+    const sx = (VIEWBOX_W * (1 - ZOOM_PAD)) / bbox.width;
+    const sy = (VIEWBOX_H * (1 - ZOOM_PAD)) / bbox.height;
+    const s  = Math.min(sx, sy, 5); // cap para não ampliar demais
+    const cx = bbox.x + bbox.width  / 2;
+    const cy = bbox.y + bbox.height / 2;
+    const tx = VIEWBOX_W / 2 - cx * s;
+    const ty = VIEWBOX_H / 2 - cy * s;
+    zoomG.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+    setOverlayHidden(true);
+    svg.classList.add('is-zoomed');
+  };
+
+  const resetZoom = () => {
+    zoomG.style.transform = '';
+    setOverlayHidden(false);
+    svg.classList.remove('is-zoomed');
+  };
+
+  /* ---------- 4. Drawer ---------- */
 
   const formatBRL = value =>
     value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
@@ -204,7 +238,10 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
     lastFocused = triggerNode || document.activeElement;
 
     svg.querySelectorAll('.is-selected').forEach(n => n.classList.remove('is-selected'));
-    if (triggerNode) triggerNode.classList.add('is-selected');
+    if (triggerNode) {
+      triggerNode.classList.add('is-selected');
+      applyZoom(triggerNode);
+    }
 
     titleEl.textContent = continent.name;
     countEl.textContent =
@@ -247,6 +284,7 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
     drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     svg.querySelectorAll('.is-selected').forEach(n => n.classList.remove('is-selected'));
+    resetZoom();
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   };
 
