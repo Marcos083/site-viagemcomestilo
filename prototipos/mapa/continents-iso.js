@@ -23,25 +23,26 @@ window.VCE_CONTINENT_BY_ISO = {
   748:'africa', 768:'africa', 788:'africa', 800:'africa', 818:'africa', 834:'africa',
   854:'africa', 894:'africa',
 
-  // ÁSIA
+  // ÁSIA (inclui Rússia — ver WHOLE_COUNTRIES)
   4:'asia',   31:'asia',  48:'asia',  50:'asia',  51:'asia',  64:'asia',
   96:'asia',  104:'asia', 116:'asia', 144:'asia', 156:'asia', 158:'asia',
   196:'asia', 268:'asia', 344:'asia', 356:'asia', 360:'asia', 364:'asia',
   368:'asia', 376:'asia', 392:'asia', 398:'asia', 400:'asia', 408:'asia',
   410:'asia', 414:'asia', 417:'asia', 418:'asia', 422:'asia', 446:'asia',
   458:'asia', 462:'asia', 496:'asia', 512:'asia', 524:'asia', 586:'asia',
-  608:'asia', 626:'asia', 634:'asia', 682:'asia', 702:'asia', 704:'asia',
-  760:'asia', 762:'asia', 764:'asia', 784:'asia', 792:'asia', 795:'asia',
-  860:'asia', 887:'asia',
+  608:'asia', 626:'asia', 634:'asia', 643:'asia', 682:'asia', 702:'asia',
+  704:'asia', 760:'asia', 762:'asia', 764:'asia', 784:'asia', 792:'asia',
+  795:'asia', 860:'asia', 887:'asia',
 
-  // EUROPA (inclui Rússia inteira — ver WHOLE_COUNTRIES)
+  // EUROPA (Rússia é tratada como Ásia — 77% do território é asiático
+  // e a ponta da Chukotka chega perto do Alasca, confundindo o mapa)
   8:'europa',  20:'europa',  40:'europa',  56:'europa',  70:'europa', 100:'europa',
   112:'europa', 191:'europa', 203:'europa', 208:'europa', 233:'europa', 234:'europa',
   246:'europa', 248:'europa', 250:'europa', 276:'europa', 292:'europa', 300:'europa',
   336:'europa', 348:'europa', 352:'europa', 372:'europa', 380:'europa', 428:'europa',
   438:'europa', 440:'europa', 442:'europa', 470:'europa', 492:'europa', 498:'europa',
   499:'europa', 528:'europa', 578:'europa', 616:'europa', 620:'europa', 642:'europa',
-  643:'europa', 674:'europa', 688:'europa', 703:'europa', 705:'europa', 724:'europa',
+  674:'europa', 688:'europa', 703:'europa', 705:'europa', 724:'europa',
   752:'europa', 756:'europa', 804:'europa', 807:'europa', 826:'europa',
 
   // AMÉRICA DO NORTE (Canadá, EUA, Groenlândia, ilhas próximas ao Canadá)
@@ -102,8 +103,9 @@ window.VCE_CONTINENT_BBOX = {
  * Países cujo território deve ser tratado como UM bloco inteiro,
  * ignorando o roteamento por polígono. Uso: países que cruzam bboxes
  * mas que o editorial prefere manter visualmente coesos.
- *   - Rússia (643): se roteado por polígono, se divide nos Urais.
- *     Mantemos inteira em "europa" por simplicidade visual.
+ *   - Rússia (643): atribuída a Ásia. Mantida inteira para não dividir
+ *     nos Urais e para que Kaliningrado (enclave europeu) não seja
+ *     re-roteado sozinho.
  */
 window.VCE_WHOLE_COUNTRIES = new Set([643]);
 
@@ -114,11 +116,11 @@ window.VCE_WHOLE_COUNTRIES = new Set([643]);
  * em lugares estranhos quando há ilhas).
  */
 window.VCE_BADGE_OVERRIDES = {
-  'america-norte':   [205, 160],
-  'america-central': [260, 260],
-  'america-sul':     [320, 370],
-  'europa':          [515, 125],
-  'africa':          [540, 315],
-  'asia':            [705, 175],
-  'oceania':         [855, 395]
+  'america-norte':   [230, 100],
+  'america-central': [265, 215],
+  'america-sul':     [335, 355],
+  'europa':          [510, 125],
+  'africa':          [540, 290],
+  'asia':            [735, 165],
+  'oceania':         [855, 370]
 };
