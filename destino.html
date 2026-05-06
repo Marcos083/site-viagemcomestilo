@@ -84,81 +84,117 @@
       .page-destino .resumo { grid-template-columns: 1fr; }
     }
 
-    /* Itinerário dia a dia */
-    .page-destino .itinerario {
+    /* Experiências em destaque */
+    .page-destino .experiencias-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    .page-destino .exp-card {
       display: flex;
       flex-direction: column;
-      gap: var(--space-5);
-    }
-    .page-destino .dia {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: var(--space-8);
-      padding: var(--space-8);
       background: var(--color-surface-white);
       border: 1px solid var(--color-border-subtle);
       border-radius: var(--radius-lg);
+      overflow: hidden;
       transition: all var(--duration-normal) var(--ease-default);
     }
-    .page-destino .dia:hover {
+    .page-destino .exp-card:hover {
       border-color: var(--color-border-strong);
       box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
-    .page-destino .dia__marker {
+    .page-destino .exp-card__image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .page-destino .exp-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-slow) var(--ease-default);
+    }
+    .page-destino .exp-card:hover .exp-card__image img { transform: scale(1.04); }
+    .page-destino .exp-card__body {
+      padding: var(--space-6);
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
-      padding-right: var(--space-6);
-      border-right: 1px solid var(--color-border-subtle);
+      gap: var(--space-3);
+      flex: 1;
     }
-    .page-destino .dia__num {
+    .page-destino .exp-card__title {
       font-family: var(--font-heading);
-      font-size: var(--font-size-xs);
-      font-weight: var(--font-weight-semibold);
-      letter-spacing: var(--tracking-wider);
-      text-transform: uppercase;
-      color: var(--color-brand-primary);
-    }
-    .page-destino .dia__label {
-      font-family: var(--font-heading);
-      font-size: var(--font-size-2xl);
-      line-height: var(--line-height-tight);
-      color: var(--color-text-primary);
-    }
-    .page-destino .dia__title {
-      font-family: var(--font-heading);
-      font-size: var(--font-size-lg);
+      font-size: var(--font-size-xl);
       line-height: var(--line-height-snug);
       color: var(--color-text-primary);
-      margin-bottom: var(--space-4);
     }
-    .page-destino .dia__desc {
+    .page-destino .exp-card__desc {
       font-size: var(--font-size-body);
       line-height: var(--line-height-relaxed);
       color: var(--color-text-secondary);
     }
-    .page-destino .dia__foto {
-      margin-top: var(--space-5);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      aspect-ratio: 16/9;
+    @media (max-width: 900px) {
+      .page-destino .experiencias-grid { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
     }
-    .page-destino .dia__foto img { width: 100%; height: 100%; object-fit: cover; }
-    @media (max-width: 800px) {
-      .page-destino .dia {
-        grid-template-columns: 1fr;
-        gap: var(--space-5);
-        padding: var(--space-6);
-      }
-      .page-destino .dia__marker {
-        flex-direction: row;
-        align-items: baseline;
-        gap: var(--space-3);
-        padding-right: 0;
-        padding-bottom: var(--space-4);
-        border-right: 0;
-        border-bottom: 1px solid var(--color-border-subtle);
-      }
+    @media (max-width: 600px) {
+      .page-destino .experiencias-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Nota personalização (abaixo das experiências) */
+    .page-destino .exp-nota {
+      margin-top: var(--space-7);
+      padding: var(--space-6);
+      background: var(--color-brand-primary-subtle);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-primary);
+    }
+    .page-destino .exp-nota strong { color: var(--color-brand-primary); }
+
+    /* Como montamos seu roteiro — 4 passos minimalistas */
+    .page-destino .processo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+      counter-reset: processo;
+    }
+    .page-destino .processo-step {
+      position: relative;
+      padding: var(--space-7) var(--space-5);
+      background: var(--color-surface-white);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      counter-increment: processo;
+    }
+    .page-destino .processo-step::before {
+      content: counter(processo, decimal-leading-zero);
+      display: block;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-brand-primary);
+      line-height: 1;
+      margin-bottom: var(--space-4);
+    }
+    .page-destino .processo-step__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      line-height: var(--line-height-snug);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+    }
+    .page-destino .processo-step__desc {
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-secondary);
+    }
+    @media (max-width: 900px) {
+      .page-destino .processo-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .page-destino .processo-grid { grid-template-columns: 1fr; }
     }
 
     /* Incluso / Não incluso */
@@ -382,7 +418,7 @@
               <path d="M4 10h12M12 6l4 4-4 4" />
             </svg>
           </a>
-          <a href="#itinerario" class="btn btn--ghost">Ver o itinerário</a>
+          <a href="#experiencias" class="btn btn--ghost">Ver experiências</a>
         </div>
       </div>
     </section>
@@ -491,174 +527,174 @@
 
 
     <!-- ========================================
-         4. ITINERÁRIO DIA A DIA
-         Componente: page-local .itinerario / .dia
-         Fixo: estrutura de cada dia (marker + título + descrição + foto opcional)
-         Dinâmico (CMS — Destino): repeater itinerario { dia, titulo, descricao, foto? }
+         4. EXPERIÊNCIAS EM DESTAQUE
+         Componente: page-local .experiencias-grid / .exp-card
+         Fixo: estrutura de cada card (foto + título + descrição)
+         Dinâmico (CMS — Destino): repeater experiencias { foto, titulo, descricao }
          ======================================== -->
-    <section class="section section--warm" id="itinerario" aria-labelledby="itinerario-title">
+    <section class="section section--warm" id="experiencias" aria-labelledby="experiencias-title">
       <div class="container">
         <header class="section-header">
           <span class="section-line" aria-hidden="true"></span>
-          <span class="label" style="display:block; margin-top:var(--space-4);">Itinerário</span>
-          <h2 class="section-title" id="itinerario-title">
-            12 dias, dia a dia.
+          <span class="label" style="display:block; margin-top:var(--space-4);">Experiências</span>
+          <h2 class="section-title" id="experiencias-title">
+            O que você vai viver na <em>África do Sul</em>.
           </h2>
           <p class="section-subtitle">
-            Da aterrissagem em Joanesburgo ao voo de volta saindo da Cidade do Cabo. Sem pressa, com tempo
-            para descansar entre cada etapa.
+            Os destaques desse destino — safáris, paisagens e cultura. O roteiro final é montado com você
+            em uma call, no ritmo e na ordem que fizerem sentido pra sua viagem.
           </p>
         </header>
 
-        <div class="itinerario">
+        <div class="experiencias-grid">
 
-          <!-- [CMS: itinerario[0]] -->
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 01</span>
-              <span class="dia__label">Chegada a Joanesburgo</span>
+          <!-- [CMS: experiencias[0]] -->
+          <article class="exp-card">
+            <div class="exp-card__image">
+              <img src="midia/Africa do Sul.webp" alt="Safári no Parque Kruger" loading="lazy" width="600" height="450">
             </div>
-            <div>
-              <h3 class="dia__title">Recepção no aeroporto e check-in</h3>
-              <p class="dia__desc">
-                Encontro com a equipe no aeroporto Oliver Tambo. Transfer em van privativa até o hotel na
-                região de Sandton. Jantar de boas-vindas em grupo, alinhamento do roteiro e descanso.
+            <div class="exp-card__body">
+              <h3 class="exp-card__title">Safári no Kruger</h3>
+              <p class="exp-card__desc">
+                Game drives ao amanhecer e ao entardecer dentro de uma das maiores reservas da África.
+                Chance real de ver os Big Five — leão, leopardo, elefante, búfalo e rinoceronte.
               </p>
             </div>
           </article>
 
-          <!-- [CMS: itinerario[1]] -->
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 02</span>
-              <span class="dia__label">Soweto e história</span>
+          <!-- [CMS: experiencias[1]] -->
+          <article class="exp-card">
+            <div class="exp-card__image">
+              <img src="midia/Africa do Sul.webp" alt="Cidade do Cabo e Table Mountain" loading="lazy" width="600" height="450">
             </div>
-            <div>
-              <h3 class="dia__title">City tour por Joanesburgo e Soweto</h3>
-              <p class="dia__desc">
-                Manhã no Apartheid Museum. À tarde, visita guiada a Soweto, incluindo a casa-museu de Nelson
-                Mandela e almoço típico em restaurante local. Retorno ao hotel no final da tarde.
+            <div class="exp-card__body">
+              <h3 class="exp-card__title">Cidade do Cabo e Table Mountain</h3>
+              <p class="exp-card__desc">
+                Subida de teleférico à Table Mountain, V&amp;A Waterfront e caminhada pelo Bo-Kaap, o
+                bairro colorido. Uma das cidades mais bonitas do mundo, com vista pra dois oceanos.
               </p>
             </div>
           </article>
 
-          <!-- [CMS: itinerario[2]] — com foto -->
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 03</span>
-              <span class="dia__label">Parque Kruger</span>
+          <!-- [CMS: experiencias[2]] -->
+          <article class="exp-card">
+            <div class="exp-card__image">
+              <img src="midia/Africa do Sul.webp" alt="Vinícolas em Stellenbosch" loading="lazy" width="600" height="450">
             </div>
-            <div>
-              <h3 class="dia__title">Voo interno + primeiro safári</h3>
-              <p class="dia__desc">
-                Voo curto até Nelspruit/Skukuza. Transfer para o lodge dentro da reserva. Após o almoço,
-                primeiro game drive ao entardecer — uma das melhores janelas para ver leões e elefantes.
-              </p>
-              <!-- [CMS: itinerario[2].foto] -->
-              <div class="dia__foto">
-                <img src="midia/Africa do Sul.webp" alt="Safári no Parque Kruger" loading="lazy" width="800" height="450">
-              </div>
-            </div>
-          </article>
-
-          <!-- [CMS: itinerario[3]] -->
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 04</span>
-              <span class="dia__label">Kruger</span>
-            </div>
-            <div>
-              <h3 class="dia__title">Dia inteiro de safári</h3>
-              <p class="dia__desc">
-                Duas saídas de game drive (amanhecer e fim de tarde), com almoço no lodge e tempo para
-                descanso. Chance real de completar os Big Five em 48h.
+            <div class="exp-card__body">
+              <h3 class="exp-card__title">Rota dos vinhos</h3>
+              <p class="exp-card__desc">
+                Stellenbosch e Franschhoek — degustação harmonizada em vinícolas clássicas, almoço regional
+                e paisagem de montanhas que rivaliza com a Toscana.
               </p>
             </div>
           </article>
 
-          <!-- [CMS: itinerario[4]] -->
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 05</span>
-              <span class="dia__label">Kruger → Cape Town</span>
+          <!-- [CMS: experiencias[3]] -->
+          <article class="exp-card">
+            <div class="exp-card__image">
+              <img src="midia/Africa do Sul.webp" alt="Cabo da Boa Esperança e pinguins de Boulders Beach" loading="lazy" width="600" height="450">
             </div>
-            <div>
-              <h3 class="dia__title">Voo para a Cidade do Cabo</h3>
-              <p class="dia__desc">
-                Último game drive pela manhã, transfer ao aeroporto e voo para Cape Town. Check-in no hotel
-                na V&amp;A Waterfront. Noite livre para explorar o porto.
+            <div class="exp-card__body">
+              <h3 class="exp-card__title">Cabo da Boa Esperança</h3>
+              <p class="exp-card__desc">
+                Farol do Cape Point, o ponto onde dois oceanos se encontram, e a colônia de pinguins
+                de Boulders Beach. Almoço à beira-mar com vista pra falésia.
               </p>
             </div>
           </article>
 
-          <!-- [CMS: itinerario[5..9]] — dias seguintes -->
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 06</span>
-              <span class="dia__label">Table Mountain</span>
+          <!-- [CMS: experiencias[4]] -->
+          <article class="exp-card">
+            <div class="exp-card__image">
+              <img src="midia/Africa do Sul.webp" alt="Soweto e museu do Apartheid" loading="lazy" width="600" height="450">
             </div>
-            <div>
-              <h3 class="dia__title">Table Mountain e centro histórico</h3>
-              <p class="dia__desc">
-                Subida de teleférico à Table Mountain com vista panorâmica. À tarde, caminhada pelo
-                Bo-Kaap (o bairro colorido) e Companhia's Garden.
+            <div class="exp-card__body">
+              <h3 class="exp-card__title">Soweto e história</h3>
+              <p class="exp-card__desc">
+                Apartheid Museum, casa-museu de Nelson Mandela e almoço típico em Soweto. A história
+                que moldou a África do Sul moderna, contada por quem viveu ela.
               </p>
             </div>
           </article>
 
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 07</span>
-              <span class="dia__label">Península do Cabo</span>
+          <!-- [CMS: experiencias[5]] -->
+          <article class="exp-card">
+            <div class="exp-card__image">
+              <img src="midia/Africa do Sul.webp" alt="Pôr do sol em Cape Town" loading="lazy" width="600" height="450">
             </div>
-            <div>
-              <h3 class="dia__title">Cabo da Boa Esperança e pinguins</h3>
-              <p class="dia__desc">
-                Dia inteiro pela península: farol do Cape Point, Cabo da Boa Esperança e a colônia de
-                pinguins em Boulders Beach. Almoço à beira-mar.
+            <div class="exp-card__body">
+              <h3 class="exp-card__title">Pôr do sol em Camps Bay</h3>
+              <p class="exp-card__desc">
+                Praia chique de Cape Town com vista para os Doze Apóstolos. Drinks ao entardecer, com
+                a montanha pegando fogo no laranja — o melhor jeito de fechar o dia.
               </p>
             </div>
           </article>
 
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 08</span>
-              <span class="dia__label">Rota dos vinhos</span>
-            </div>
-            <div>
-              <h3 class="dia__title">Stellenbosch e Franschhoek</h3>
-              <p class="dia__desc">
-                Passeio guiado por vinícolas clássicas da região, com degustação harmonizada e almoço
-                regional. Volta à Cidade do Cabo no fim da tarde.
-              </p>
-            </div>
+        </div>
+
+        <p class="exp-nota">
+          <strong>Cada roteiro é único.</strong>
+          Você escolhe o que mais te empolga, define o ritmo e a duração com a nossa equipe.
+          Veja abaixo como funciona.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         5. COMO MONTAMOS SEU ROTEIRO
+         Fixo: 4 passos (conteúdo institucional, igual em todo destino)
+         Dinâmico: nenhum
+         Componente: page-local .processo-grid / .processo-step
+         ======================================== -->
+    <section class="section" aria-labelledby="processo-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-line section-line--center" aria-hidden="true"></span>
+          <span class="label" style="display:block; margin-top:var(--space-4);">Como funciona</span>
+          <h2 class="section-title" id="processo-title">
+            Como montamos seu roteiro.
+          </h2>
+          <p class="section-subtitle" style="margin-inline: auto;">
+            Nada de pacote engessado. A gente conversa, entende o seu momento, e desenha a viagem
+            do seu jeito — antes de você fechar.
+          </p>
+        </header>
+
+        <div class="processo-grid">
+
+          <article class="processo-step">
+            <h3 class="processo-step__title">Conversa inicial</h3>
+            <p class="processo-step__desc">
+              Bate-papo no WhatsApp pra entender o que você busca: ritmo, companhia, datas, orçamento
+              e o que faz sua viagem dos sonhos.
+            </p>
           </article>
 
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dias 09–11</span>
-              <span class="dia__label">Cidade do Cabo</span>
-            </div>
-            <div>
-              <h3 class="dia__title">Robben Island, Kalk Bay e tempo livre</h3>
-              <p class="dia__desc">
-                Visita guiada a Robben Island, manhã em Kalk Bay, compras na V&amp;A Waterfront e tempo livre
-                para você explorar no seu ritmo. Jantar de encerramento no dia 11.
-              </p>
-            </div>
+          <article class="processo-step">
+            <h3 class="processo-step__title">Proposta personalizada</h3>
+            <p class="processo-step__desc">
+              Em até 48h, você recebe um roteiro desenhado pra você — com hotéis, experiências,
+              tempo livre e valores claros.
+            </p>
           </article>
 
-          <article class="dia">
-            <div class="dia__marker">
-              <span class="dia__num">Dia 12</span>
-              <span class="dia__label">Retorno ao Brasil</span>
-            </div>
-            <div>
-              <h3 class="dia__title">Transfer ao aeroporto</h3>
-              <p class="dia__desc">
-                Transfer em horário compatível com o voo de retorno. Acompanhamento da equipe até o check-in.
-              </p>
-            </div>
+          <article class="processo-step">
+            <h3 class="processo-step__title">Ajustes finos</h3>
+            <p class="processo-step__desc">
+              Mais um dia em Cape Town? Trocar safári por praia? Mexemos junto até a viagem ficar
+              do jeito que você imagina.
+            </p>
+          </article>
+
+          <article class="processo-step">
+            <h3 class="processo-step__title">Reserva e preparação</h3>
+            <p class="processo-step__desc">
+              Contrato, parcelamento em até 48× e checklist completo de documentos. Você cuida de
+              fazer as malas, a gente cuida do resto.
+            </p>
           </article>
 
         </div>
@@ -716,7 +752,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Game drives, passeios e ingressos listados no itinerário</span>
+                <span>Game drives, passeios e ingressos do programa</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -754,7 +790,7 @@
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
-                <span>Refeições não mencionadas no itinerário</span>
+                <span>Refeições não mencionadas no roteiro</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -782,7 +818,7 @@
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
-                <span>Passeios opcionais não listados no itinerário</span>
+                <span>Passeios opcionais não listados no roteiro</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
