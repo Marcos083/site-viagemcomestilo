@@ -128,9 +128,28 @@
   padding: 20px 0;
   transition: all var(--duration-slow) var(--ease-default);
 }
-.navbar.is-scrolled {
+
+/* Background blurado vai num pseudo-elemento, não no .navbar.
+   backdrop-filter no próprio .navbar transforma ele em containing block
+   pra descendentes position:fixed — o que fazia o overlay do menu
+   mobile (.navbar__links inset:0 fixed) se posicionar relativo ao
+   navbar bar (~60px) em vez do viewport quando scrolled, encolhendo
+   pra uma faixa no topo. O ::before resolve sem mudar o visual. */
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: background var(--duration-slow) var(--ease-default),
+              backdrop-filter var(--duration-slow) var(--ease-default);
+}
+.navbar.is-scrolled::before {
   background: rgba(253, 253, 251, 0.95);
   backdrop-filter: blur(20px);
+}
+
+.navbar.is-scrolled {
   padding: 12px 0;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
 }
