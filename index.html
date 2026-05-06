@@ -158,8 +158,17 @@
          ======================================== -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__bg">
-        <!-- Trocar por <video> quando o cliente entregar o hero em MP4 (< 8 MB) -->
-        <img src="midia/Foto - Embarque.webp" alt="" loading="eager" width="2400" height="1400">
+        <!-- Hero em vídeo. Poster = primeiro frame visível antes do MP4 carregar /
+             fallback acessível pra reduce-motion. autoplay+muted+playsinline são
+             obrigatórios pra reprodução automática em mobile. -->
+        <video autoplay muted loop playsinline preload="auto"
+               poster="midia/Foto - Embarque.webp"
+               aria-hidden="true"
+               width="2400" height="1400">
+          <source src="https://raw.githubusercontent.com/Marcos083/site-assets/refs/heads/main/background-hero.mp4" type="video/mp4">
+          <!-- Fallback pra navegador sem suporte ou conexão lenta -->
+          <img src="midia/Foto - Embarque.webp" alt="" width="2400" height="1400">
+        </video>
       </div>
       <div class="hero__overlay"></div>
 
