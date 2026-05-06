@@ -52,16 +52,45 @@
 
     .page-como .metodo-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: var(--space-7);
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      column-gap: var(--space-8);
+      row-gap: var(--space-10);
+    }
+
+    .page-como .metodo-grid .step {
+      grid-column: span 2;
+    }
+
+    .page-como .metodo-grid .step:nth-child(4) {
+      grid-column: 2 / span 2;
+      grid-row: 2;
+    }
+
+    .page-como .metodo-grid .step:nth-child(5) {
+      grid-column: 4 / span 2;
+      grid-row: 2;
     }
 
     @media (max-width: 1100px) {
-      .page-como .metodo-grid { grid-template-columns: repeat(3, 1fr); }
+      .page-como .metodo-grid {
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: var(--space-7);
+        row-gap: var(--space-9);
+      }
+      .page-como .metodo-grid .step,
+      .page-como .metodo-grid .step:nth-child(4),
+      .page-como .metodo-grid .step:nth-child(5) {
+        grid-column: auto;
+        grid-row: auto;
+      }
     }
 
     @media (max-width: 700px) {
-      .page-como .metodo-grid { grid-template-columns: 1fr; gap: var(--space-9); }
+      .page-como .metodo-grid {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: var(--space-9);
+      }
     }
 
     .page-como .inclusos {
