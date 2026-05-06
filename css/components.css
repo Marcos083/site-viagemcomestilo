@@ -893,6 +893,8 @@
   line-height: var(--line-height-snug);
   max-width: 700px;
   margin-bottom: var(--space-8);
+  /* override do reset h1-h6 em base.css (que força text-primary escuro) */
+  color: var(--color-text-on-dark);
 }
 .bloco-pagamento__points {
   display: flex;
@@ -1060,6 +1062,8 @@
   line-height: var(--line-height-snug);
   max-width: 700px;
   margin: 0 auto var(--space-6);
+  /* override do reset h1-h6 em base.css (que força text-primary escuro) */
+  color: var(--color-text-on-dark);
 }
 .cta-final__sub {
   font-size: var(--font-size-md);
