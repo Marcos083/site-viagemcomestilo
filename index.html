@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="prototipos/mapa/mapa.css">
 
   <style>
     /* ---------- PAGE-LOCAL — .page-home ----------
@@ -227,7 +228,113 @@
 
 
     <!-- ========================================
-         3. ROTEIROS — GRID FILTRÁVEL por ano + continente
+         3. MAPA INTERATIVO — descoberta por continente
+         Componente: .mapa-interativo (prototipos/mapa/mapa.css)
+         JS:    prototipos/mapa/{data.js, continents-iso.js, mapa.js (module)}
+         Fixo:  estrutura SVG, título, legenda
+         Dinâmico:
+           - Geometria: Natural Earth 110m (d3-geo + topojson via CDN — protótipo;
+                        em produção, baixar topologia + ISO mapping localmente)
+           - Lista de roteiros: window.VCE_MAPA_DATA (mock no protótipo;
+                        em produção via REST do WP — /wp-json/vce/v1/roteiros)
+         Posição: depois do trust-bar, antes do grid filtrável.
+         O mapa é alternativa visual ao grid abaixo.
+         ======================================== -->
+    <section class="mapa-interativo" aria-labelledby="mapa-title">
+      <div class="mapa-interativo__container">
+
+        <header class="mapa-interativo__header">
+          <span class="mapa-interativo__label">Descubra nossos destinos</span>
+          <h2 class="mapa-interativo__title" id="mapa-title">
+            Comece pelo continente que <em>sempre te chamou</em>.
+          </h2>
+          <p class="mapa-interativo__lead">
+            Clique num continente pra ver os roteiros, datas e parcelamento. Ou veja todos
+            organizados na grade logo abaixo.
+          </p>
+        </header>
+
+        <div class="mapa-interativo__stage">
+          <div class="mapa-svg__loading" data-mapa-loading>
+            <span class="mapa-svg__loading-spinner" aria-hidden="true"></span>
+            <span>Carregando mapa…</span>
+          </div>
+
+          <svg
+            data-mapa-svg
+            class="mapa-svg"
+            viewBox="0 0 1000 500"
+            preserveAspectRatio="xMidYMid meet"
+            xmlns="http://www.w3.org/2000/svg"
+            role="group"
+            aria-label="Mapa-múndi interativo com seis continentes"
+            hidden>
+
+            <title>Mapa-múndi — clique num continente para ver os roteiros</title>
+
+            <rect class="mapa-svg__ocean" x="0" y="0" width="1000" height="500" />
+
+            <g class="mapa-svg__zoom" data-mapa-zoom>
+              <g data-continent-paths></g>
+
+              <g class="mapa-svg__labels">
+                <text class="mapa-svg__label" data-label="america-norte">América do Norte</text>
+                <text class="mapa-svg__label" data-label="america-central">América Central</text>
+                <text class="mapa-svg__label" data-label="america-sul">América do Sul</text>
+                <text class="mapa-svg__label" data-label="europa">Europa</text>
+                <text class="mapa-svg__label" data-label="africa">África</text>
+                <text class="mapa-svg__label" data-label="asia">Ásia</text>
+                <text class="mapa-svg__label" data-label="oceania">Oceania</text>
+              </g>
+
+              <g class="mapa-svg__badge" data-badge="america-norte">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+              <g class="mapa-svg__badge" data-badge="america-central">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+              <g class="mapa-svg__badge" data-badge="america-sul">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+              <g class="mapa-svg__badge" data-badge="europa">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+              <g class="mapa-svg__badge" data-badge="africa">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+              <g class="mapa-svg__badge" data-badge="asia">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+              <g class="mapa-svg__badge" data-badge="oceania">
+                <circle class="mapa-svg__badge-bg" r="18" />
+                <text class="mapa-svg__badge-text">0</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="mapa-interativo__legend" aria-hidden="true">
+          <span class="mapa-interativo__legend-item">
+            <span class="mapa-interativo__legend-dot"></span>
+            Continente com roteiros disponíveis
+          </span>
+          <span class="mapa-interativo__legend-item">
+            <span class="mapa-interativo__legend-dot mapa-interativo__legend-dot--muted"></span>
+            Em breve
+          </span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+         4. ROTEIROS — GRID FILTRÁVEL por ano + continente
          Componente: .card-roteiro + .filter-chips (components.css)
          JS: js/ui.js #5 (filtro vive em data-filter-root)
          Fixo: estrutura dos filtros
@@ -573,7 +680,7 @@
 
 
     <!-- ========================================
-         4. DIFERENCIAIS — 3 linhas alternadas
+         5. DIFERENCIAIS — 3 linhas alternadas
          Componente: .diferencial (components.css)
          Ordem real do cliente (ata 20/04/2026 § 6):
            1. Pagamento (48× boleto)
@@ -678,7 +785,7 @@
 
 
     <!-- ========================================
-         5. BLOCO PAGAMENTO — reforço 48× no meio da página
+         6. BLOCO PAGAMENTO — reforço 48× no meio da página
          Componente: .bloco-pagamento (components.css)
          Dinâmico (ACF Options Page): número máximo de parcelas,
          título e pontos de reforço.
@@ -731,7 +838,7 @@
 
 
     <!-- ========================================
-         6. DEPOIMENTOS (preview)
+         7. DEPOIMENTOS (preview)
          Componente: .card-depoimento (components.css)
          Fixo: 3 cards
          Dinâmico (CMS — Depoimento): listagem filtrada para destaque,
@@ -832,7 +939,7 @@
 
 
     <!-- ========================================
-         7. FOUNDER (preview) — bloco curto
+         8. FOUNDER (preview) — bloco curto
          Componente: .founder (components.css)
          Fixo: estrutura
          Dinâmico (CMS — Página Sobre): foto, nome, bio curta, citação
@@ -875,7 +982,7 @@
 
 
     <!-- ========================================
-         8. POSTS RECENTES — preview do blog
+         9. POSTS RECENTES — preview do blog
          Componente: .card-post (components.css)
          Fixo: 3 cards + CTA "ver todos os posts"
          Dinâmico (CMS — post nativo): últimos 3 posts publicados,
@@ -953,7 +1060,7 @@
 
 
     <!-- ========================================
-         9. FAQ TOP — objeções principais
+         10. FAQ TOP — objeções principais
          Componente: .faq (components.css)
          JS: js/ui.js #3 (accordion com aria-expanded)
          Fixo: 5 perguntas-top da home
@@ -1077,7 +1184,7 @@
 
 
     <!-- ========================================
-         10. CTA FINAL
+         11. CTA FINAL
          Componente: .cta-final (components.css)
          Dinâmico (ACF Options Page): número WhatsApp
          ======================================== -->
@@ -1181,6 +1288,38 @@
 
 
   <!-- ========================================
+       MAPA INTERATIVO — DRAWER
+       Painel lateral com a lista de roteiros do continente clicado.
+       Backdrop + drawer ficam fora do <main> porque são fixed/overlay.
+       ======================================== -->
+  <div class="mapa-drawer__backdrop" data-mapa-backdrop aria-hidden="true"></div>
+
+  <aside class="mapa-drawer"
+         data-mapa-drawer
+         role="dialog"
+         aria-modal="true"
+         aria-hidden="true"
+         aria-labelledby="mapa-drawer-title">
+    <header class="mapa-drawer__header">
+      <div class="mapa-drawer__header-text">
+        <span class="mapa-drawer__eyebrow">Roteiros em</span>
+        <h2 class="mapa-drawer__title" id="mapa-drawer-title" data-mapa-drawer-title>—</h2>
+        <p class="mapa-drawer__count" data-mapa-drawer-count></p>
+      </div>
+      <button type="button" class="mapa-drawer__close"
+              data-mapa-close
+              aria-label="Fechar lista de roteiros">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+    <div class="mapa-drawer__list" data-mapa-drawer-list></div>
+  </aside>
+
+
+  <!-- ========================================
        WHATSAPP FLOAT
        Componente: .whatsapp-float (components.css)
        ======================================== -->
@@ -1190,6 +1329,11 @@
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
     </svg>
   </a>
+
+  <!-- Mapa interativo: dados (mock no protótipo, REST do WP em produção) + ISO mapping + lógica -->
+  <script src="prototipos/mapa/data.js"></script>
+  <script src="prototipos/mapa/continents-iso.js"></script>
+  <script type="module" src="prototipos/mapa/mapa.js"></script>
 
   <script src="js/ui.js"></script>
 </body>
