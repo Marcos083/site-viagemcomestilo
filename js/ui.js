@@ -33,24 +33,34 @@
   const toggle = document.querySelector('.navbar__toggle');
   const links = document.querySelector('.navbar__links');
   if (toggle && links) {
+    const syncExpanded = (isOpen) => {
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    };
     const open = () => {
       links.classList.add('is-open');
       toggle.classList.add('is-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('is-menu-open');
+      syncExpanded(true);
     };
     const close = () => {
       links.classList.remove('is-open');
       toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+      document.body.classList.remove('is-menu-open');
+      syncExpanded(false);
     };
     toggle.setAttribute('aria-controls', 'navbar-links');
-    toggle.setAttribute('aria-expanded', 'false');
+    syncExpanded(false);
     toggle.addEventListener('click', () => {
       links.classList.contains('is-open') ? close() : open();
     });
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900 && links.classList.contains('is-open')) close();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && links.classList.contains('is-open')) close();
+    });
   }
 
   /* ---------- 3. FAQ ACCORDION ---------- */
