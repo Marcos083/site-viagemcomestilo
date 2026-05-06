@@ -197,7 +197,14 @@
 .navbar.is-scrolled .navbar__toggle span { background: var(--color-text-primary); }
 
 @media (max-width: 900px) {
-  .navbar__toggle { display: flex; }
+  .navbar__toggle {
+    display: flex;
+    /* O overlay .navbar__links é position:fixed com z-index dentro do
+       stacking do navbar (z 99). Sem position+z-index aqui, o toggle
+       ficaria atrás do overlay e o usuário não conseguiria fechar o menu. */
+    position: relative;
+    z-index: var(--z-header);
+  }
 
   .navbar__links {
     display: none;
@@ -224,6 +231,11 @@
 body.is-menu-open {
   overflow: hidden;
 }
+
+/* O float do WhatsApp vive em z-index --z-float (1000), acima do navbar
+   (z 100). Quando o menu mobile está aberto, ele perfuraria o overlay
+   escuro. Esconde enquanto o menu cobre a tela. */
+body.is-menu-open .whatsapp-float { display: none; }
 
 
 /* =============================================
