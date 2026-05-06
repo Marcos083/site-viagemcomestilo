@@ -6,6 +6,12 @@
  * Estrutura mínima que o componente espera:
  *   continent: id do continente (casa com `continents[].id` e `data-continent` do SVG)
  *   titulo, subtitulo, preco, parcelas, duracao_dias, datas[], capa, destaque?
+ *
+ * Paths das `capa` são relativos à página que carrega o script — hoje
+ * o mapa é embedado na home (raiz do projeto), então `midia/...` resolve
+ * direto. O protótipo standalone em prototipos/mapa/index.html deixou
+ * de funcionar — se precisar voltar a iterá-lo isolado, ajuste com base
+ * tag ou paths absolutos.
  */
 window.VCE_MAPA_DATA = {
   continents: [
@@ -28,7 +34,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 21,
       datas: ['Abr 2026', 'Set 2026'],
-      capa: '../../midia/França, Grecia e Italia.webp',
+      capa: 'midia/França, Grecia e Italia.webp',
       destaque: true
     },
     {
@@ -41,7 +47,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 16,
       datas: ['Mai 2026', 'Out 2026'],
-      capa: '../../midia/Leste Europeu.webp'
+      capa: 'midia/Leste Europeu.webp'
     },
     {
       id: 'italia',
@@ -53,7 +59,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 14,
       datas: ['Jun 2026'],
-      capa: '../../midia/Itália.webp'
+      capa: 'midia/Itália.webp'
     },
     {
       id: 'marrocos',
@@ -65,7 +71,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 12,
       datas: ['Mar 2026', 'Out 2026'],
-      capa: '../../midia/Marrocos.webp'
+      capa: 'midia/Marrocos.webp'
     },
     {
       id: 'africa-do-sul',
@@ -77,7 +83,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 13,
       datas: ['Jul 2026'],
-      capa: '../../midia/Africa do Sul.webp'
+      capa: 'midia/Africa do Sul.webp'
     },
     {
       id: 'maldivas',
@@ -89,7 +95,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 9,
       datas: ['Ago 2026', 'Nov 2026'],
-      capa: '../../midia/Maldivas.webp',
+      capa: 'midia/Maldivas.webp',
       destaque: true
     },
     {
@@ -102,7 +108,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 17,
       datas: ['Set 2026'],
-      capa: '../../midia/India e Nepal.webp'
+      capa: 'midia/India e Nepal.webp'
     },
     {
       id: 'china',
@@ -114,7 +120,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 14,
       datas: ['Mai 2026'],
-      capa: '../../midia/China.webp'
+      capa: 'midia/China.webp'
     },
     {
       id: 'cancun',
@@ -126,7 +132,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 8,
       datas: ['Fev 2026', 'Jul 2026', 'Dez 2026'],
-      capa: '../../midia/Cancun.webp'
+      capa: 'midia/Cancun.webp'
     },
     {
       id: 'punta-cana',
@@ -138,7 +144,7 @@ window.VCE_MAPA_DATA = {
       parcelas: 48,
       duracao_dias: 8,
       datas: ['Mar 2026', 'Out 2026'],
-      capa: '../../midia/Punta Cana.webp'
+      capa: 'midia/Punta Cana.webp'
     }
   ]
 };
