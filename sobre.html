@@ -183,6 +183,22 @@
       line-height: var(--line-height-relaxed);
       color: var(--color-text-secondary);
     }
+
+    /* Seção "Quem começou tudo isso" (CEO): a bio é longa e o grid
+       lado-a-lado deixava um vazio enorme ao lado da foto. Empilha
+       vertical — foto em cima (paisagem), texto embaixo. Só nesta
+       página; a home mantém o .founder lado-a-lado. */
+    .page-sobre .founder {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      align-items: start;
+      max-width: 760px;
+      margin-inline: auto;
+    }
+    .page-sobre .founder__image {
+      aspect-ratio: 16 / 10;
+      max-width: 100%;
+    }
   </style>
 </head>
 
