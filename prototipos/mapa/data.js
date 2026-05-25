@@ -145,6 +145,20 @@ window.VCE_MAPA_DATA = {
       duracao_dias: 8,
       datas: ['Mar 2026', 'Out 2026'],
       capa: 'midia/Punta Cana.webp'
+    },
+    {
+      // Adicionado p/ exibir a bolinha da Oceania no mapa (pedido do cliente).
+      // TODO: substituir capa/dados quando o cliente enviar o material do roteiro.
+      id: 'australia-nova-zelandia',
+      continent: 'oceania',
+      paises: ['Austrália', 'Nova Zelândia'],
+      titulo: 'Austrália e Nova Zelândia',
+      subtitulo: 'Sydney, Great Ocean Road e Ilha Sul',
+      preco: 38900,
+      parcelas: 48,
+      duracao_dias: 18,
+      datas: ['Nov 2026'],
+      capa: 'midia/Card - Destino.webp'
     }
   ]
 };
